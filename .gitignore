@@ -4,3 +4,6 @@
 # Do not store generated HTML and PDF files
 cf-conventions.html
 cf-conventions.pdf
+
+./BCP-14/*.adoc
+./BCP-14/conventions_build
