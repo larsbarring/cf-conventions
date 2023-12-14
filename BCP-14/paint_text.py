@@ -4,18 +4,22 @@ from glob import glob
 from os import system
 
 # Order is important:
-KEYWORDS = ["MUST NOT", "SHALL NOT", "SHOULD NOT",
+BCP14 = ["MUST NOT", "SHALL NOT", "SHOULD NOT",
             "MUST", "REQUIRED", "SHALL", "SHOULD",
             "RECOMMENDED", "MAY", "OPTIONAL"
 ]
+BCP14_extended = [
+    "NOT RECOMMENDED", "RECOMMEND\S* NOT","RECOMMEND\S+",
+    "CAN NOT", "COULD NOT", "CAN", "COULD", 
+    "DEPRECATED", "HAVE TO"
+]
 # Other words that may be relevant to look at:
-# DEPRECATED, CAN
 
 # Colors according to asciidoctor default setup
-#    no foreground = "black"
-#    no background = "white"
-# code: fore., back.,  use  
+#    no foreground = "black" = ""
+#    no background = "white" = ""
 COLOR_DICT = {
+# code: fore., back.,  use  
     0: ("red", "aqua", "not worked on"),
     1: ("red", "lime", "suggested change"),
     2: ("red", "yellow", "needs discussion"),
@@ -46,13 +50,13 @@ def color_help(color_code):
     return text
 
 
-def paint(text, color_code):
+def paint(text, keywords, color_code):
     color = adoc_colors(color_code)
     count = 0
-    for k in KEYWORDS:
-        kin = f" {k.lower()} "
+    for k in keywords:
+        kin = rf"(?<= )({k.lower()})(?= )"
         if color:
-            kout = f" {color}#{k.lower()}# "
+            kout = rf"{color}#\1#"
         else:
             kout = kin
         text, c = re.subn(kin, kout, text)
@@ -60,11 +64,11 @@ def paint(text, color_code):
     return text, count
 
 
-def process_file_list(file_list, color_code):
+def process_file_list(file_list, keywords, color_code):
     for file in file_list:
         file_out = f"{file[1:]}"
         with open(file, "r") as fin:
-            text, count = paint(fin.read(), args.color_code)
+            text, count = paint(fin.read(), keywords, args.color_code)
             with open(file_out, "w") as fut:
                 fut.write(text)
         print(f"IN: {file:26}   OUT: {file_out:26} count = {count}")
@@ -79,12 +83,21 @@ if __name__ == "__main__":
                          default=0,
                          help=", ".join([color_help(c) for c in COLOR_DICT])
                         )
+    parser.add_argument("-v", "--vocabulary",
+                         default="BCP14",
+                         help="Either 'BCP14' (default), or 'EXTENDED'"
+                        )    
     args = parser.parse_args()
     file_pattern = args.filename
     if file_pattern == "*":
         file_pattern += ".adoc"
     indir = "../"
     file_list = glob(indir + file_pattern)
-    process_file_list(file_list, args.color_code)
+    vocab = args.vocabulary
+    if vocab.lower().startswith("ext"):
+        keywords = BCP14_extended
+    else:
+        keywords = BCP14
+    process_file_list(file_list, keywords, args.color_code)
 
     system('asciidoctor --verbose ${FINAL_TAG} -a docprodtime="$(date -u ${DATE_FMT})" cf-conventions.adoc -D conventions_build')
