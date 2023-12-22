@@ -68,16 +68,16 @@ def process_file_list(file_list, keywords, color_code):
         file_out = f"{file[1:]}"
         with open(file, "r") as fin:
             text, count = paint(fin.read(), keywords, color_code)
-            with open(file_out, "w") as fut:
-                fut.write(text)
-        print(f"IN: {file:26}   OUT: {file_out:26} count = {count}")
+        with open(file_out, "w") as fut:
+            fut.write(text)
+        print(f"IN: {file:26}   OUT: {file_out:26} count: {count}")
 
 
 def get_going():
     parser = argparse.ArgumentParser(
         prog="paint_text",
-        description=("Paint words related to BCP-14 in .adoc files, "
-                    "which must reside in the parent directory ('../')")
+        description=("\nPaint words related to BCP-14 in .adoc files, "
+                     "which must reside in the parent directory ('../')")
     )
     parser.add_argument("-f", "--file_name", default="*")
     parser.add_argument("-c", "--color_code",
