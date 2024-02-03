@@ -9,10 +9,11 @@ BCP14 = ["MUST NOT", "SHALL NOT", "SHOULD NOT",
             "RECOMMENDED", "MAY", "OPTIONAL"
 ]
 EXTENDED_BCP14 = [
-    "NOT RECOMMENDED", "RECOMMEND\S* NOT","RECOMMEND\S+",
+    "NOT RECOMMENDED", "RECOMMENDS* NOT","RECOMMENDS*",
     "CAN NOT", "COULD NOT", "CAN", "COULD", 
     "DEPRECATED", "HAVE TO"
 ]
+KEYWORDS = {"BCP14": BCP14, "Extended BCP14": EXTENDED_BCP14}
 
 # Colors according to asciidoctor default setup
 #    no foreground = "black" = ""
@@ -26,8 +27,11 @@ COLOR_DICT = {
     4: ("", "", "ready to merge"),             # Manually change to this when the whole text piece is ready
 }
 
-def adoc_colors(color_code):
-    fg = COLOR_DICT[color_code][0]
+def adoc_colors(color_code, fg_modifier):
+    if fg_modifier:
+        fg = COLOR_DICT[color_code][0]
+    else:
+        fg = "black"
     bg = COLOR_DICT[color_code][1]
     if fg and bg:
         color = f"[{fg} {bg}-background]"
@@ -49,8 +53,8 @@ def color_help(color_code):
     return text
 
 
-def paint(text, keywords, color_code):
-    color = adoc_colors(color_code)
+def paint(text, keywords, color_code, fg_modifier):
+    color = adoc_colors(color_code, fg_modifier)
     count = 0
     for k in keywords:
         kin = rf"(?<= )({k.lower()})(?= )"
@@ -67,7 +71,12 @@ def process_file_list(file_list, keywords, color_code):
     for file in file_list:
         file_out = f"{file[1:]}"
         with open(file, "r") as fin:
-            text, count = paint(fin.read(), keywords, color_code)
+            text = fin.read()
+        for kw in keywords:
+            # print(f'{kw:>14}:  {",   ".join(KEYWORDS[kw])}')
+            # print()
+            fg_modifier = "Extended" not in kw
+            text, count = paint(text, KEYWORDS[kw], color_code, fg_modifier)
         with open(file_out, "w") as fut:
             fut.write(text)
         print(f"IN: {file:26}   OUT: {file_out:26} count: {count}")
@@ -77,17 +86,19 @@ def get_going():
     parser = argparse.ArgumentParser(
         prog="paint_text",
         description=("\nPaint words related to BCP-14 in .adoc files, "
-                     "which must reside in the parent directory ('../')")
+                     "which must reside in the parent directory ('../'). "
+                     "If no filename is given then all .adoc files will be processed.")
     )
     parser.add_argument("-f", "--file_name", default="*")
-    parser.add_argument("-c", "--color_code",
-                         default=0,
-                         help=", ".join([color_help(c) for c in COLOR_DICT])
-                        )
     parser.add_argument("-v", "--vocabulary",
                          default="BCP14",
                          help="Either 'BCP14' (default), 'EXT[ENDED]', or 'BOTH'"
-                        )    
+                        )
+    parser.add_argument("-c", "--color_code",
+                         default=0,
+                         help=(", ".join([color_help(c) for c in COLOR_DICT]) +
+                               "  (Extended keywords have black letters)")
+                        )
     args = parser.parse_args()
     file_pattern = args.file_name
     if file_pattern == "*":
@@ -97,19 +108,16 @@ def get_going():
     vocab = args.vocabulary
     print("\nKeywords:")
     if vocab.lower() == "both":
-        keywords = BCP14 + EXTENDED_BCP14
-        print(f'         BCP-14:  {",   ".join(BCP14)}')
-        print(f'Extended BCP-14:  {",   ".join(EXTENDED_BCP14)}')
+
+        keywords = ["BCP14", "Extended BCP14"]
     elif vocab.lower().startswith("ext"):
-        keywords = EXTENDED_BCP14
-        print(f'Extended BCP-14: {",   ".join(EXTENDED_BCP14)}')
+        keywords = ["Extended BCP14"]
     else:
-        keywords = BCP14
-        print(f'BCP-14: {",   ".join(BCP14)}')
-    print()
+        keywords = ["BCP14"]
     process_file_list(file_list, keywords, args.color_code)
 
 
 if __name__ == "__main__":
+    print()
     get_going()
     system('asciidoctor --verbose ${FINAL_TAG} -a docprodtime="$(date -u ${DATE_FMT})" cf-conventions.adoc -D conventions_build')
