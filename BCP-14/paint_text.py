@@ -72,11 +72,13 @@ def process_file_list(file_list, keywords, color_code):
         file_out = f"{file[1:]}"
         with open(file, "r") as fin:
             text = fin.read()
+        count = 0
         for kw in keywords:
             # print(f'{kw:>14}:  {",   ".join(KEYWORDS[kw])}')
             # print()
             fg_modifier = "Extended" not in kw
-            text, count = paint(text, KEYWORDS[kw], color_code, fg_modifier)
+            text, n = paint(text, KEYWORDS[kw], color_code, fg_modifier)
+            count += n
         with open(file_out, "w") as fut:
             fut.write(text)
         print(f"IN: {file:26}   OUT: {file_out:26} count: {count}")
@@ -108,12 +110,15 @@ def get_going():
     vocab = args.vocabulary
     print("\nKeywords:")
     if vocab.lower() == "both":
-
         keywords = ["BCP14", "Extended BCP14"]
+        print(f"BCP14:    {BCP14}")
+        print(f"Extended: {EXTENDED_BCP14}")
     elif vocab.lower().startswith("ext"):
         keywords = ["Extended BCP14"]
+        print(f"Extended: {EXTENDED_BCP14}")
     else:
         keywords = ["BCP14"]
+        print(f"BCP14:    {BCP14}")
     process_file_list(file_list, keywords, args.color_code)
 
 
