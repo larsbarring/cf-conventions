@@ -21,8 +21,8 @@ CF does not assume or [lime-background]#require# that the UDUNITS software will 
 In most **`units`** conversions, the sole operation on the data is multiplication by a scale factor.
 Special treatment is [aqua-background]#required# in converting the **`units`** of variables that involve temperature (<<temperature-units>>) and the **`units`** of time coordinate variables (<<time-coordinate>>).
 
-The COARDS convention prohibits the unit `degrees` altogether, but this unit is not forbidden by the CF convention because it [aqua-background]#may# in fact be appropriate for a variable containing, say, solar zenith angle.
-The unit `degrees` is also allowed on coordinate variables such as the latitude and longitude coordinates of a transformed grid.
+The COARDS convention prohibits the unit `degrees` altogether, but this unit is not [lime-background]#forbidden# by the CF convention because it [aqua-background]#may# in fact be appropriate for a variable containing, say, solar zenith angle.
+The unit `degrees` is also [lime-background]#allowed# on coordinate variables such as the latitude and longitude coordinates of a transformed grid.
 In this case the coordinate values are not true latitudes and longitudes, which [aqua-background]#must# always be identified using the more specific forms of `degrees` as described in <<latitude-coordinate>> and <<longitude-coordinate>>.
 
 
@@ -36,15 +36,15 @@ The UDUNITS package defines a few dimensionless units, such as `percent`, `ppm` 
 As an alternative to the canonical **`units`** of `1` or some other unitless number, the **`units`** for a dimensionless quantity [aqua-background]#may# be given as a ratio of dimensional units, for instance `mg kg-1` for a mass ratio of 1e-6, or `microlitre litre-1` for a volume ratio of 1e-6. Data-producers are invited to consider whether this alternative would be more helpful to the users of their data.
 
 The CF convention supports dimensionless units that are UDUNITS compatible, with one exception, concerning the dimensionless units defined by UDUNITS for volume ratios, such as `ppmv` and `ppbv`.
-These units are allowed in the **`units`** attribute by CF only if the data variable has no **`standard_name`**.
-These units are prohibited by CF if there is a **`standard_name`**, because the **`standard_name`** defines whether the quantity is a volume ratio, so the **`units`** are needed only to indicate a dimensionless number.
+These units are [lime-background]#allowed# in the **`units`** attribute by CF only if the data variable has no **`standard_name`**.
+These units are [lime-background]#prohibited# by CF if there is a **`standard_name`**, because the **`standard_name`** defines whether the quantity is a volume ratio, so the **`units`** are needed only to indicate a dimensionless number.
  
 Information describing a dimensionless physical quantity itself (e.g.
 "area fraction" or "probability") does not belong in the **`units`** attribute, but [aqua-background]#should# be given in the **`long_name`** or **`standard_name`** attributes (see <<long-name>> and <<standard-name>>), in the same way as for physical quantities with dimensional units.
-As an exception, to maintain backwards compatibility with COARDS, the text strings `level`, `layer`, and `sigma_level` are allowed in the **`units`** attribute, in order to indicate dimensionless vertical coordinates.
-This use of **`units`** is not compatible with UDUNITS, and is [lime-background]#deprecated# by this standard because conventions for more precisely identifying dimensionless vertical coordinates are available (see <<dimensionless-vertical-coordinate>>).
+As an exception, to maintain backwards compatibility with COARDS, the text strings `level`, `layer`, and `sigma_level` are [lime-background]#allowed# in the **`units`** attribute, in order to indicate dimensionless vertical coordinates.
+This use of **`units`** is not compatible with UDUNITS, and is deprecated by this standard because conventions for more precisely identifying dimensionless vertical coordinates are available (see <<dimensionless-vertical-coordinate>>).
 
-The UDUNITS syntax that allows scale factors and offsets to be applied to a unit is not supported by this standard, except for case of specifying reference time, see section <<time-coordinate>>.
+The UDUNITS syntax that [lime-background]#allows# scale factors and offsets to be applied to a unit is not supported by this standard, except for case of specifying reference time, see section <<time-coordinate>>.
 The application of any scale factors or offsets to data [aqua-background]#should# be indicated by the **`scale_factor`** and **`add_offset`** attributes.
 Use of these attributes for data packing, which is their most important application, is discussed in detail in <<packed-data>>.
 
@@ -111,7 +111,7 @@ For instance, when temperature is on-scale, a value in `kg degree_C m-2` [lime-b
 [[units-multiples, Section 3.1.3, "Scale factors and offsets"]]
 ==== Scale factors and offsets
 
-UDUNITS recognises the SI prefixes shown in <<table-supported-units>> for decimal multiples and submultiples of units, and allows them to be applied to non-SI units as well.
+UDUNITS recognises the SI prefixes shown in <<table-supported-units>> for decimal multiples and submultiples of units, and [lime-background]#allows# them to be applied to non-SI units as well.
 UDUNITS offers a syntax for indicating arbitrary scale factors and offsets to be applied to a unit.
 (Note that this is different from the scale factors and offsets used for converting between **`units`**, as discussed for temperature in <<temperature-units>>.)
 This UDUNITS syntax for arbitrary transformation of **`units`** is not supported by the CF standard, except for the case of specifying reference time (<<time-coordinate>>).
@@ -150,7 +150,7 @@ If a variable has no **`long_name`** attribute then an application [aqua-backgro
 A fundamental requirement for exchange of scientific data is the ability to describe precisely the physical quantities being represented.
 To some extent this is the role of the **`long_name`** attribute as defined in the NUG.
 However, usage of **`long_name`** is completely ad-hoc.
-For many applications it is desirable to have a more definitive description of the quantity, which allows users of data from different sources (some of which [lime-background]#might# be models and others observational) to determine whether quantities are in fact comparable.
+For many applications it is desirable to have a more definitive description of the quantity, which [lime-background]#allows# users of data from different sources (some of which [lime-background]#might# be models and others observational) to determine whether quantities are in fact comparable.
 For this reason each variable [aqua-background]#may# optionally be given a "standard name", whose meaning is defined by this convention.
 There [aqua-background]#may# be several variables in a dataset with any given standard name, and these [aqua-background]#may# be distinguished by other metadata, such as coordinates (<<coordinate-types>>) and **`cell_methods`** (<<cell-methods>>).
 

@@ -8,7 +8,7 @@ The purpose of the CF conventions is to [lime-background]#require# conforming da
 
 An important benefit of a convention is that it enables software tools to display data and perform operations on specified subsets of the data with minimal user intervention.
 It is possible to provide the metadata describing how a field is located in time and space in many different ways that a human would immediately recognize as equivalent.
-The purpose in restricting how the metadata is represented is to make it practical to write software that allows a machine to parse that metadata and to automatically associate each data value with its location in time and space.
+The purpose in restricting how the metadata is represented is to make it practical to write software that [lime-background]#allows# a machine to parse that metadata and to automatically associate each data value with its location in time and space.
 It is equally important that the metadata be easy for human users to write and to understand.
 
 This standard is intended for use with climate and forecast data, for atmosphere, surface and ocean, and was designed with model-generated data particularly in mind.
@@ -45,7 +45,7 @@ Therefore CF-netCDF does not use codes, but instead relies on controlled vocabul
 
 7. The conventions [aqua-background]#should# minimise the possibility for mistakes by data-writers and data-readers.
 
-8. Conventions are provided to allow data-producers to describe the data they wish to produce, rather than attempting to prescribe what data they [aqua-background]#should# produce; consequently most CF conventions are [aqua-background]#optional#.
+8. Conventions are provided to [lime-background]#allow# data-producers to describe the data they wish to produce, rather than attempting to prescribe what data they [aqua-background]#should# produce; consequently most CF conventions are [aqua-background]#optional#.
 
 9. Because many datasets remain in use for a long time after production, it is desirable that metadata written according to previous versions of the convention [aqua-background]#should# also be compliant with and have the same interpretation under later versions.
 
@@ -78,7 +78,7 @@ coordinate variable:: A coordinate variable is a one-dimensional variable with t
 In CF, a coordinate variable [aqua-background]#must# be of a numeric data type (note that
 link:$$https://docs.unidata.ucar.edu/nug/current/best_practices.html#bp_Coordinate-Systems$$[NUG section on coordinate variables] does not have this requirement).
 The coordinate values [aqua-background]#must# be in strict monotonic order (all values are different, and they are arranged in either consistently increasing or consistently decreasing order).
-Missing values are not allowed in coordinate variables.
+Missing values are [lime-background]#not allowed# in coordinate variables.
 To avoid confusion with coordinate variables, CF does not [lime-background]#permit# a one-dimensional string-valued variable to have the same name as its dimension.
 
 grid mapping variable:: A variable used as a container for attributes that define a specific grid mapping.
@@ -145,15 +145,15 @@ Each variable in a netCDF file has an associated description which is provided b
 The **`units`**, and **`long_name`** attributes are defined in the NUG and the **`standard_name`** attribute is defined in this document.
 
 The **`units`** attribute is [aqua-background]#required# for all variables that represent dimensional quantities (except for boundary variables defined in <<cell-boundaries>>).
-The values of the **`units`** attributes are character strings that are recognized by UNIDATA's UDUNITS package <<UDUNITS>> (with exceptions allowed as discussed in <<units>>).
+The values of the **`units`** attributes are character strings that are recognized by UNIDATA's UDUNITS package <<UDUNITS>> (with exceptions [lime-background]#allowed# as discussed in <<units>>).
 
 The **`long_name`** and **`standard_name`** attributes are used to describe the content of each variable.
 For backwards compatibility with COARDS neither is [aqua-background]#required#, but use of at least one of them is strongly [aqua-background]#recommended#.
 The use of standard names will facilitate the exchange of climate and forecast data by providing unambiguous identification of variables most commonly analyzed.
 
 Four types of coordinates receive special treatment by these conventions: latitude, longitude, vertical, and time.
-Every variable [aqua-background]#must# have associated metadata that allows identification of each such coordinate that is relevant.
-Two independent parts of the convention allow this to be done.
+Every variable [aqua-background]#must# have associated metadata that [lime-background]#allows# identification of each such coordinate that is relevant.
+Two independent parts of the convention [lime-background]#allow# this to be done.
 There are conventions that identify the variables that contain the coordinate data, and there are conventions that identify the type of coordinate represented by that data.
 
 There are two methods used to identify variables that contain coordinate data.
@@ -191,7 +191,7 @@ A major design goal has been to maintain __backward compatibility__ with COARDS.
 Hence applications written to process datasets that conform to these conventions will also be able to process COARDS conforming datasets.
 We have also striven to maximize __conformance__ to the COARDS standard so that datasets that only [lime-background]#require# the metadata that was available under COARDS will still be able to be processed by COARDS conforming applications.
 But because of the extensions that provide new metadata content, and the relaxation of some COARDS requirements, datasets that conform to these conventions will not necessarily be recognized by applications that adhere to the COARDS conventions.
-The features of these conventions that allow writing netCDF files that are not COARDS conforming are summarized below.
+The features of these conventions that [lime-background]#allow# writing netCDF files that are not COARDS conforming are summarized below.
 
 COARDS standardizes the description of grids composed of independent latitude, longitude, vertical, and time axes.
 In addition to standardizing the metadata [aqua-background]#required# to identify each of these axis types, COARDS [lime-background]#requires# (_time_, _vertical_, _latitude_, _longitude_) as the CDL order for the dimensions of a variable, with longitude being the most rapidly varying dimension (the last dimension in CDL order).
@@ -201,12 +201,12 @@ The use of non-COARDS axis ordering will render files inaccessible to some appli
 Often a buffering operation [lime-background]#can# be used to miminize performance penalties when axis ordering in model code does not match the axis ordering of a COARDS file.
 
 COARDS addresses the issue of identifying dimensionless vertical coordinates, but does not provide any mechanism for mapping the dimensionless values to dimensional ones that [lime-background]#can# be located with respect to the earth's surface.
-For backwards compatibility we continue to allow (but do not require) the **`units`** attribute of dimensionless vertical coordinates to take the values "level", "layer", or "sigma_level."
+For backwards compatibility we continue to [lime-background]#allow# (but do not require) the **`units`** attribute of dimensionless vertical coordinates to take the values "level", "layer", or "sigma_level."
 But we [lime-background]#recommend# that the **`standard_name`** and **`formula_terms`** attributes be used to identify the appropriate definition of the dimensionless vertical coordinate (see <<parametric-vertical-coordinate>>).
 
 The CF conventions define attributes which enable the description of data properties that are outside the scope of the COARDS conventions.
 These new attributes do not violate the COARDS conventions, but applications that only recognize COARDS conforming datasets will not have the capabilities that the new attributes are meant to enable.
-Briefly the new attributes allow:
+Briefly the new attributes [lime-background]#allow#:
 
 * Identification of quantities using standard names.
 * Description of dimensionless vertical coordinates.
@@ -223,7 +223,7 @@ Briefly the new attributes allow:
 === UGRID Conventions
 
 These conventions implicitly incorporate parts of the UGRID conventions for storing unstructured (or flexible mesh) data in netCDF files using mesh topologies <<UGRID>>.
-Only version 1.0 of the UGRID conventions is allowed.
+Only version 1.0 of the UGRID conventions is [lime-background]#allowed#.
 The UGRID conventions description is referenced from, rather than rewritten into, this document and the canonical description of how to store mesh topologies is only to be found at <<UGRID>>.
 A summary indicating how UGRID relates to other parts of the CF conventions, and which features of UGRID are excluded from CF, [lime-background]#can# be found in <<mesh-topology-variables>>.
 To reduce the chance of ambiguities arising from their accidental re-use, all of the UGRID standardized attributes are specified in <<appendix-mesh-topology-attributes>> and <<attribute-appendix>>.

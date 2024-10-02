@@ -27,7 +27,7 @@ This standard is more restrictive than the NUG with respect to the use of the **
 
 When packed data is written, the **`scale_factor`** and **`add_offset`** attributes [aqua-background]#must# be of the same type as the unpacked data, which [aqua-background]#must# be either **`float`** or **`double`**. Data of type **`float`** [aqua-background]#must# be packed into one of these types: **`byte`**, **`unsigned byte`**, **`short`**, **`unsigned short`**. Data of type **`double`** [aqua-background]#must# be packed into one of these types: **`byte`**, **`unsigned byte`**, **`short`**, **`unsigned short`**, **`int`**, **`unsigned int`**.
 
-When packed data is read, it [aqua-background]#should# be unpacked to the type of the **`scale_factor`** and **`add_offset`** attributes, which [aqua-background]#must# have the same type if both are present. For guidance only, we suggest that packed data which does not conform to the rules of this section regarding the types of the data variable and attributes [aqua-background]#should# be unpacked to **`double`** type, in order to minimise the risk of loss of precision.
+When packed data is read, it [aqua-background]#should# be unpacked to the type of the **`scale_factor`** and **`add_offset`** attributes, which [aqua-background]#must# have the same type if both are present. For guidance only, we [lime-background]#suggest# that packed data which does not conform to the rules of this section regarding the types of the data variable and attributes [aqua-background]#should# be unpacked to **`double`** type, in order to minimise the risk of loss of precision.
 
 When data to be packed contains missing values the attributes that indicate missing values (**`_FillValue`**, **`valid_min`**, **`valid_max`**, **`valid_range`**) [aqua-background]#must# be of the same data type as the packed data.
 See <<missing-data>> for a discussion of how applications [aqua-background]#should# treat variables that have attributes indicating both missing values and transformations defined by a scale and/or offset.
@@ -150,7 +150,7 @@ This results in a different number of tie point coordinates in the two cases sho
 
 For each interpolated dimension, the number of interpolation subareas is equal to the number of tie points minus the number of continuous areas.
 
-Tie point coordinate variables for both coordinate and auxiliary coordinate variables [aqua-background]#must# be defined as numeric data types and are not allowed to have missing values.
+Tie point coordinate variables for both coordinate and auxiliary coordinate variables [aqua-background]#must# be defined as numeric data types and are [lime-background]#not allowed# to have missing values.
 
 [[interpolation_subarea_generation]]
 [caption="Figure {doc-part}.{counter:figure}. ", reftext=Figure {doc-part}.{figure}]
@@ -344,7 +344,7 @@ The **`interpolation_parameters`** attribute takes a string value, the string co
 The order of elements is not significant.
 Any numerical term that is specified as [aqua-background]#optional# in <<appendix-coordinate-subsampling>> and is omitted from the **`interpolation_parameters`** attribute [aqua-background]#should# be assumed to be zero.
 
-The **`interpolation_parameters`** attribute [aqua-background]#may# only be provided if allowed by the definition of the interpolation method.
+The **`interpolation_parameters`** attribute [aqua-background]#may# only be provided if [lime-background]#allowed# by the definition of the interpolation method.
 Interpolation parameters [aqua-background]#may# always be provided to non-standardized interpolation methods.
 
 The interpolation parameters are [lime-background]#not permitted# to contain absolute coordinate information, such as additional tie points, but [aqua-background]#may# contain relative coordinate information, for example an offset with respect to a tie point or with respect to a combination of tie points.
@@ -681,7 +681,7 @@ For instance, a **`computational_precision**` value of **`"64"**` would specify 
 Geoscientific models and measurements generate false floating-point precision (scientifically meaningless data bits) that wastes storage space.
 False precision [lime-background]#can# mislead (by implying noise is signal) and is scientifically pointless.
 Quantization algorithms [lime-background]#can# eliminate false precision, usually by rounding the least significant bits of <<IEEE_754>> floating-point mantissas to zeros.
-(Quantization of integer types, although theoretically allowed, is not covered by this convention.)
+(Quantization of integer types, although theoretically [lime-background]#allowed#, is not covered by this convention.)
 The quantized results are valid <<IEEE_754>> values---no special software or decoder is necessary to read them.
 Importantly, the quantized bits compress more efficiently than random bits.
 Thus quantization is sometimes referred to as a form of lossy compression although, strictly speaking, quantization only pre-conditions data for more efficient compression by a subsequent compressor.
@@ -690,7 +690,7 @@ The CF conventions of this section define a metadata framework to record quantiz
 The goals are twofold.
 First, to inform interested users how, and to what degree, the quantized data differ from the original unquantized data, which are not stored in the dataset and [aqua-background]#may# no longer exist.
 Second, to provide the necessary provenance metadata for users to reproduce the data transformations on the same or other raw data.
-These conventions also allow users to better understand the precision that data producers expect from source models or measurements.
+These conventions also [lime-background]#allow# users to better understand the precision that data producers expect from source models or measurements.
 
 These conventions [aqua-background]#must not# be used with data variables of integer type.
 They [aqua-background]#must not# be used with any variable, even if it is also a data variable, that serves as a coordinate variable, or is named by a **`coordinates`**, **`formula_terms`** or **`cell_measures`** attribute of any other variable.

@@ -474,7 +474,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author30" class="author">Christopher&#160;Barker</span><br>
 <span id="author31" class="author">Sadie&#160;Bartholomew</span><br>
 <span id="revnumber">version &#160;1.12 draft,</span>
-<span id="revdate">&#160;&#160;Wed  2 Oct 15:46:08 UTC 2024</span>
+<span id="revdate">&#160;&#160;Wed  2 Oct 16:22:54 UTC 2024</span>
 <br><span id="revremark">See&#160;https://cfconventions.org&#160;for&#160;further&#160;information.</span>
 </div>
 </div>
@@ -1066,7 +1066,7 @@ The purpose of the CF conventions is to <span class="EBCP">require</span> confor
 <div class="paragraph">
 <p>An important benefit of a convention is that it enables software tools to display data and perform operations on specified subsets of the data with minimal user intervention.
 It is possible to provide the metadata describing how a field is located in time and space in many different ways that a human would immediately recognize as equivalent.
-The purpose in restricting how the metadata is represented is to make it practical to write software that allows a machine to parse that metadata and to automatically associate each data value with its location in time and space.
+The purpose in restricting how the metadata is represented is to make it practical to write software that <span class="EBCP">allows</span> a machine to parse that metadata and to automatically associate each data value with its location in time and space.
 It is equally important that the metadata be easy for human users to write and to understand.</p>
 </div>
 <div class="paragraph">
@@ -1117,7 +1117,7 @@ Therefore CF-netCDF does not use codes, but instead relies on controlled vocabul
 <p>The conventions <span class="BCP">should</span> minimise the possibility for mistakes by data-writers and data-readers.</p>
 </li>
 <li>
-<p>Conventions are provided to allow data-producers to describe the data they wish to produce, rather than attempting to prescribe what data they <span class="BCP">should</span> produce; consequently most CF conventions are <span class="BCP">optional</span>.</p>
+<p>Conventions are provided to <span class="EBCP">allow</span> data-producers to describe the data they wish to produce, rather than attempting to prescribe what data they <span class="BCP">should</span> produce; consequently most CF conventions are <span class="BCP">optional</span>.</p>
 </li>
 <li>
 <p>Because many datasets remain in use for a long time after production, it is desirable that metadata written according to previous versions of the convention <span class="BCP">should</span> also be compliant with and have the same interpretation under later versions.</p>
@@ -1169,7 +1169,7 @@ The term <em>interval</em> is sometimes used for one-dimensional cells.</p>
 In CF, a coordinate variable <span class="BCP">must</span> be of a numeric data type (note that
 <a href="https://docs.unidata.ucar.edu/nug/current/best_practices.html#bp_Coordinate-Systems">NUG section on coordinate variables</a> does not have this requirement).
 The coordinate values <span class="BCP">must</span> be in strict monotonic order (all values are different, and they are arranged in either consistently increasing or consistently decreasing order).
-Missing values are not allowed in coordinate variables.
+Missing values are <span class="EBCP">not allowed</span> in coordinate variables.
 To avoid confusion with coordinate variables, CF does not <span class="EBCP">permit</span> a one-dimensional string-valued variable to have the same name as its dimension.</p>
 </dd>
 <dt class="hdlist1">grid mapping variable</dt>
@@ -1284,7 +1284,7 @@ The <strong><code>units</code></strong>, and <strong><code>long_name</code></str
 </div>
 <div class="paragraph">
 <p>The <strong><code>units</code></strong> attribute is <span class="BCP">required</span> for all variables that represent dimensional quantities (except for boundary variables defined in <a href="#cell-boundaries">Section 7.1, "Cell Boundaries"</a>).
-The values of the <strong><code>units</code></strong> attributes are character strings that are recognized by UNIDATA&#8217;s UDUNITS package <a href="#UDUNITS">[UDUNITS]</a> (with exceptions allowed as discussed in <a href="#units">Section 3.1, "Units"</a>).</p>
+The values of the <strong><code>units</code></strong> attributes are character strings that are recognized by UNIDATA&#8217;s UDUNITS package <a href="#UDUNITS">[UDUNITS]</a> (with exceptions <span class="EBCP">allowed</span> as discussed in <a href="#units">Section 3.1, "Units"</a>).</p>
 </div>
 <div class="paragraph">
 <p>The <strong><code>long_name</code></strong> and <strong><code>standard_name</code></strong> attributes are used to describe the content of each variable.
@@ -1293,8 +1293,8 @@ The use of standard names will facilitate the exchange of climate and forecast d
 </div>
 <div class="paragraph">
 <p>Four types of coordinates receive special treatment by these conventions: latitude, longitude, vertical, and time.
-Every variable <span class="BCP">must</span> have associated metadata that allows identification of each such coordinate that is relevant.
-Two independent parts of the convention allow this to be done.
+Every variable <span class="BCP">must</span> have associated metadata that <span class="EBCP">allows</span> identification of each such coordinate that is relevant.
+Two independent parts of the convention <span class="EBCP">allow</span> this to be done.
 There are conventions that identify the variables that contain the coordinate data, and there are conventions that identify the type of coordinate represented by that data.</p>
 </div>
 <div class="paragraph">
@@ -1338,7 +1338,7 @@ A major design goal has been to maintain <em>backward compatibility</em> with CO
 Hence applications written to process datasets that conform to these conventions will also be able to process COARDS conforming datasets.
 We have also striven to maximize <em>conformance</em> to the COARDS standard so that datasets that only <span class="EBCP">require</span> the metadata that was available under COARDS will still be able to be processed by COARDS conforming applications.
 But because of the extensions that provide new metadata content, and the relaxation of some COARDS requirements, datasets that conform to these conventions will not necessarily be recognized by applications that adhere to the COARDS conventions.
-The features of these conventions that allow writing netCDF files that are not COARDS conforming are summarized below.</p>
+The features of these conventions that <span class="EBCP">allow</span> writing netCDF files that are not COARDS conforming are summarized below.</p>
 </div>
 <div class="paragraph">
 <p>COARDS standardizes the description of grids composed of independent latitude, longitude, vertical, and time axes.
@@ -1350,13 +1350,13 @@ Often a buffering operation <span class="EBCP">can</span> be used to miminize pe
 </div>
 <div class="paragraph">
 <p>COARDS addresses the issue of identifying dimensionless vertical coordinates, but does not provide any mechanism for mapping the dimensionless values to dimensional ones that <span class="EBCP">can</span> be located with respect to the earth&#8217;s surface.
-For backwards compatibility we continue to allow (but do not require) the <strong><code>units</code></strong> attribute of dimensionless vertical coordinates to take the values "level", "layer", or "sigma_level."
+For backwards compatibility we continue to <span class="EBCP">allow</span> (but do not require) the <strong><code>units</code></strong> attribute of dimensionless vertical coordinates to take the values "level", "layer", or "sigma_level."
 But we <span class="EBCP">recommend</span> that the <strong><code>standard_name</code></strong> and <strong><code>formula_terms</code></strong> attributes be used to identify the appropriate definition of the dimensionless vertical coordinate (see <a href="#parametric-vertical-coordinate">Section 4.3.3, "Parametric Vertical Coordinate"</a>).</p>
 </div>
 <div class="paragraph">
 <p>The CF conventions define attributes which enable the description of data properties that are outside the scope of the COARDS conventions.
 These new attributes do not violate the COARDS conventions, but applications that only recognize COARDS conforming datasets will not have the capabilities that the new attributes are meant to enable.
-Briefly the new attributes allow:</p>
+Briefly the new attributes <span class="EBCP">allow</span>:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1394,7 +1394,7 @@ Briefly the new attributes allow:</p>
 <h3 id="ugrid-conventions"><a class="anchor" href="#ugrid-conventions"></a>1.6. UGRID Conventions</h3>
 <div class="paragraph">
 <p>These conventions implicitly incorporate parts of the UGRID conventions for storing unstructured (or flexible mesh) data in netCDF files using mesh topologies <a href="#UGRID">[UGRID]</a>.
-Only version 1.0 of the UGRID conventions is allowed.
+Only version 1.0 of the UGRID conventions is <span class="EBCP">allowed</span>.
 The UGRID conventions description is referenced from, rather than rewritten into, this document and the canonical description of how to store mesh topologies is only to be found at <a href="#UGRID">[UGRID]</a>.
 A summary indicating how UGRID relates to other parts of the CF conventions, and which features of UGRID are excluded from CF, <span class="EBCP">can</span> be found in <a href="#mesh-topology-variables">Section 5.9, "Mesh Topology Variables"</a>.
 To reduce the chance of ambiguities arising from their accidental re-use, all of the UGRID standardized attributes are specified in <a href="#appendix-mesh-topology-attributes">Appendix K, Mesh Topology Attributes</a> and <a href="#attribute-appendix">Appendix A, Attributes</a>.</p>
@@ -1465,9 +1465,9 @@ variables:
 <p>It is <span class="BCP">recommended</span> that variable, dimension, attribute and group names begin with a letter and be composed of letters, digits, and underscores.
 By the word <em>letters</em> we mean the standard ASCII letters uppercase <code>A</code> to <code>Z</code> and lowercase <code>a</code> to <code>z</code>.
 By the word <em>digits</em> we mean the standard ASCII digits <code>0</code> to <code>9</code>, and similarly <em>underscores</em> means the standard ASCII underscore <code>_</code>.
-Note that this is in conformance with the COARDS conventions, but is more restrictive than the netCDF interface which allows almost all Unicode characters encoded as multibyte UTF-8 characters (<a href="https://docs.unidata.ucar.edu/nug/current/file_format_specifications.html">NUG Appendix B</a>).
-The netCDF interface also allows leading underscores in names, but the NUG states that this is reserved for system use.
-ASCII period (.) and ASCII hyphen (-) are also allowed in attribute names only.</p>
+Note that this is in conformance with the COARDS conventions, but is more restrictive than the netCDF interface which <span class="EBCP">allows</span> almost all Unicode characters encoded as multibyte UTF-8 characters (<a href="https://docs.unidata.ucar.edu/nug/current/file_format_specifications.html">NUG Appendix B</a>).
+The netCDF interface also <span class="EBCP">allows</span> leading underscores in names, but the NUG states that this is reserved for system use.
+ASCII period (.) and ASCII hyphen (-) are also <span class="EBCP">allowed</span> in attribute names only.</p>
 </div>
 <div class="paragraph">
 <p>Case is significant in netCDF names, but it is <span class="BCP">recommended</span> that names <span class="BCP">should not</span> be distinguished purely by case, i.e., if case is disregarded, no two names <span class="BCP">should</span> be the same.
@@ -1485,7 +1485,7 @@ For example, a description of what a variable represents <span class="BCP">may</
 <h3 id="dimensions"><a class="anchor" href="#dimensions"></a>2.4. Dimensions</h3>
 <div class="paragraph">
 <p>A variable <span class="BCP">may</span> have any number of dimensions, including zero, and the dimensions <span class="BCP">must</span> all have different names.
-<em>COARDS strongly <span class="EBCP">recommends</span> limiting the number of dimensions to four, but we wish to allow greater flexibility</em>.
+<em>COARDS strongly <span class="EBCP">recommends</span> limiting the number of dimensions to four, but we wish to <span class="EBCP">allow</span> greater flexibility</em>.
 The dimensions of the variable define the axes of the quantity it contains.
 Dimensions other than those of space and time <span class="BCP">may</span> be included.
 Several examples <span class="EBCP">can</span> be found in this document.
@@ -1518,9 +1518,9 @@ For example, a variable containing data for temperature at 1.5 m above the groun
 <p>The NUG conventions
 (<a href="https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html">NUG Appendix A, Attribute Conventions</a>)
 provide the <strong><code>_FillValue</code></strong>, <strong><code>missing_value</code></strong>, <strong><code>valid_min</code></strong>, <strong><code>valid_max</code></strong>, and <strong><code>valid_range</code></strong> attributes to indicate missing data.
-Missing data is allowed in data variables and auxiliary coordinate variables.
+Missing data is <span class="EBCP">allowed</span> in data variables and auxiliary coordinate variables.
 Generic applications <span class="BCP">should</span> treat the data as missing where any auxiliary coordinate variables have missing values; special-purpose applications <span class="EBCP">might</span> be able to make use of the data.
-Missing data is not allowed in coordinate variables.</p>
+Missing data is <span class="EBCP">not allowed</span> in coordinate variables.</p>
 </div>
 <div class="paragraph">
 <p>The NUG conventions for missing data changed significantly between version 2.3 and version 2.4.
@@ -1598,7 +1598,7 @@ For backwards compatibility with COARDS none of these global attributes is <span
 </div>
 <div class="paragraph">
 <p>The NUG defines <strong><code>title</code></strong> and <strong><code>history</code></strong> to be global attributes.
-We wish to allow the newly defined attributes, i.e., <strong><code>institution</code></strong>, <strong><code>source</code></strong>, <strong><code>references</code></strong>, and <strong><code>comment</code></strong>, to be either global or assigned to individual variables.
+We wish to <span class="EBCP">allow</span> the newly defined attributes, i.e., <strong><code>institution</code></strong>, <strong><code>source</code></strong>, <strong><code>references</code></strong>, and <strong><code>comment</code></strong>, to be either global or assigned to individual variables.
 When an attribute appears both globally and as a variable attribute, the variable&#8217;s version has precedence.</p>
 </div>
 <div class="dlist">
@@ -1726,7 +1726,7 @@ The lateral search algorithm <span class="BCP">may</span> only be used for NUG c
 <td class="content">
 <div class="paragraph">
 <p>This use of the lateral search strategy to find them is discouraged.
-They are allowed mainly for backwards-compatibility with existing datasets, and <span class="BCP">may</span> be <span class="EBCP">deprecated</span> in future versions of the standard.</p>
+They are <span class="EBCP">allowed</span> mainly for backwards-compatibility with existing datasets, and <span class="BCP">may</span> be deprecated in future versions of the standard.</p>
 </div>
 </td>
 </tr>
@@ -1738,7 +1738,7 @@ They are allowed mainly for backwards-compatibility with existing datasets, and 
 <h4 id="_application_of_attributes"><a class="anchor" href="#_application_of_attributes"></a>2.7.2. Application of attributes</h4>
 <div class="paragraph">
 <p>The following attributes are <span class="BCP">optional</span> for non-root groups.
-They are allowed in order to provide additional provenance and description of the subsidiary data.
+They are <span class="EBCP">allowed</span> in order to provide additional provenance and description of the subsidiary data.
 They do not override attributes from parent groups.</p>
 </div>
 <div class="ulist">
@@ -1809,8 +1809,8 @@ In most <strong><code>units</code></strong> conversions, the sole operation on t
 Special treatment is <span class="BCP">required</span> in converting the <strong><code>units</code></strong> of variables that involve temperature (<a href="#temperature-units">Section 3.1.2, "Temperature units"</a>) and the <strong><code>units</code></strong> of time coordinate variables (<a href="#time-coordinate">Section 4.4, "Time Coordinate"</a>).</p>
 </div>
 <div class="paragraph">
-<p>The COARDS convention prohibits the unit <code>degrees</code> altogether, but this unit is not forbidden by the CF convention because it <span class="BCP">may</span> in fact be appropriate for a variable containing, say, solar zenith angle.
-The unit <code>degrees</code> is also allowed on coordinate variables such as the latitude and longitude coordinates of a transformed grid.
+<p>The COARDS convention prohibits the unit <code>degrees</code> altogether, but this unit is not <span class="EBCP">forbidden</span> by the CF convention because it <span class="BCP">may</span> in fact be appropriate for a variable containing, say, solar zenith angle.
+The unit <code>degrees</code> is also <span class="EBCP">allowed</span> on coordinate variables such as the latitude and longitude coordinates of a transformed grid.
 In this case the coordinate values are not true latitudes and longitudes, which <span class="BCP">must</span> always be identified using the more specific forms of <code>degrees</code> as described in <a href="#latitude-coordinate">Section 4.1, "Latitude Coordinate"</a> and <a href="#longitude-coordinate">Section 4.2, "Longitude Coordinate"</a>.</p>
 </div>
 <div class="sect3">
@@ -1824,17 +1824,17 @@ As an alternative to the canonical <strong><code>units</code></strong> of <code>
 </div>
 <div class="paragraph">
 <p>The CF convention supports dimensionless units that are UDUNITS compatible, with one exception, concerning the dimensionless units defined by UDUNITS for volume ratios, such as <code>ppmv</code> and <code>ppbv</code>.
-These units are allowed in the <strong><code>units</code></strong> attribute by CF only if the data variable has no <strong><code>standard_name</code></strong>.
-These units are prohibited by CF if there is a <strong><code>standard_name</code></strong>, because the <strong><code>standard_name</code></strong> defines whether the quantity is a volume ratio, so the <strong><code>units</code></strong> are needed only to indicate a dimensionless number.</p>
+These units are <span class="EBCP">allowed</span> in the <strong><code>units</code></strong> attribute by CF only if the data variable has no <strong><code>standard_name</code></strong>.
+These units are <span class="EBCP">prohibited</span> by CF if there is a <strong><code>standard_name</code></strong>, because the <strong><code>standard_name</code></strong> defines whether the quantity is a volume ratio, so the <strong><code>units</code></strong> are needed only to indicate a dimensionless number.</p>
 </div>
 <div class="paragraph">
 <p>Information describing a dimensionless physical quantity itself (e.g.
 "area fraction" or "probability") does not belong in the <strong><code>units</code></strong> attribute, but <span class="BCP">should</span> be given in the <strong><code>long_name</code></strong> or <strong><code>standard_name</code></strong> attributes (see <a href="#long-name">Section 3.2, "Long Name"</a> and <a href="#standard-name">Section 3.3, "Standard Name"</a>), in the same way as for physical quantities with dimensional units.
-As an exception, to maintain backwards compatibility with COARDS, the text strings <code>level</code>, <code>layer</code>, and <code>sigma_level</code> are allowed in the <strong><code>units</code></strong> attribute, in order to indicate dimensionless vertical coordinates.
-This use of <strong><code>units</code></strong> is not compatible with UDUNITS, and is <span class="EBCP">deprecated</span> by this standard because conventions for more precisely identifying dimensionless vertical coordinates are available (see <a href="#dimensionless-vertical-coordinate">Section 4.3.2, "Dimensionless Vertical Coordinate"</a>).</p>
+As an exception, to maintain backwards compatibility with COARDS, the text strings <code>level</code>, <code>layer</code>, and <code>sigma_level</code> are <span class="EBCP">allowed</span> in the <strong><code>units</code></strong> attribute, in order to indicate dimensionless vertical coordinates.
+This use of <strong><code>units</code></strong> is not compatible with UDUNITS, and is deprecated by this standard because conventions for more precisely identifying dimensionless vertical coordinates are available (see <a href="#dimensionless-vertical-coordinate">Section 4.3.2, "Dimensionless Vertical Coordinate"</a>).</p>
 </div>
 <div class="paragraph">
-<p>The UDUNITS syntax that allows scale factors and offsets to be applied to a unit is not supported by this standard, except for case of specifying reference time, see section <a href="#time-coordinate">Section 4.4, "Time Coordinate"</a>.
+<p>The UDUNITS syntax that <span class="EBCP">allows</span> scale factors and offsets to be applied to a unit is not supported by this standard, except for case of specifying reference time, see section <a href="#time-coordinate">Section 4.4, "Time Coordinate"</a>.
 The application of any scale factors or offsets to data <span class="BCP">should</span> be indicated by the <strong><code>scale_factor</code></strong> and <strong><code>add_offset</code></strong> attributes.
 Use of these attributes for data packing, which is their most important application, is discussed in detail in <a href="#packed-data">Section 8.1, "Packed Data"</a>.</p>
 </div>
@@ -1906,7 +1906,7 @@ For instance, when temperature is on-scale, a value in <code>kg degree_C m-2</co
 <div class="sect3">
 <h4 id="units-multiples"><a class="anchor" href="#units-multiples"></a>3.1.3. Scale factors and offsets</h4>
 <div class="paragraph">
-<p>UDUNITS recognises the SI prefixes shown in <a href="#table-supported-units">Prefixes for decimal multiples and submultiples of units</a> for decimal multiples and submultiples of units, and allows them to be applied to non-SI units as well.
+<p>UDUNITS recognises the SI prefixes shown in <a href="#table-supported-units">Prefixes for decimal multiples and submultiples of units</a> for decimal multiples and submultiples of units, and <span class="EBCP">allows</span> them to be applied to non-SI units as well.
 UDUNITS offers a syntax for indicating arbitrary scale factors and offsets to be applied to a unit.
 (Note that this is different from the scale factors and offsets used for converting between <strong><code>units</code></strong>, as discussed for temperature in <a href="#temperature-units">Section 3.1.2, "Temperature units"</a>.)
 This UDUNITS syntax for arbitrary transformation of <strong><code>units</code></strong> is not supported by the CF standard, except for the case of specifying reference time (<a href="#time-coordinate">Section 4.4, "Time Coordinate"</a>).
@@ -2045,7 +2045,7 @@ If a variable has no <strong><code>long_name</code></strong> attribute then an a
 <p>A fundamental requirement for exchange of scientific data is the ability to describe precisely the physical quantities being represented.
 To some extent this is the role of the <strong><code>long_name</code></strong> attribute as defined in the NUG.
 However, usage of <strong><code>long_name</code></strong> is completely ad-hoc.
-For many applications it is desirable to have a more definitive description of the quantity, which allows users of data from different sources (some of which <span class="EBCP">might</span> be models and others observational) to determine whether quantities are in fact comparable.
+For many applications it is desirable to have a more definitive description of the quantity, which <span class="EBCP">allows</span> users of data from different sources (some of which <span class="EBCP">might</span> be models and others observational) to determine whether quantities are in fact comparable.
 For this reason each variable <span class="BCP">may</span> optionally be given a "standard name", whose meaning is defined by this convention.
 There <span class="BCP">may</span> be several variables in a dataset with any given standard name, and these <span class="BCP">may</span> be distinguished by other metadata, such as coordinates (<a href="#coordinate-types">Chapter 4, Coordinate Types</a>) and <strong><code>cell_methods</code></strong> (<a href="#cell-methods">Section 7.3, "Cell Methods"</a>).</p>
 </div>
@@ -2558,8 +2558,8 @@ For vertical axes the most commonly used of these include <strong><code>meter (m
 <h4 id="dimensionless-vertical-coordinate"><a class="anchor" href="#dimensionless-vertical-coordinate"></a>4.3.2. Dimensionless Vertical Coordinate</h4>
 <div class="paragraph">
 <p>The <strong><code>units</code></strong> attribute is not <span class="BCP">required</span> for dimensionless coordinates.
-For backwards compatibility with COARDS we continue to allow the <strong><code>units</code></strong> attribute to take one of the values: <strong><code>level</code></strong>, <strong><code>layer</code></strong>, or <strong><code>sigma_level</code></strong>.
-These values are not recognized by the UDUNITS package, and are considered a <span class="EBCP">deprecated</span> feature in the CF standard.</p>
+For backwards compatibility with COARDS we continue to <span class="EBCP">allow</span> the <strong><code>units</code></strong> attribute to take one of the values: <strong><code>level</code></strong>, <strong><code>layer</code></strong>, or <strong><code>sigma_level</code></strong>.
+These values are not recognized by the UDUNITS package, and are considered a deprecated feature in the CF standard.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2663,7 +2663,7 @@ The CF standard follows UDUNITS in the definition of units, but we <span class="
 A time coordinate value represents a date/time.
 In order to calculate a time coordinate value from a date/time, or the reverse, one <span class="BCP">must</span> know the <strong><code>units</code></strong> attribute of the time coordinate variable (containing the time unit of the coordinate values and the reference date/time) and the calendar.
 The choice of calendar defines the set of dates (year-month-day combinations) which are <span class="EBCP">permitted</span>, and therefore it specifies the number of days between the times of <strong><code>0:0:0</code></strong> (midnight) on any two dates.
-Date/times which are <span class="EBCP">not permitted</span> in a given calendar are prohibited in both the encoded time coordinate values, and in the reference date/time string.
+Date/times which are <span class="EBCP">not permitted</span> in a given calendar are <span class="EBCP">prohibited</span> in both the encoded time coordinate values, and in the reference date/time string.
 It is <span class="BCP">recommended</span> that the calendar be specified by the <strong><code>calendar</code></strong> attribute of the time coordinate variable.</p>
 </div>
 <div class="paragraph">
@@ -2690,9 +2690,9 @@ For instance, <strong><code>60 seconds after 23:59</code></strong> means <strong
 <div class="paragraph">
 <p>The values currently defined for <strong><code>calendar</code></strong> are listed below.
 In all calendars except <strong><code>360_day</code></strong> and <strong><code>none</code></strong>, the lengths of the months are the same as in the Gregorian calendar for leap years and non-leap years.
-In the <strong><code>julian</code></strong> and the default <strong><code>standard</code></strong> mixed Gregorian/Julian calendar, dates in years before year 0 (i.e. before 0-1-1 0:0:0) are not allowed, and the year in the reference date/time of the units <span class="BCP">must not</span> be negative.
-In these calendars, year zero has a special use to indicate a climatology (see <a href="#climatological-statistics">Section 7.4, "Climatological Statistics"</a>), but this use of year zero is <span class="EBCP">deprecated</span>.
-In other calendars, years before year 1 are allowed.</p>
+In the <strong><code>julian</code></strong> and the default <strong><code>standard</code></strong> mixed Gregorian/Julian calendar, dates in years before year 0 (i.e. before 0-1-1 0:0:0) are <span class="EBCP">not allowed</span>, and the year in the reference date/time of the units <span class="BCP">must not</span> be negative.
+In these calendars, year zero has a special use to indicate a climatology (see <a href="#climatological-statistics">Section 7.4, "Climatological Statistics"</a>), but this use of year zero is deprecated.
+In other calendars, years before year 1 are <span class="EBCP">allowed</span>.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -2700,7 +2700,7 @@ In other calendars, years before year 1 are allowed.</p>
 <dd>
 <p>Mixed Gregorian/Julian calendar as defined by UDUNITS.
 This is the default.
-A <span class="EBCP">deprecated</span> alternative name for this calendar is <strong><code>gregorian</code></strong>.
+A deprecated alternative name for this calendar is <strong><code>gregorian</code></strong>.
 In this calendar, date/times after (and including) 1582-10-15 0:0:0 are in the Gregorian calendar, in which a year is a leap year if either (i) it is divisible by 4 but not by 100 or (ii) it is divisible by 400.
 Date/times before (and excluding) 1582-10-5 0:0:0 are in the Julian calendar.
 Year 1 AD or CE in the <strong><code>standard</code></strong> calendar is also year 1 of the <strong><code>julian</code></strong> calendar.
@@ -2711,7 +2711,7 @@ It is also <span class="BCP">recommended</span> that a reference date/time befor
 <dt class="hdlist1"><strong><code>proleptic_gregorian</code></strong></dt>
 <dd>
 <p>A calendar with the Gregorian rules for leap-years extended to dates before 1582-10-15.
-All dates consistent with these rules are allowed, both before and after 1582-10-15 0:0:0.</p>
+All dates consistent with these rules are <span class="EBCP">allowed</span>, both before and after 1582-10-15 0:0:0.</p>
 </dd>
 <dt class="hdlist1"><strong><code>julian</code></strong></dt>
 <dd>
@@ -2794,7 +2794,7 @@ This attribute is ignored if <strong><code>leap_year</code></strong> is not spec
 <div class="paragraph">
 <p>The <strong><code>calendar</code></strong> attribute is not <span class="BCP">required</span> when a non-standard calendar is being used.
 It is sufficient to define the calendar using the <strong><code>month_lengths</code></strong> attribute, along with <strong><code>leap_year</code></strong>, and <strong><code>leap_month</code></strong> as appropriate.
-However, the <strong><code>calendar</code></strong> attribute is allowed to take non-standard values and in that case defining the non-standard calendar using the appropriate attributes is <span class="BCP">required</span>.</p>
+However, the <strong><code>calendar</code></strong> attribute is <span class="EBCP">allowed</span> to take non-standard values and in that case defining the non-standard calendar using the appropriate attributes is <span class="BCP">required</span>.</p>
 </div>
 <div id="paleoclimate-time-axis-ex" class="exampleblock">
 <div class="title">Example 4.6. Paleoclimate time axis</div>
@@ -2971,7 +2971,7 @@ This faciliates processing of this data by generic applications that don&#8217;t
 <p>A "reduced" longitude-latitude grid is one in which the points are arranged along constant latitude lines with the number of points on a latitude line decreasing toward the poles.
 Storing this type of gridded data in two-dimensional arrays wastes space, and results in the presence of missing values in the 2D coordinate variables.
 We <span class="EBCP">recommend</span> that this type of gridded data be stored using the compression scheme described in <a href="#compression-by-gathering">Section 8.2, "Lossless Compression by Gathering"</a>.
-Compression by gathering preserves structure by storing a set of indices that allows an application to easily scatter the compressed data back to two-dimensional arrays.
+Compression by gathering preserves structure by storing a set of indices that <span class="EBCP">allows</span> an application to easily scatter the compressed data back to two-dimensional arrays.
 The compressed latitude and longitude auxiliary coordinate variables are identified by the <code>coordinates</code> attribute.</p>
 </div>
 <div id="reduced-horizontal-grid-ex" class="exampleblock">
@@ -3596,7 +3596,7 @@ The purpose of a domain variable is to provide domain information to application
 Ancillary variables and cell methods are not part of the domain, because they are only defined in relation to data values.</p>
 </div>
 <div class="paragraph">
-<p>The domain variable supports the same attributes as are allowed on a data variable for describing a domain, with exactly the same meanings and syntaxes, as described in <a href="#attribute-appendix">Appendix A, Attributes</a>.
+<p>The domain variable supports the same attributes as are <span class="EBCP">allowed</span> on a data variable for describing a domain, with exactly the same meanings and syntaxes, as described in <a href="#attribute-appendix">Appendix A, Attributes</a>.
 If an attribute is needed by a particular data variable to describe its domain, then that attribute would also be needed by the equivalent domain variable.</p>
 </div>
 <div class="paragraph">
@@ -3882,7 +3882,7 @@ Some features of the UGRID conventions <a href="#UGRID">[UGRID]</a> are not curr
 </div>
 <div class="paragraph">
 <p>The variables containing the coordinate values for cells indexed by the mesh topology are defined by the mesh topology variable but are equivalent to one-dimensional auxiliary coordinate variables, and so <span class="BCP">may</span> also be provided by the data or domain variable&#8217;s <strong><code>coordinates</code></strong> attribute.
-Note that the mesh topology variable allows cell bounds to be provided without any cell coordinate values, via its <em><strong><code>node_coordinates</code></strong></em> attribute.</p>
+Note that the mesh topology variable <span class="EBCP">allows</span> cell bounds to be provided without any cell coordinate values, via its <em><strong><code>node_coordinates</code></strong></em> attribute.</p>
 </div>
 <div class="paragraph">
 <p>A <em>location index set variable</em> defines a subset of locations of a mesh topology variable, e.g. only special locations like weirs and gates.
@@ -4084,7 +4084,7 @@ data:
 <div class="paragraph">
 <p>In some situations a dimension <span class="BCP">may</span> have alternative sets of coordinates values.
 Since there <span class="EBCP">can</span> only be one coordinate variable for the dimension (the variable with the same name as the dimension), any alternative sets of values <span class="EBCP">have to</span> be stored in auxiliary coordinate variables.
-For such alternative coordinate variables, there are no mandatory attributes, but they <span class="BCP">may</span> have any of the attributes allowed for coordinate variables.</p>
+For such alternative coordinate variables, there are no mandatory attributes, but they <span class="BCP">may</span> have any of the attributes <span class="EBCP">allowed</span> for coordinate variables.</p>
 </div>
 <div id="model-level-numbers-ex" class="exampleblock">
 <div class="title">Example 6.2. Model level numbers</div>
@@ -4493,7 +4493,7 @@ The horizontal coordinate variables to which "<strong><code>area</code></strong>
 This information includes standardized and non-standardized parts.
 Currently the only standardized information is to provide the typical interval between the original data values to which the method was applied, in the situation where the present data values are statistically representative of original data values which had a finer spacing.
 The syntax is (<strong><code>interval</code></strong>: <em>value unit</em>), where <em>value</em> is a numerical value and <em>unit</em> is a string that <span class="EBCP">can</span> be recognized by UNIDATA&#8217;s UDUNITS package <a href="#UDUNITS">[UDUNITS]</a>.
-The <em>unit</em> will usually be dimensionally equivalent to the unit of the corresponding dimension, but this is not <span class="BCP">required</span> (which allows, for example, the interval for a standard deviation calculated from points evenly spaced in distance along a parallel to be reported in units of length even if the zonal coordinate of the cells is given in degrees).
+The <em>unit</em> will usually be dimensionally equivalent to the unit of the corresponding dimension, but this is not <span class="BCP">required</span> (which <span class="EBCP">allows</span>, for example, the interval for a standard deviation calculated from points evenly spaced in distance along a parallel to be reported in units of length even if the zonal coordinate of the cells is given in degrees).
 Recording the original interval is particularly important for standard deviations.
 For example, the standard deviation of daily values <span class="EBCP">could</span> be indicated by <strong><code>cell_methods="time: standard_deviation (interval: 1 day)"</code></strong> and of annual values by <strong><code>cell_methods="time: standard_deviation (interval: 1 year)"</code></strong>.</p>
 </div>
@@ -4590,8 +4590,8 @@ data:
 </div>
 <div class="paragraph">
 <p>If the <em>method</em> is <code>mean</code>, various ways of calculating the mean <span class="EBCP">can</span> be distinguished in the <code>cell_methods</code> attribute with a string of the form "mean where  <em>type1</em> [over <em>type2</em>]".
-Here, <em>type1</em> <span class="EBCP">can</span> be any of the possibilities allowed for <em>typevar</em> or <em>type</em> (as specified in the two paragraphs preceding above Example).
-The same options apply to <em>type2</em>, except it is not allowed to be the name of an auxiliary coordinate variable with a dimension greater than one (ignoring the possible dimension accommodating the maximum string length).
+Here, <em>type1</em> <span class="EBCP">can</span> be any of the possibilities <span class="EBCP">allowed</span> for <em>typevar</em> or <em>type</em> (as specified in the two paragraphs preceding above Example).
+The same options apply to <em>type2</em>, except it is <span class="EBCP">not allowed</span> to be the name of an auxiliary coordinate variable with a dimension greater than one (ignoring the possible dimension accommodating the maximum string length).
 A <code>cell_methods</code> attribute with a string of the form "mean where <em>type1</em> over <em>type2</em>" indicates the mean is calculated by summing over the <em>type1</em> portion of the cell and dividing by the area of the <em>type2</em> portion.
 In particular, a <code>cell_methods</code> string of the form "mean where all_area_types over <em>type2</em>" indicates the mean is calculated by summing over all types of area within the cell and dividing by the area of the <em>type2</em> portion.
 (Note that <code>all_area_types</code> is one of the valid strings <span class="EBCP">permitted</span> for a variable with the <code>standard_name</code> <code>area_type</code>.)
@@ -4630,15 +4630,15 @@ This convention cannot be used, however, if the name of a dimension or scalar co
 There are two situations where this convention is useful.</p>
 </div>
 <div class="paragraph">
-<p>First, it allows one to provide some indication of the method when the cell coordinate range cannot be precisely defined.
+<p>First, it <span class="EBCP">allows</span> one to provide some indication of the method when the cell coordinate range cannot be precisely defined.
 For example, a climatological mean <span class="EBCP">might</span> be based on any data that exists, and, in general, the data <span class="EBCP">might</span> not be available over the same time periods everywhere.
 In this case, the time range would not be well defined (because it would vary, depending on location), and it <span class="EBCP">could not</span> be precisely specified through a time dimension&#8217;s bounds.
 Nevertheless, useful information <span class="EBCP">can</span> be conveyed by a <strong><code>cell_methods</code></strong> entry of "<strong><code>time: mean</code></strong>" (where <strong><code>time</code></strong>, it <span class="BCP">should</span> be noted, is a valid <strong><code>standard_name</code></strong>).
 (As <span class="BCP">required</span> by this convention, it is assumed here that for the data referred to by this <strong><code>cell_methods</code></strong> attribute, "time" is not a dimension or coordinate variable.)</p>
 </div>
 <div class="paragraph">
-<p>Second, for a few special dimensions, this convention allows one to indicate (without explicitly defining the coordinates) that the method applies to the domain covering the entire <span class="EBCP">permitted</span> range of those dimensions.
-This is allowed only for longitude, latitude, and area (indicating a combination of horizontal coordinates).
+<p>Second, for a few special dimensions, this convention <span class="EBCP">allows</span> one to indicate (without explicitly defining the coordinates) that the method applies to the domain covering the entire <span class="EBCP">permitted</span> range of those dimensions.
+This is <span class="EBCP">allowed</span> only for longitude, latitude, and area (indicating a combination of horizontal coordinates).
 For longitude, the domain is indicated according to this provision by the string "longitude" (rather than the name of a longitude coordinate variable), and this implies that the method applies to all possible longitudes (i.e., from 0E to 360E).
 For latitude, the string "latitude" is used and implies the method applies to all possible latitudes (i.e., from 90S to 90N).
 For area, the string "area" is used and implies the method applies to the whole world.</p>
@@ -4676,7 +4676,7 @@ The time coordinates <span class="BCP">should</span> be values that are represen
 </div>
 <div class="paragraph">
 <p>For compatibility with the COARDS standard, a climatological time coordinate in the default <strong><code>standard</code></strong> and <strong><code>julian</code></strong> calendars <span class="BCP">may</span> be indicated by setting the date/time reference string in the time coordinate&#8217;s <strong><code>units</code></strong> attribute to midnight on 1 January in year 0 (i.e., <strong><code>since 0-1-1</code></strong>).
-This convention is <span class="EBCP">deprecated</span> because it does not provide any information about the intervals used to compute the climatology, and there <span class="BCP">may</span> be inconsistencies among software packages in the interpretation of the time coordinates with a reference time of year 0.
+This convention is deprecated because it does not provide any information about the intervals used to compute the climatology, and there <span class="BCP">may</span> be inconsistencies among software packages in the interpretation of the time coordinates with a reference time of year 0.
 Use of year 0 for this purpose is impossible in all other calendars, because year 0 is a valid year.</p>
 </div>
 <div class="paragraph">
@@ -4923,7 +4923,7 @@ The approach described here specifies how to encode such geometries following th
 The geometry type specifies the set of topological assumptions to be applied to relate the nodes (see Table 7.1).
 For example, multipoint and line geometries are nearly the same except nodes are interpreted as being connected for lines.
 Lines and polygons are also nearly the same except that the first and last nodes are assumed to be connected for polygons.
-Note that CF does <span class="EBCP">not require</span> the first and last node to be identical but allows them to be coincident if desired.
+Note that CF does <span class="EBCP">not require</span> the first and last node to be identical but <span class="EBCP">allows</span> them to be coincident if desired.
 Polygons that have holes, such as waterbodies in a land unit, are encoded as a collection of polygon ring parts, each identified as <em>exterior</em> or <em>interior</em> polygons.
 Multipart geometries, such as multiple lines representing the same river or multiple islands representing the same jurisdiction, are encoded as collections of unconnected points, lines, or polygons that are logically grouped into a single geometry.</p>
 </div>
@@ -5005,7 +5005,7 @@ The <strong><code>grid_mapping</code></strong> and <strong><code>coordinates</co
 <div class="paragraph">
 <p>The <strong><code>geometry_type</code></strong> attribute indicates the type of geometry present.
 Its allowable values are: <em>point</em>, <em>line</em>, <em>polygon</em>.
-Multipart geometries are allowed for all three geometry types.
+Multipart geometries are <span class="EBCP">allowed</span> for all three geometry types.
 For example, polygon geometries <span class="EBCP">could</span> include single part geometries like the State of Colorado and multipart geometries like the State of Hawaii.</p>
 </div>
 <div class="paragraph">
@@ -5189,7 +5189,7 @@ The units of a variable <span class="BCP">should</span> be representative of the
 <p>When packed data is written, the <strong><code>scale_factor</code></strong> and <strong><code>add_offset</code></strong> attributes <span class="BCP">must</span> be of the same type as the unpacked data, which <span class="BCP">must</span> be either <strong><code>float</code></strong> or <strong><code>double</code></strong>. Data of type <strong><code>float</code></strong> <span class="BCP">must</span> be packed into one of these types: <strong><code>byte</code></strong>, <strong><code>unsigned byte</code></strong>, <strong><code>short</code></strong>, <strong><code>unsigned short</code></strong>. Data of type <strong><code>double</code></strong> <span class="BCP">must</span> be packed into one of these types: <strong><code>byte</code></strong>, <strong><code>unsigned byte</code></strong>, <strong><code>short</code></strong>, <strong><code>unsigned short</code></strong>, <strong><code>int</code></strong>, <strong><code>unsigned int</code></strong>.</p>
 </div>
 <div class="paragraph">
-<p>When packed data is read, it <span class="BCP">should</span> be unpacked to the type of the <strong><code>scale_factor</code></strong> and <strong><code>add_offset</code></strong> attributes, which <span class="BCP">must</span> have the same type if both are present. For guidance only, we suggest that packed data which does not conform to the rules of this section regarding the types of the data variable and attributes <span class="BCP">should</span> be unpacked to <strong><code>double</code></strong> type, in order to minimise the risk of loss of precision.</p>
+<p>When packed data is read, it <span class="BCP">should</span> be unpacked to the type of the <strong><code>scale_factor</code></strong> and <strong><code>add_offset</code></strong> attributes, which <span class="BCP">must</span> have the same type if both are present. For guidance only, we <span class="EBCP">suggest</span> that packed data which does not conform to the rules of this section regarding the types of the data variable and attributes <span class="BCP">should</span> be unpacked to <strong><code>double</code></strong> type, in order to minimise the risk of loss of precision.</p>
 </div>
 <div class="paragraph">
 <p>When data to be packed contains missing values the attributes that indicate missing values (<strong><code>_FillValue</code></strong>, <strong><code>valid_min</code></strong>, <strong><code>valid_max</code></strong>, <strong><code>valid_range</code></strong>) <span class="BCP">must</span> be of the same data type as the packed data.
@@ -5334,7 +5334,7 @@ This results in a different number of tie point coordinates in the two cases sho
 <p>For each interpolated dimension, the number of interpolation subareas is equal to the number of tie points minus the number of continuous areas.</p>
 </div>
 <div class="paragraph">
-<p>Tie point coordinate variables for both coordinate and auxiliary coordinate variables <span class="BCP">must</span> be defined as numeric data types and are not allowed to have missing values.</p>
+<p>Tie point coordinate variables for both coordinate and auxiliary coordinate variables <span class="BCP">must</span> be defined as numeric data types and are <span class="EBCP">not allowed</span> to have missing values.</p>
 </div>
 <div id="interpolation_subarea_generation" class="imageblock text-center text-center">
 <div class="content">
@@ -5553,7 +5553,7 @@ The order of elements is not significant.
 Any numerical term that is specified as <span class="BCP">optional</span> in <a href="#appendix-coordinate-subsampling">Appendix J, Coordinate Interpolation Methods</a> and is omitted from the <strong><code>interpolation_parameters</code></strong> attribute <span class="BCP">should</span> be assumed to be zero.</p>
 </div>
 <div class="paragraph">
-<p>The <strong><code>interpolation_parameters</code></strong> attribute <span class="BCP">may</span> only be provided if allowed by the definition of the interpolation method.
+<p>The <strong><code>interpolation_parameters</code></strong> attribute <span class="BCP">may</span> only be provided if <span class="EBCP">allowed</span> by the definition of the interpolation method.
 Interpolation parameters <span class="BCP">may</span> always be provided to non-standardized interpolation methods.</p>
 </div>
 <div class="paragraph">
@@ -5941,7 +5941,7 @@ For instance, a <strong><code>computational_precision</strong></code> value of <
 <p>Geoscientific models and measurements generate false floating-point precision (scientifically meaningless data bits) that wastes storage space.
 False precision <span class="EBCP">can</span> mislead (by implying noise is signal) and is scientifically pointless.
 Quantization algorithms <span class="EBCP">can</span> eliminate false precision, usually by rounding the least significant bits of <a href="#IEEE_754">[IEEE_754]</a> floating-point mantissas to zeros.
-(Quantization of integer types, although theoretically allowed, is not covered by this convention.)
+(Quantization of integer types, although theoretically <span class="EBCP">allowed</span>, is not covered by this convention.)
 The quantized results are valid <a href="#IEEE_754">[IEEE_754]</a> values---no special software or decoder is necessary to read them.
 Importantly, the quantized bits compress more efficiently than random bits.
 Thus quantization is sometimes referred to as a form of lossy compression although, strictly speaking, quantization only pre-conditions data for more efficient compression by a subsequent compressor.</p>
@@ -5951,7 +5951,7 @@ Thus quantization is sometimes referred to as a form of lossy compression althou
 The goals are twofold.
 First, to inform interested users how, and to what degree, the quantized data differ from the original unquantized data, which are not stored in the dataset and <span class="BCP">may</span> no longer exist.
 Second, to provide the necessary provenance metadata for users to reproduce the data transformations on the same or other raw data.
-These conventions also allow users to better understand the precision that data producers expect from source models or measurements.</p>
+These conventions also <span class="EBCP">allow</span> users to better understand the precision that data producers expect from source models or measurements.</p>
 </div>
 <div class="paragraph">
 <p>These conventions <span class="BCP">must not</span> be used with data variables of integer type.
@@ -6104,7 +6104,7 @@ The term &#8220; <strong>feature</strong> &#8221; refers herein to a single inst
 The representation of such features in a CF dataset was supported previous to the introduction of this chapter using a particular convention, which is still supported (that described by section 9.3.1).
 This chapter describes further conventions which offer advantages of efficiency and clarity for storing a collection of features in a single file.
 When using these new conventions, <em>the features contained within a collection <span class="BCP">must</span> always be of the same type; and all the collections in a CF file <span class="BCP">must</span> be of the same feature type</em>.
-(Future versions of CF <span class="BCP">may</span> allow mixing of multiple feature types within a file.)
+(Future versions of CF <span class="BCP">may</span> <span class="EBCP">allow</span> mixing of multiple feature types within a file.)
 Table 9.1 presents the feature types covered by this chapter.
 Details and examples of storage of each of these feature types are provided in Appendix H, as indicated in the table.</p>
 </div>
@@ -6265,7 +6265,7 @@ The instance variables will be scalar coordinate variables; the data variable an
 <p>The individual features within a collection need not necessarily contain the same number of elements.  
 For instance observed in situ time series will commonly contain unique numbers of time points, reflecting different deployment dates of the instruments.  
 Other data sources, such as the output of numerical models, <span class="BCP">may</span> commonly generate features of identical size.
-CF offers multiple representations to allow the storage to be optimized for the character of the data.
+CF offers multiple representations to <span class="EBCP">allow</span> the storage to be optimized for the character of the data.
 Four types of representation are utilized in this chapter:</p>
 </div>
 <div class="ulist">
@@ -6644,7 +6644,7 @@ For those indices of the sample dimension, into which data have not yet been wri
 <h3 id="featureType"><a class="anchor" href="#featureType"></a>9.4. The featureType  attribute</h3>
 <div class="paragraph">
 <p>A global attribute, <strong>featureType</strong>, is <span class="BCP">required</span> for all Discrete Geometry representations except the orthogonal multidimensional array representation, for which it is highly <span class="BCP">recommended</span>.
-The exception is allowed for backwards compatibility, as discussed in 9.3.1.
+The exception is <span class="EBCP">allowed</span> for backwards compatibility, as discussed in 9.3.1.
 A Discrete Geometry file <span class="BCP">may</span> include arbitrary numbers of data variables, but (as of CF v1.6) all of the data variables contained in a single file <span class="BCP">must</span> be of the single feature type indicated by the global <strong><code>featureType</code></strong> attribute, if it is present.1   The value assigned to the <strong><code>featureType</code></strong> attribute is case-insensitive;  it <span class="BCP">must</span> be one of the string values listed in the left column of Table 9.1.</p>
 </div>
 </div>
@@ -6746,7 +6746,7 @@ CF does not prohibit any of these attributes from being attached to variables of
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html">NUG Appendix A, "Attribute Conventions"</a>, and <a href="#packed-data">Section 8.1, "Packed Data"</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If present for a variable, this number is to be added to the data after it is read by an application.
 If both <strong><code>scale_factor</code></strong> and <strong><code>add_offset</code></strong> attributes are present, the data are first scaled before the offset is added.
-In cases where there is a strong constraint on dataset size, it is allowed to pack the coordinate variables (using add_offset and/or scale_factor), but this is not <span class="BCP">recommended</span> in general.</p></td>
+In cases where there is a strong constraint on dataset size, it is <span class="EBCP">allowed</span> to pack the coordinate variables (using add_offset and/or scale_factor), but this is not <span class="BCP">recommended</span> in general.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong><code>algorithm</code></strong></p></td>
@@ -6874,7 +6874,7 @@ Identifies the roles of mesh topology and location index set variables (see <a h
 <td class="tableblock halign-left valign-top"><p class="tableblock">C, D, BO</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html">NUG Appendix A, "Attribute Conventions"</a>, and <a href="#missing-data">Section 2.5.1, "Missing data, valid and actual range of data"</a>, and <a href="#ch9-missing-data">Section 9.6, "Missing Data"</a>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A value used to represent missing or undefined data.
-Allowed for auxiliary coordinate variables but not allowed for coordinate variables.</p></td>
+Allowed for auxiliary coordinate variables but <span class="EBCP">not allowed</span> for coordinate variables.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong><code>featureType</code></strong></p></td>
@@ -7020,7 +7020,7 @@ This name is not standardized.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">C, D, BO</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#missing-data">Section 2.5.1, "Missing data, valid and actual range of data"</a>, and <a href="#ch9-missing-data">Section 9.6, "Missing Data"</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A value or values used to represent missing or undefined data.
-Allowed for auxiliary coordinate variables but not allowed for coordinate variables.</p></td>
+Allowed for auxiliary coordinate variables but <span class="EBCP">not allowed</span> for coordinate variables.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong><code>month_lengths</code></strong></p></td>
@@ -7109,7 +7109,7 @@ The count variable indicates that the contiguous ragged array representation is 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html">NUG Appendix A, "Attribute Conventions"</a>, and <a href="#packed-data">Section 8.1, "Packed Data"</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If present for a variable, the data are to be multiplied by this factor after the data are read by an application.
 See also the <strong><code>add_offset</code></strong> attribute.
-In cases where there is a strong constraint on dataset size, it is allowed to pack the coordinate variables (using add_offset and/or scale_factor), but this is not <span class="BCP">recommended</span> in general.</p></td>
+In cases where there is a strong constraint on dataset size, it is <span class="EBCP">allowed</span> to pack the coordinate variables (using add_offset and/or scale_factor), but this is not <span class="BCP">recommended</span> in general.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong><code>source</code></strong></p></td>
@@ -7377,7 +7377,7 @@ Any applications that parse the standard table <span class="BCP">should</span> b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number_of_observations</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The number of discrete observations or measurements from which a data value has been derived.
-The use of this modifier is <span class="EBCP">deprecated</span> and the standard_name number_of_observations is preferred to describe this type of metadata variable.</p></td>
+The use of this modifier is deprecated and the standard_name number_of_observations is preferred to describe this type of metadata variable.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>standard_error</code></p></td>
@@ -7392,7 +7392,7 @@ If the values supplied are for some multiple of the standard error, the <code>st
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Flag values indicating the quality or other status of the data values.
 The variable <span class="BCP">should</span> have <strong><code>flag_values</code></strong> or <strong><code>flag_masks</code></strong> (or both) and <strong><code>flag_meanings</code></strong> attributes to show how it <span class="BCP">should</span> be interpreted (<a href="#flags">Section 3.5, "Flags"</a>).
-The use of this modifier is <span class="EBCP">deprecated</span> and the standard_name status_flag is preferred to describe this type of metadata variable.</p></td>
+The use of this modifier is deprecated and the standard_name status_flag is preferred to describe this type of metadata variable.</p></td>
 </tr>
 </tbody>
 </table>
@@ -7407,7 +7407,7 @@ See <a href="#temperature-units">Section 3.1.2, "Temperature units"</a> for expl
 <h2 id="parametric-v-coord"><a class="anchor" href="#parametric-v-coord"></a>Appendix D: Parametric Vertical Coordinates</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The definitions given here allow an application to compute dimensional coordinate values from the parametric vertical coordinate values (usually dimensionless) and associated variables.
+<p>The definitions given here <span class="EBCP">allow</span> an application to compute dimensional coordinate values from the parametric vertical coordinate values (usually dimensionless) and associated variables.
 The formulas are expressed for a gridpoint <code>(n,k,j,i)</code> where <code>i</code> and <code>j</code> are the horizontal indices, <code>k</code> is the vertical index and <code>n</code> is the time index.
 A coordinate variable is associated with its definition by the value of the <code>standard_name</code> attribute.
 The terms in the definition are associated with file variables by the <code>formula_terms</code> attribute.
@@ -7797,7 +7797,7 @@ No <code>standard_name</code> has been defined for <code>C</code> or <code>depth
 <h3 id="_ocean_sigma_over_z_coordinate"><a class="anchor" href="#_ocean_sigma_over_z_coordinate"></a>Ocean sigma over z coordinate</h3>
 <div class="paragraph">
 <p><strong>The description of this type of parametric vertical coordinate is defective in version 1.8 and earlier versions of the standard, in that it does not state what values the vertical coordinate variable <span class="BCP">should</span> contain.
-Therefore, in accordance with the rules, all versions of the standard before 1.9 are <span class="EBCP">deprecated</span> for datasets that use the "ocean sigma over z" coordinate.</strong></p>
+Therefore, in accordance with the rules, all versions of the standard before 1.9 are deprecated for datasets that use the "ocean sigma over z" coordinate.</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7848,7 +7848,7 @@ For any <code>k</code>, whichever of <code>sigma(k)</code> or <code>zlev(k)</cod
 <p>The <code>standard_name</code>s for <code>eta</code>, <code>depth</code>, <code>zlev</code> and the <code>computed_standard_name</code> <span class="BCP">must</span> be one of the consistent sets shown in <a href="#table-computed-standard-names">Table D.1</a>.
 The <code>standard_name</code> for <code>sigma</code> is <code>ocean_sigma_coordinate</code>.
 No <code>standard_name</code> has been defined for <code>depth_c</code> or <code>nsigma</code>.
-The <code>nsigma</code> parameter is <span class="EBCP">deprecated</span> and <span class="BCP">optional</span> in <code>formula_terms</code>; if supplied, it <span class="BCP">must</span> equal the number of elements of <code>zlev</code> which contain missing data.</p>
+The <code>nsigma</code> parameter is deprecated and <span class="BCP">optional</span> in <code>formula_terms</code>; if supplied, it <span class="BCP">must</span> equal the number of elements of <code>zlev</code> which contain missing data.</p>
 </div>
 <div class="paragraph">
 <p>The <code>standard_name</code> for the vertical coordinate variable is <code>ocean_sigma_z_coordinate</code>.
@@ -8266,7 +8266,7 @@ and
 <dd>
 <p>The x (abscissa) and y (ordinate) rectangular coordinates are identified by the <strong><code>standard_name</code></strong> attribute values <strong><code>projection_x_angular_coordinate</code></strong> and <strong><code>projection_y_angular_coordinate</code></strong>, respectively.
 It is assumed that the y-axis is aligned to the Earth&#8217;s N/S axis, whereas the x-axis aligns with the E/W axis.
-CF specified the standard names <strong><code>projection_x_coordinate</code></strong> and <strong><code>projection_y_coordinate</code></strong> for these coordinates prior to version 1.9, but that use is <span class="EBCP">deprecated</span>.
+CF specified the standard names <strong><code>projection_x_coordinate</code></strong> and <strong><code>projection_y_coordinate</code></strong> for these coordinates prior to version 1.9, but that use is deprecated.
 In the case of this projection, the projection coordinates are the scanning angle of the satellite instrument.</p>
 </dd>
 <dt class="hdlist1"><em>Notes:</em></dt>
@@ -8300,7 +8300,7 @@ Only one of those the attributes <strong><code>fixed_angle_axis</code></strong> 
 Note also that the values "x" and "y" are not case-sensitive.</p>
 </div>
 <div class="paragraph">
-<p>The use of <code>projection_x_coordinate</code> and <code>projection_y_coordinate</code> was <span class="EBCP">deprecated</span> in version 1.9 of the CF Conventions.
+<p>The use of <code>projection_x_coordinate</code> and <code>projection_y_coordinate</code> was deprecated in version 1.9 of the CF Conventions.
 The initial definition of this projection used these standard names to identify the projection coordinates even though their canonical units (meters) do not match those <span class="BCP">required</span> for this projection (radians).</p>
 </div>
 </dd>
@@ -9113,7 +9113,7 @@ Corresponds to a OGC WKT TOWGS84 node.</p></td>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The various <strong><code>*_name</code></strong> attributes are <span class="BCP">optional</span> but <span class="BCP">recommended</span> when known as they allow for a better description and interoperability with WKT definitions.</p>
+<p>The various <strong><code>*_name</code></strong> attributes are <span class="BCP">optional</span> but <span class="BCP">recommended</span> when known as they <span class="EBCP">allow</span> for a better description and interoperability with WKT definitions.</p>
 </li>
 <li>
 <p><strong><code>reference_ellipsoid_name</code></strong>, <strong><code>prime_meridian_name</code></strong>, <strong><code>horizontal_datum_name</code></strong> and <strong><code>geographic_crs_name</code></strong> <span class="BCP">must</span> be all defined if any one is defined, and if <strong><code>projected_crs_name</code></strong> is defined then <strong><code>geographic_crs_name</code></strong> <span class="BCP">must</span> be also.</p>
@@ -9627,7 +9627,7 @@ The instance dimension in the case of profiles specifies the number of profiles 
 The instance variables, which have just this dimension, including latitude and longitude for example, are also referred to as <strong>profile variables</strong> and are considered to be information about the profiles.
 It is strongly <span class="BCP">recommended</span> that there always be a profile variable (of any data type) with <code>cf_role</code> attribute " <code>profile_id</code> ", whose values uniquely identify the profiles.
 The profile variables <span class="BCP">may</span> contain missing values.
-This allows one to reserve space for additional profiles that <span class="BCP">may</span> be added at a later time, as discussed in section 9.6.
+This <span class="EBCP">allows</span> one to reserve space for additional profiles that <span class="BCP">may</span> be added at a later time, as discussed in section 9.6.
 All the representations described in section 9.1.3 <span class="EBCP">can</span> be used for profiles.
 The global attribute <code>featureType=&#8221;profile&#8221;</code> (case-insensitive) <span class="BCP">should</span> be included if all data variables in the file contain profiles.</p>
 </div>
@@ -9704,7 +9704,7 @@ Either the instance (<code>profile</code>) or the element (<code>z</code>) dimen
 <h4 id="_incomplete_multidimensional_array_representation_of_profiles"><a class="anchor" href="#_incomplete_multidimensional_array_representation_of_profiles"></a>H.3.2. Incomplete multidimensional array representation of profiles</h4>
 <div class="paragraph">
 <p>If there are the same number of levels in each profile, but they do not have the same set of vertical coordinates, one <span class="EBCP">can</span> use the incomplete multidimensional array representation, which the vertical coordinate variable is two-dimensional e.g. replacing <code>z(z)</code> in <a href="#example-h.8">"Atmospheric sounding profiles for a common set of vertical coordinates stored in the orthogonal multidimensional array representation."</a> with <code>alt(profile,z)</code>.
-This representation also allows one to have a variable number of elements in different profiles, at the cost of some wasted space.
+This representation also <span class="EBCP">allows</span> one to have a variable number of elements in different profiles, at the cost of some wasted space.
 In that case, any unused elements of the data and auxiliary coordinate variables <span class="BCP">must</span> contain missing data values (section 9.6).</p>
 </div>
 </div>
@@ -9855,7 +9855,7 @@ The elements are associated with the profile using the same algorithm as in H.2.
 <div class="paragraph">
 <p>When the number of vertical levels for each profile varies, and one cannot write them contiguously, one <span class="EBCP">can</span> use the indexed ragged array representation.
 The canonical use case is when writing real-time data streams that contain reports from many profiles, arriving randomly.
-If the sample dimension is the unlimited dimension, this allows data to be appended to the file.</p>
+If the sample dimension is the unlimited dimension, this <span class="EBCP">allows</span> data to be appended to the file.</p>
 </div>
 <div id="example-h.11" class="exampleblock">
 <div class="title">Example H.11. Atmospheric sounding profiles for a common set of vertical coordinates stored in the indexed ragged array representation.</div>
@@ -9935,7 +9935,7 @@ The instance dimension in the case of trajectories specifies the number of traje
 The instance variables, which have just this dimension, are also referred to as <strong>trajectory variables</strong> and are considered to be information about the trajectories.
 It is strongly <span class="BCP">recommended</span> that there always be a trajectory variable (of any data type) with the attribute <code>cf_role=&#8221;trajectory_id&#8221;</code> attribute, whose values uniquely identify the trajectories.
 The trajectory variables <span class="BCP">may</span> contain missing values.
-This allows one to reserve space for additional trajectories that <span class="BCP">may</span> be added at a later time, as discussed in section 9.6.
+This <span class="EBCP">allows</span> one to reserve space for additional trajectories that <span class="BCP">may</span> be added at a later time, as discussed in section 9.6.
 All the representations described in section 9.3 <span class="EBCP">can</span> be used for trajectories.
 The global attribute <code>featureType=&#8221;trajectory&#8221;</code> (case-insensitive) <span class="BCP">should</span> be included if all data variables in the file contain trajectories.</p>
 </div>
@@ -9943,7 +9943,7 @@ The global attribute <code>featureType=&#8221;trajectory&#8221;</code> (case-ins
 <h4 id="_multidimensional_array_representation_of_trajectories"><a class="anchor" href="#_multidimensional_array_representation_of_trajectories"></a>H.4.1. Multidimensional array representation of trajectories</h4>
 <div class="paragraph">
 <p>When storing multiple trajectories in the same file, and the number of elements in each trajectory is the same, one <span class="EBCP">can</span> use the multidimensional array representation.
-This representation also allows one to have a variable number of elements in different trajectories, at the cost of some wasted space.
+This representation also <span class="EBCP">allows</span> one to have a variable number of elements in different trajectories, at the cost of some wasted space.
 In that case, any unused elements of the data and auxiliary coordinate variables <span class="BCP">must</span> contain missing data values (section 9.6).  </p>
 </div>
 <div id="example-h.12" class="exampleblock">
@@ -10152,7 +10152,7 @@ The elements are associated with the trajectories using the same algorithm as in
 <div class="paragraph">
 <p>When the number of elements at each trajectory vary, and the elements cannot be written in order, one <span class="EBCP">can</span> use the indexed ragged array representation.
 The canonical use case is when writing real-time data streams that contain reports from many trajectories.
-The data <span class="EBCP">can</span> be written as it arrives; if the flatsample dimension is the unlimited dimension, this allows data to be appended to the file.</p>
+The data <span class="EBCP">can</span> be written as it arrives; if the flatsample dimension is the unlimited dimension, this <span class="EBCP">allows</span> data to be appended to the file.</p>
 </div>
 <div id="example-h.15" class="exampleblock">
 <div class="title">Example H.15. Trajectories recording atmospheric composition in the indexed ragged array representation.</div>
@@ -10230,7 +10230,7 @@ A data variable <span class="BCP">may</span> contain a collection of such timeSe
 The instance dimension in the case of a timeSeriesProfile is also referred to as the <strong>station dimension</strong>.
 The instance variables, which have just this dimension, including latitude and longitude for example, are also referred to as <strong>station variables</strong> and are considered to contain information describing the stations.
 The station variables <span class="BCP">may</span> contain missing values.
-This allows one to reserve space for additional stations that <span class="BCP">may</span> be added at a later time, as discussed in section 9.6.
+This <span class="EBCP">allows</span> one to reserve space for additional stations that <span class="BCP">may</span> be added at a later time, as discussed in section 9.6.
 In addition,</p>
 </div>
 <div class="ulist">
@@ -10368,7 +10368,7 @@ The number of profiles equals the number of times.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>At the cost of some wasted space, the multidimensional array representation also allows one to have a variable number of profiles for different stations, and varying numbers of levels for different profiles.
+<p>At the cost of some wasted space, the multidimensional array representation also <span class="EBCP">allows</span> one to have a variable number of profiles for different stations, and varying numbers of levels for different profiles.
 In these cases, any unused elements of the data and auxiliary coordinate variables <span class="BCP">must</span> contain missing data values (section 9.6).</p>
 </div>
 </div>
@@ -10550,7 +10550,7 @@ A data variable <span class="BCP">may</span> contain a collection of such trajec
 The instance dimension in the case of a trajectoryProfile is also referred to as the <strong>trajectory dimension</strong>.
 The instance variables, which have just this dimension, are also referred to as <strong>trajectory variables</strong> and are considered to contain information describing the trajectories.
 The trajectory variables <span class="BCP">may</span> contain missing values.
-This allows one to reserve space for additional trajectories that <span class="BCP">may</span> be added at a later time, as discussed in section 9.6.
+This <span class="EBCP">allows</span> one to reserve space for additional trajectories that <span class="BCP">may</span> be added at a later time, as discussed in section 9.6.
 TrajectoryProfiles are more complicated than trajectories because there are two element dimensions.
 Each trajectory has a number of profiles as its elements, and each profile has a number of data from various levels as its elements.
 It is strongly <span class="BCP">recommended</span> that there always be a variable (of any data type) with the profile dimension and the <code>cf_role</code> attribute <code>profile_id</code>, whose values uniquely identify the profiles.</p>
@@ -10633,7 +10633,7 @@ In the latter case, listing the time coordinate variable in the coordinates attr
 </div>
 </div>
 <div class="paragraph">
-<p>At the cost of some wasted space, the multidimensional array representation also allows one to have a variable number of profiles for different trajectories, and varying numbers of levels for different profiles.
+<p>At the cost of some wasted space, the multidimensional array representation also <span class="EBCP">allows</span> one to have a variable number of profiles for different trajectories, and varying numbers of levels for different profiles.
 In these cases, any unused elements of the data and auxiliary coordinate variables <span class="BCP">must</span> contain missing data values (section 9.6).</p>
 </div>
 </div>
@@ -11315,7 +11315,7 @@ Each node has a unique arbitrary identity that is independent of its spatial loc
 </ul>
 </div>
 <div class="paragraph">
-<p>Each type of cell implies a restricted topology for which only some kinds of mesh are allowed.
+<p>Each type of cell implies a restricted topology for which only some kinds of mesh are <span class="EBCP">allowed</span>.
 For point cells, every node corresponds to exactly one cell; and two cells have a topological relationship if and only if their nodes are connected by a mesh link.
 For edge and face cells, every node corresponds to a boundary vertex of a cell; the same node <span class="EBCP">can</span> represent vertices in multiple cells; every link in the mesh connects two cell boundary vertices; and two cells have a topological relationship if and only if they share at least one node.</p>
 </div>
@@ -11433,10 +11433,10 @@ The strings which identify such axes are well defined in that they <span class="
 This appendix provides details on the available methods for compression by coordinate subsampling.</p>
 </div>
 <div class="paragraph">
-<p>The definitions and guidance given here allow an application to compress an existing data set using coordinate subsampling, while letting the creator of the compressed dataset control the accuracy of the reconstituted coordinates through the degree of subsampling, the choice of interpolation method and by setting the computational precision.</p>
+<p>The definitions and guidance given here <span class="EBCP">allow</span> an application to compress an existing data set using coordinate subsampling, while letting the creator of the compressed dataset control the accuracy of the reconstituted coordinates through the degree of subsampling, the choice of interpolation method and by setting the computational precision.</p>
 </div>
 <div class="paragraph">
-<p>Furthermore, the definitions given here allow an application to uncompress coordinate and auxiliary coordinate variables that have been compressed using coordinate subsampling.
+<p>Furthermore, the definitions given here <span class="EBCP">allow</span> an application to uncompress coordinate and auxiliary coordinate variables that have been compressed using coordinate subsampling.
 The key element of this process is the reconstitution of the full resolution coordinates in the domain of the data by interpolation between the subsampled coordinates, the tie points, stored in the compressed dataset.</p>
 </div>
 <div class="paragraph">
@@ -12457,13 +12457,13 @@ The "Use" values are <strong>MT</strong> for mesh topology variables, <strong>LI
 <p><a href="https://github.com/cf-convention/cf-conventions/issues/511">Issue #511</a>: Appendix B: New element in XML file header to record the "first published date"</p>
 </li>
 <li>
-<p><a href="https://github.com/cf-convention/cf-conventions/issues/509">Issue #509</a>: In exceptional cases allow a standard name to be aliased into two alternatives</p>
+<p><a href="https://github.com/cf-convention/cf-conventions/issues/509">Issue <mark>509</a>: In exceptional cases [lime-background]#allow</mark> a standard name to be aliased into two alternatives</p>
 </li>
 <li>
 <p><a href="https://github.com/cf-convention/cf-conventions/issues/501">Issue <mark>501</a>: Clarify that data variables and variables containing coordinate data are highly [aqua-background]#recommended</mark> to have <strong><code>long_name</code></strong> or <strong><code>standard_name</code></strong> attributes, that <strong><code>cf_role</code></strong> is used only for discrete sampling geometries and UGRID mesh topologies, and that CF does not prohibit CF attributes from being used in ways that are not defined by CF but that in such cases their meaning is not defined by CF.</p>
 </li>
 <li>
-<p><a href="https://github.com/cf-convention/cf-conventions/issues/477">Issue #477</a>: Period and hyphen allowed in attribute names</p>
+<p><a href="https://github.com/cf-convention/cf-conventions/issues/477">Issue <mark>477</a>: Period and hyphen [lime-background]#allowed</mark> in attribute names</p>
 </li>
 <li>
 <p><a href="https://github.com/cf-convention/cf-conventions/issues/500">Issue #500</a>: Appendix B: Added a <strong><code>conventions</code></strong> string to the standard name xml file format definition</p>
@@ -13106,7 +13106,7 @@ OGC document 12-063. 1st May 2015.</p>
 <div id="footer">
 <div id="footer-text">
 Version &#160;1.12 draft<br>
-Last updated 2024-10-02 17:46:08 +0200
+Last updated 2024-10-02 18:22:54 +0200
 </div>
 </div>
 </body>
