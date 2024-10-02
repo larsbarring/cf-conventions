@@ -11,8 +11,8 @@ We refer to the type of discrete sampling geometry as its **featureType**.
 The term {ldquo} **feature** {rdquo} refers herein to a single instance of the **discrete sampling geometry** (such as a single time series).
 The representation of such features in a CF dataset was supported previous to the introduction of this chapter using a particular convention, which is still supported (that described by section 9.3.1).
 This chapter describes further conventions which offer advantages of efficiency and clarity for storing a collection of features in a single file.
-When using these new conventions, __the features contained within a collection [red aqua-background]#must# always be of the same type; and all the collections in a CF file [red aqua-background]#must# be of the same feature type__.
-(Future versions of CF [red aqua-background]#may# allow mixing of multiple feature types within a file.)
+When using these new conventions, __the features contained within a collection [aqua-background]#must# always be of the same type; and all the collections in a CF file [aqua-background]#must# be of the same feature type__.
+(Future versions of CF [aqua-background]#may# allow mixing of multiple feature types within a file.)
 Table 9.1 presents the feature types covered by this chapter.
 Details and examples of storage of each of these feature types are provided in Appendix H, as indicated in the table.
 
@@ -42,13 +42,13 @@ Details and examples of storage of each of these feature types are provided in A
 |===============
 
 **Table 9.1.** Logical structure and mandatory coordinates for discrete sampling geometry featureTypes.
-Other space-time coordinates [red aqua-background]#may# be included which are not mandatory.
+Other space-time coordinates [aqua-background]#may# be included which are not mandatory.
 
-In Table 9.1 the spatial coordinates x and y typically refer to longitude and latitude but other horizontal coordinates [black aqua-background]#could# also be used (see sections 4 and 5.6).  
+In Table 9.1 the spatial coordinates x and y typically refer to longitude and latitude but other horizontal coordinates [lime-background]#could# also be used (see sections 4 and 5.6).  
 The spatial coordinate z refers to vertical position.
 The time coordinate is indicated as t.
 The space-time coordinates that are indicated for each feature are mandatory.
-However a featureType [red aqua-background]#may# also include other space-time coordinates which are not mandatory (notably the z coordinate, and for instance a **`forecast_reference_time`** coordinate in addition to a mandatory time coordinate).
+However a featureType [aqua-background]#may# also include other space-time coordinates which are not mandatory (notably the z coordinate, and for instance a **`forecast_reference_time`** coordinate in addition to a mandatory time coordinate).
 The array subscripts that are shown illustrate only the __logical__ structure of the data.
 The subscripts found in actual CF files are determined by the specific type of representations (see section 9.3).
 
@@ -60,8 +60,8 @@ Problematic examples include:  
 * paths in space that indicate a geographically located feature, but lack a suitable time coordinate (e.g. a meteorological front).
 
 Future versions of CF will generalize the concepts of geolocation to encompass these cases. 
-As of CF version 1.6 such data [black aqua-background]#can# be stored using the representations that are documented here by two means: 1) by utilizing the orthogonal multidimensional array representation and omitting the featureType attribute; or 2) by assigning arbitrary coordinates to the mandatory dimensions. 
-For example a globally-averaged latitude position (90s to 90n) [black aqua-background]#could# be represented arbitrarily (and poorly) as a latitude position at the equator.
+As of CF version 1.6 such data [lime-background]#can# be stored using the representations that are documented here by two means: 1) by utilizing the orthogonal multidimensional array representation and omitting the featureType attribute; or 2) by assigning arbitrary coordinates to the mandatory dimensions. 
+For example a globally-averaged latitude position (90s to 90n) [lime-background]#could# be represented arbitrarily (and poorly) as a latitude position at the equator.
 
 [[collections-instances-elements, Section 9.2, "Collections, instances, and elements"]]
 === Collections, instances and elements
@@ -74,14 +74,14 @@ The subscripts o and p distinguish the data elements that compose a single featu
 For example in a collection of **timeSeries** features, each time series instance, i, has data values at various times, o. 
 In a collection of **profile** features, the subscript, o, provides the index position along the vertical axis of each profile instance.
 We refer to data values in a feature as its **elements**, and to the dimensions of o and p as **element dimensions**.
-Each feature [black aqua-background]#can# have its own set of element subscripts o and p.
-For instance, in a collection of timeSeries features, each individual timeSeries [black aqua-background]#can# have its own set of times.
+Each feature [lime-background]#can# have its own set of element subscripts o and p.
+For instance, in a collection of timeSeries features, each individual timeSeries [lime-background]#can# have its own set of times.
 The notation t(i,o) means there is a set of times with subscripts o for the elements of each feature i.  
 Feature instances within a collection need not have the same numbers of elements.
 If the features do all have the same number of elements, and the sequence of element coordinates is identical for all features, savings in simplicity and space are achievable by storing only one copy of these coordinates.
 This is the essence of the orthogonal multidimensional representation (see section 9.3.1).
 
-If there is only a single feature to be stored in a data variable, there is no need for an instance dimension and it is permitted to omit it.
+If there is only a single feature to be stored in a data variable, there is no need for an instance dimension and it is [lime-background]#permitted# to omit it.
 The data will then be one-dimensional, which is a special (degenerate) case of the multidimensional array representation.
 The instance variables will be scalar coordinate variables; the data variable and other auxiliary coordinate variables will have only an element dimension and not have an instance dimension, e.g. data(o) and t(o) for a single timeSeries.
 
@@ -90,28 +90,28 @@ The instance variables will be scalar coordinate variables; the data variable an
 
 The individual features within a collection need not necessarily contain the same number of elements.  
 For instance observed in situ time series will commonly contain unique numbers of time points, reflecting different deployment dates of the instruments.  
-Other data sources, such as the output of numerical models, [red aqua-background]#may# commonly generate features of identical size.
+Other data sources, such as the output of numerical models, [aqua-background]#may# commonly generate features of identical size.
 CF offers multiple representations to allow the storage to be optimized for the character of the data.
 Four types of representation are utilized in this chapter:
 
 * two **multidimensional array representations**, in which each feature instance is allocated the identical amount of storage space. 
 In these representations the instance dimension and the element dimension(s) are distinct CF coordinate axes (typical of coordinate axes discussed in chapter 4); and
-* two **ragged array representations**, in which each feature is provided with the minimum amount of space that it requires.
+* two **ragged array representations**, in which each feature is provided with the minimum amount of space that it [lime-background]#requires#.
 In these representations the instances of the individual features are stacked sequentially along the same array dimension as the elements of the features; we refer to this combined dimension as the **sample dimension**.
 
 In the multidimensional array representations, data variables have both an instance dimension and an element dimension. 
-The dimensions [red aqua-background]#may# be given in any order. 
-If there is a need for either the instance or an element dimension to be the netCDF unlimited dimension (so that more features or more elements [black aqua-background]#can# be appended), then that dimension [red aqua-background]#must# be the outer dimension of the data variable i.e. the leading dimension in CDL.
+The dimensions [aqua-background]#may# be given in any order. 
+If there is a need for either the instance or an element dimension to be the netCDF unlimited dimension (so that more features or more elements [lime-background]#can# be appended), then that dimension [aqua-background]#must# be the outer dimension of the data variable i.e. the leading dimension in CDL.
 
 In the ragged array representations, the instance dimension (**`i`**), which sequences the individual features within the collection, and the element dimension, which sequences the data elements of each feature (**`o`** and **`p`**), both occupy the same dimension (the sample dimension).  
-If the sample dimension is the netCDF unlimited dimension, new data [black aqua-background]#can# be appended to the file.  
+If the sample dimension is the netCDF unlimited dimension, new data [lime-background]#can# be appended to the file.  
 
-In all representations, the instance dimension (which is also the sample dimension in ragged representations) [red aqua-background]#may# be set initially to a size that is arbitrarily larger than what is [red aqua-background]#required# for the features which are available at the time that the file is created.  
-Allocating unused array space in this way (pre-filled with missing values -- see also section 9.6, __Missing data__), [black aqua-background]#can# be useful as a means to reserve space that will be available to add features at a later time.
+In all representations, the instance dimension (which is also the sample dimension in ragged representations) [aqua-background]#may# be set initially to a size that is arbitrarily larger than what is [aqua-background]#required# for the features which are available at the time that the file is created.  
+Allocating unused array space in this way (pre-filled with missing values -- see also section 9.6, __Missing data__), [lime-background]#can# be useful as a means to reserve space that will be available to add features at a later time.
 
 ==== Orthogonal multidimensional array representation
 
-The **orthogonal multidimensional array representation**, the simplest representation, [black aqua-background]#can# be used if each feature instance in the collection has identical coordinates along the element axis of the features. 
+The **orthogonal multidimensional array representation**, the simplest representation, [lime-background]#can# be used if each feature instance in the collection has identical coordinates along the element axis of the features. 
 For example, for a collection of the timeSeries that share a common set of times, or a collection of profiles that share a common set of vertical levels, this is likely to be the natural representation to use. 
 In both examples, there will be longitude and latitude coordinate variables, x(i), y(i), that are one-dimensional and defined along the instance dimension.
 
@@ -174,8 +174,8 @@ This representation is consistent with the multidimensional fields described in 
 
 ====  Incomplete multidimensional array representation
 
-The **incomplete multidimensional array representation** [black aqua-background]#can# used if the features within a collection do not all have the same number of elements, but sufficient storage space is available to allocate the number of elements [red aqua-background]#required# by the longest feature to all features. 
-That is, features that are shorter than the longest feature [red aqua-background]#must# be padded with missing values to bring all instances to the same storage size.
+The **incomplete multidimensional array representation** [lime-background]#can# used if the features within a collection do not all have the same number of elements, but sufficient storage space is available to allocate the number of elements [aqua-background]#required# by the longest feature to all features. 
+That is, features that are shorter than the longest feature [aqua-background]#must# be padded with missing values to bring all instances to the same storage size.
 This representation sacrifices storage space to achieve simplicity for reading and writing.  
 
 Table 9.3 illustrates the storage of a data variable using the orthogonal multidimensional array representation.  
@@ -236,7 +236,7 @@ Table 9.3.   The storage of data using the incomplete multidimensional array re
 
 ====  Contiguous ragged array representation
 
-The **contiguous ragged array representation** [black aqua-background]#can# be used only if the size of each feature is known at the time that it is created. 
+The **contiguous ragged array representation** [lime-background]#can# be used only if the size of each feature is known at the time that it is created. 
 In this representation the data for each feature will be contiguous on disk, as shown in Table 9.4.
 
 [cols="1",width="25%"]
@@ -289,7 +289,7 @@ In this representation the data for each feature will be contiguous on disk, as 
 
 Table 9.4. The storage of data using the contiguous ragged representation (subscripts in CDL order).
 
-In this representation, the file contains a **count variable**, which [red aqua-background]#must# be an integer type and
+In this representation, the file contains a **count variable**, which [aqua-background]#must# be an integer type and
 
 [cols="4"]
 |===============
@@ -312,12 +312,12 @@ count(i4)
 must have the instance dimension as its sole dimension. 
 The count variable contains the number of elements that each feature has.
 This representation and its count variable are identifiable by the presence of an attribute, **`sample_dimension`**, found on the count variable, which names the sample dimension being counted.
-For indices that correspond to features, whose data have not yet been written, the count variable [red aqua-background]#should#  have a value of zero or a missing value.
+For indices that correspond to features, whose data have not yet been written, the count variable [aqua-background]#should#  have a value of zero or a missing value.
 
 ==== Indexed ragged array representation
 
 The **indexed ragged array representation** stores the features interleaved along the sample dimension in the data variable as shown in Table 9.4.
-The canonical use case for this representation is the storage of real-time data streams that contain reports from many sources; the data [black aqua-background]#can# be written as it arrives.
+The canonical use case for this representation is the storage of real-time data streams that contain reports from many sources; the data [lime-background]#can# be written as it arrives.
 
 [cols="3",width="75"]
 |===============
@@ -415,55 +415,55 @@ The canonical use case for this representation is the storage of real-time data 
 Table 9.4 The storage of data using the indexed ragged representation (subscripts in CDL order). 
 The left hand side of the table illustrates a data variable; the right hand side of the table contains the values of the index variable.
 
-In this representation, the file contains an **index variable**, which [red aqua-background]#must# be an integer type, and [red aqua-background]#must# have the sample dimension as its single dimension. 
+In this representation, the file contains an **index variable**, which [aqua-background]#must# be an integer type, and [aqua-background]#must# have the sample dimension as its single dimension. 
 The index variable contains the zero-based index of the feature to which each element belongs. 
 This representation is identifiable by the presence of an attribute, **`instance_dimension`**, on the index variable, which names the dimension of the instance variables. 
-For those indices of the sample dimension, into which data have not yet been written, the index variable [red aqua-background]#should# be pre-filled with missing values.
+For those indices of the sample dimension, into which data have not yet been written, the index variable [aqua-background]#should# be pre-filled with missing values.
 
 [[featureType, Section 9.4, "The featureType  attribute"]]
 === The featureType  attribute
 
-A global attribute, **featureType**, is [red aqua-background]#required# for all Discrete Geometry representations except the orthogonal multidimensional array representation, for which it is highly recommended.
+A global attribute, **featureType**, is [aqua-background]#required# for all Discrete Geometry representations except the orthogonal multidimensional array representation, for which it is highly [aqua-background]#recommended#.
 The exception is allowed for backwards compatibility, as discussed in 9.3.1.
-A Discrete Geometry file [red aqua-background]#may# include arbitrary numbers of data variables, but (as of CF v1.6) all of the data variables contained in a single file [red aqua-background]#must# be of the single feature type indicated by the global **`featureType`** attribute, if it is present.1   The value assigned to the **`featureType`** attribute is case-insensitive;  it [red aqua-background]#must# be one of the string values listed in the left column of Table 9.1.
+A Discrete Geometry file [aqua-background]#may# include arbitrary numbers of data variables, but (as of CF v1.6) all of the data variables contained in a single file [aqua-background]#must# be of the single feature type indicated by the global **`featureType`** attribute, if it is present.1   The value assigned to the **`featureType`** attribute is case-insensitive;  it [aqua-background]#must# be one of the string values listed in the left column of Table 9.1.
 
 [[coordinates-metadata, Section 9.5, "Coordinates and metadata"]]
 === Coordinates and metadata
 
-Every feature within a Discrete Geometry CF file [red aqua-background]#must# be unambiguously associated with an extensible collection of instance variables that identify the feature and provide other metadata as needed to describe it.
-Every element of every feature [red aqua-background]#must# be unambiguously associated with its space and time coordinates and with the feature that contains it.
-The **`coordinates`** attribute [red aqua-background]#must# be attached to every data variable to indicate the spatiotemporal coordinate variables that are needed to geo-locate the data.
+Every feature within a Discrete Geometry CF file [aqua-background]#must# be unambiguously associated with an extensible collection of instance variables that identify the feature and provide other metadata as needed to describe it.
+Every element of every feature [aqua-background]#must# be unambiguously associated with its space and time coordinates and with the feature that contains it.
+The **`coordinates`** attribute [aqua-background]#must# be attached to every data variable to indicate the spatiotemporal coordinate variables that are needed to geo-locate the data.
 
-Where feasible, one of the coordinate or auxiliary coordinate variables of a discrete sampling geometry [red aqua-background]#should# have an attribute named **`cf_role`**.
-This attribute has no other function in the CF convention (despite its general-sounding name), and its only permitted values are **`timeseries_id`**, **`profile_id`**, and **`trajectory_id`**.
-The variable carrying the **`cf_role`** attribute [red aqua-background]#may# have any data type.
-When a variable is assigned this attribute, it [red aqua-background]#must# provide a unique identifier for each feature instance.  
-CF files that contain timeSeries, profile or trajectory featureTypes, [red aqua-background]#should# include only a single occurrence of a **`cf_role`** attribute;  CF files that contain timeSeriesProfile or trajectoryProfile [red aqua-background]#may# contain two occurrences, corresponding to the two levels of structure in these feature types.
+Where feasible, one of the coordinate or auxiliary coordinate variables of a discrete sampling geometry [aqua-background]#should# have an attribute named **`cf_role`**, whose only [lime-background]#permitted# values for this purposes are **`timeseries_id`**, **`profile_id`**, and **`trajectory_id`**.
+(Despite its general-sounding name, this attribute only one other function, namely in <<mesh-topology-variables>>.)
+The variable carrying the **`cf_role`** attribute [aqua-background]#may# have any data type.
+When a variable is assigned this attribute, it [aqua-background]#must# provide a unique identifier for each feature instance.  
+CF files that contain timeSeries, profile or trajectory featureTypes, [aqua-background]#should# include only a single occurrence of a **`cf_role`** attribute;  CF files that contain timeSeriesProfile or trajectoryProfile [aqua-background]#may# contain two occurrences, corresponding to the two levels of structure in these feature types.
 
 It is not uncommon for observational data to have two sets of coordinates for particular coordinate axes of a feature: a nominal point location and a more precise location that varies with the elements in the feature. 
-For example, although an idealized vertical profile is measured at a fixed horizontal position and time, a realistic representation might include the time variations and horizontal drift that occur during the duration of the sampling. 
-Similarly, although an idealized time series exists at a fixed lat-long position, a realistic representation of a moored ocean time series might include the {ldquo}watch cycle{rdquo} excursions of horizontal position that occur as a result of tidal currents.
+For example, although an idealized vertical profile is measured at a fixed horizontal position and time, a realistic representation [lime-background]#might# include the time variations and horizontal drift that occur during the duration of the sampling. 
+Similarly, although an idealized time series exists at a fixed lat-long position, a realistic representation of a moored ocean time series [lime-background]#might# include the {ldquo}watch cycle{rdquo} excursions of horizontal position that occur as a result of tidal currents.
 
 CF Discrete Geometries provides a mechanism to encode both the nominal and the precise positions, while retaining the semantics of the idealized feature type.
-Only the set of coordinates which are regarded as the nominal (default or preferred) positions [red aqua-background]#should# be indicated by the attribute **`axis`**, which [red aqua-background]#should# be assigned string values to indicate the orientations of the axes (**`X`**, **`Y`**, **`Z`**, or **`T`**).
+Only the set of coordinates which are regarded as the nominal (default or preferred) positions [aqua-background]#should# be indicated by the attribute **`axis`**, which [aqua-background]#should# be assigned string values to indicate the orientations of the axes (**`X`**, **`Y`**, **`Z`**, or **`T`**).
 See <<example-h.5>> (a single timeseries with time-varying deviations from a nominal point spatial location): 
-Auxiliary coordinate variables containing the nominal and the precise positions [red aqua-background]#should# be listed in the relevant **`coordinates`** attributes of data variables.
-In orthogonal representations the nominal positions [black aqua-background]#could# be  coordinate variables, which do not need to be listed in the **`coordinates`** attribute, rather than auxiliary coordinate variables.
+Auxiliary coordinate variables containing the nominal and the precise positions [aqua-background]#should# be listed in the relevant **`coordinates`** attributes of data variables.
+In orthogonal representations the nominal positions [lime-background]#could# be  coordinate variables, which do not need to be listed in the **`coordinates`** attribute, rather than auxiliary coordinate variables.
 
-Coordinate bounds [red aqua-background]#may# optionally be associated with coordinate variables and auxiliary coordinate variables using the bounds attribute, following the conventions described in section 7.1.
+Coordinate bounds [aqua-background]#may# optionally be associated with coordinate variables and auxiliary coordinate variables using the bounds attribute, following the conventions described in section 7.1.
 Coordinate bounds are especially important for accurate representations of model output data using discrete geometry representations; they record the boundaries of the model grid cells.
 
-If there is a vertical coordinate variable or auxiliary coordinate variable, it [red aqua-background]#must# be identified by the means specified in section 4.3.  
-The use of the attribute **`axis=Z`** is [red aqua-background]#recommended# for clarity.
-A **`standard_name`** attribute (see section 3.3) that identifies the vertical coordinate is recommended, e.g. "altitude", "height", etc.
+If there is a vertical coordinate variable or auxiliary coordinate variable, it [aqua-background]#must# be identified by the means specified in section 4.3.  
+The use of the attribute **`axis=Z`** is [aqua-background]#recommended# for clarity.
+A **`standard_name`** attribute (see section 3.3) that identifies the vertical coordinate is [aqua-background]#recommended#, e.g. "altitude", "height", etc.
 (See the CF Standard Name Table).
 
 [[ch9-missing-data, Section 9.6, "Missing Data"]]
 === Missing Data
 
-In data for discrete sampling geometries written according to the rules of this section, wherever there are unused elements in data storage, the data variable and all its auxiliary coordinate variables (spatial and time) [red aqua-background]#must# contain missing values.
-This situation [red aqua-background]#may# arise for the incomplete multidimensional array representation, and in any representation if the instance dimension is set to a larger size than the number of features currently stored.
-Data variables [red aqua-background]#should# (as usual) also contain missing values to indicate when there is no valid data available for the element, although the coordinates are valid.
+In data for discrete sampling geometries written according to the rules of this section, wherever there are unused elements in data storage, the data variable and all its auxiliary coordinate variables (spatial and time) [aqua-background]#must# contain missing values.
+This situation [aqua-background]#may# arise for the incomplete multidimensional array representation, and in any representation if the instance dimension is set to a larger size than the number of features currently stored.
+Data variables [aqua-background]#should# (as usual) also contain missing values to indicate when there is no valid data available for the element, although the coordinates are valid.
 
-Similarly, for indices where the instance variable identified by **`cf_role`** contains a missing value indicator, all other instance variables [red aqua-background]#should# also contain missing values.
+Similarly, for indices where the instance variable identified by **`cf_role`** contains a missing value indicator, all other instance variables [aqua-background]#should# also contain missing values.
 

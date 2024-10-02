@@ -15,18 +15,21 @@ The document begins with a header that identifies it as an XML file:
 ----
 
 Next is the **`standard_name_table`** itself, which is bracketed by the tags **`&lt;standard_name_table&gt;`** and **`&lt;/standard_name_table&gt;`**.
+The opening tag has two attributes: `xmlns:xsi` that provides a link to the standard XML namespace, and `xsi:noNamespaceSchemaLocation` 
+that provides a link to the file that provides the XML schema rules for the content of the Standard Name Table XML file.
 
 ----
 <standard_name_table
  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
- xsi:noNamespaceSchemaLocation="CFStandardNameTable.xsd">
+ xsi:noNamespaceSchemaLocation="https://cfconventions.org/Data/schema-files/cf-standard-name-table-2.0.xsd">
 ----
 
 The content (delimited by the `&lt;standard_name_table&gt;` tags) consists of, in order,
 
 ----
   <version_number>Version number here ... </version_number>
-  <conventions>Conventions string here ... </conventions> 
+  <conventions>Conventions string here ... </conventions>
+  <first_published>Datetime of first publication to the website ... </first_published>
   <last_modified>Datetime stamp here ... </last_modified>
   <institution>Name of institution here ... </institution>
   <contact>E-mail address of contact person ... </contact>
@@ -34,7 +37,7 @@ The content (delimited by the `&lt;standard_name_table&gt;` tags) consists of, i
 
 where the "Conventions string" is  composed of the fixed string **`CF-StandardNameTable-`** immediately followed by the version number.
 
-Next follows a sequence of **`entry`** elements which [red aqua-background]#may# optionally be followed by a sequence of **`alias`** elements.
+Next follows a sequence of **`entry`** elements which [aqua-background]#may# optionally be followed by a sequence of **`alias`** elements.
 The **`entry`** and **`alias`** elements take the following forms:
 
 ----
@@ -59,7 +62,7 @@ Each **`entry`** element contains the following elements:
   </entry>
 ----
 
-`Entry` elements [red aqua-background]#may# optionally also contain the following elements:
+`Entry` elements [aqua-background]#may# optionally also contain the following elements:
 
 ----
   <grib>GRIB parameter code</grib>
@@ -74,7 +77,7 @@ When a variable has more than one equivalent GRIB code, the alternatives are giv
 The **`alias`** elements do not contain definitions.
 Rather they contain the value of the **`id`** attribute of an **`entry`** element that contains the sought after definition.
 The purpose of the **`alias`** elements are to provide a means for maintaining the table in a backwards compatible fashion.
-For example, if more than one **`id`** string was found to correspond to identical definitions, then the redundant definitions [black aqua-background]#can# be converted into aliases.
+For example, if more than one **`id`** string was found to correspond to identical definitions, then the redundant definitions [lime-background]#can# be converted into aliases.
 It is not intended that the **`alias`** elements be used to accommodate the use of local naming conventions in the **`standard_name`** attribute strings.
 Each **`alias`** element contains a single element:
 
@@ -84,15 +87,29 @@ Each **`alias`** element contains a single element:
   </alias>
 ----
 
+In exceptional cases the **`alias`** element [aqua-background]#may# contain two elements:
+
+----
+  <alias id="an_id">
+    <entry_id>Identifier of a defining entry ... </entry_id>
+    <entry_id>Identifier of another defining entry ... </entry_id>
+  </alias>
+----
+
+
 [[name-table-three-entries-ex]]
 [caption="Example B.1. "]
 .A name table containing three entries
 ====
 ----
   <?xml version="1.0"?>
-  <standard_name_table>
+  <standard_name_table xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation=
+        "http://cf.conventions.org/Data/schema-files/cf-standard-name-table-2.0.xsd">
     <version_number>83</version_number>
     <conventions>CF-StandardNameTable-83</conventions>
+    <first_published>2023-10-17T15:09:35Z</first_published>
+    <last_modified>2023-10-17T15:09:35Z</last_modified>
     <institution>Program for Climate Model Diagnosis and Intercomparison</institution>
     <contact>support@pcmdi.llnl.gov</contact>
     <entry id="surface_air_pressure">
@@ -124,5 +141,5 @@ The definition of a variable with the **`standard_name`** attribute **`surface_a
 The definition of a variable with the **`standard_name`** attribute mean_sea_level_pressure is found indirectly by first finding the element with the **`id="mean_sea_level_pressure"`**, and then, since this is an alias element, by searching for the element with **`id="air_pressure_at_sea_level"`** as indicated by the value of the **`entry_id`** tag.
 ====
 
-It is possible that new tags [red aqua-background]#may# be added in the future.
-Any applications that parse the standard table [red aqua-background]#should# be written so that unrecognized tags are gracefully ignored.
+It is possible that new tags [aqua-background]#may# be added in the future.
+Any applications that parse the standard table [aqua-background]#should# be written so that unrecognized tags are gracefully ignored.

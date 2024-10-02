@@ -50,8 +50,8 @@ where `ia1` and `ib1` are the first dimension indices in the target domain of th
 The target domain is segmented into smaller interpolation subareas as described in <<compression-by-coordinate-subsampling-tie-points-and-interpolation-subareas>>.
 
 For one-dimensional interpolation, an interpolation subarea is defined by two tie points, one at each end of the interpolation subarea.
-However, the tie points [red aqua-background]#may# be inside or outside the interpolation subareas as shown in <<interpolation_subareas_1d>>.
-When interpolation methods are applied for a given interpolation subarea, it [red aqua-background]#must# be ensured that reconstituted coordinate points are only generated inside the interpolation subarea being processed, even if some of the tie point coordinates lie outside of that interpolation subarea.
+However, the tie points [aqua-background]#may# be inside or outside the interpolation subareas as shown in <<interpolation_subareas_1d>>.
+When interpolation methods are applied for a given interpolation subarea, it [aqua-background]#must# be ensured that reconstituted coordinate points are only generated inside the interpolation subarea being processed, even if some of the tie point coordinates lie outside of that interpolation subarea.
 See also description in <<compression-by-coordinate-subsampling-tie-points-and-interpolation-subareas>>.
 
 [[interpolation_subareas_1d]]
@@ -68,7 +68,7 @@ For two-dimensional interpolation, an interpolation subarea is defined by four t
 .Two-dimensional interpolation subarea.
 image::images/ci_2d_interpolation_subarea.svg[,60%,pdfwidth=50vw,align="center"]
 
-For the reconstitution of the uncompressed coordinate and auxiliary coordinate variables the interpolation method [black aqua-background]#can# be applied independently for each interpolation subarea, making it possible to parallelize the computational process.
+For the reconstitution of the uncompressed coordinate and auxiliary coordinate variables the interpolation method [lime-background]#can# be applied independently for each interpolation subarea, making it possible to parallelize the computational process.
 
 The following notation is used:
 
@@ -189,7 +189,7 @@ w = fw(ua, ub, u(i), s(i))
 ----
 
 enables the creator of the dataset to calculate the coefficient `w` from the coordinate values `ua` and `ub` at tie points `A` and `B` respectively, and the coordinate value `u(i)` at index `i` between the tie points `A` and `B`.
-If the number of points in the interpolation subarea `(ib - ia + 1)` is odd, then the data point at index `i = (ib + ia)/2` [red aqua-background]#shall# be selected for this calculation, otherwise the data point at index `i = (ib + ia - 1)/2` [red aqua-background]#shall# be selected.
+If the number of points in the interpolation subarea `(ib - ia + 1)` is odd, then the data point at index `i = (ib + ia)/2` [aqua-background]#shall# be selected for this calculation, otherwise the data point at index `i = (ib + ia - 1)/2` [aqua-background]#shall# be selected.
 
 **Coordinate uncompression calculations** +
 The coordinate value `u(i)` at index `i` between tie points `A` and `B` is calculated from:
@@ -211,19 +211,19 @@ where `ua` and `ub` are the coordinate values at tie points `A` and `B` respecti
 A one-dimensional quadratic method for interpolation of the geographic coordinates latitude and longitude, typically used for remote sensing products with geographic coordinates on the reference ellipsoid.
 
 Requires a pair of latitude and longitude tie point variables, as defined unambiguously in <<latitude-coordinate>> and <<longitude-coordinate>>.
-For each interpolation subarea, none of the tie points defining the interpolation subarea are permitted to coincide.
+For each interpolation subarea, none of the tie points defining the interpolation subarea are [lime-background]#permitted# to coincide.
 
-By default, interpolation is performed directly in the latitude and longitude coordinates, but [red aqua-background]#may# be performed in three-dimensional cartesian coordinates where [red aqua-background]#required# for achieving the desired accuracy.
-This [red aqua-background]#must# be indicated by setting the `location_use_3d_cartesian` flag within the interpolation parameter `interpolation_subarea_flags` for each interpolation subarea where interpolation in three-dimensional cartesian coordinates is required.
+By default, interpolation is performed directly in the latitude and longitude coordinates, but [aqua-background]#may# be performed in three-dimensional cartesian coordinates where [aqua-background]#required# for achieving the desired accuracy.
+This [aqua-background]#must# be indicated by setting the `location_use_3d_cartesian` flag within the interpolation parameter `interpolation_subarea_flags` for each interpolation subarea where interpolation in three-dimensional cartesian coordinates is [aqua-background]#required#.
 
 The quadratic interpolation coefficients `cea = (ce, ca)`, stored as interpolation parameters in the product, describe a point `P` between the tie points `A` and `B`, which is equivalent of an additional tie point in the sense that the method will accurately reconstitute the point `P` in the same way as it accurately reconstitutes the tie points `A` and `B`.
 See <<quadratic1>> and <<quadratic2>>.
 
 Although equivalent to a tie point, the coefficients `ce` and `ca` have two advantages over tie points.
-Firstly, they [black aqua-background]#can# often be stored as a lower precision floating point number compared to the tie points, as `ce` and `ca` only describes the position of `P` relative to the midpoint `M` between the tie points `A` and `B`.
-Secondly, if any of `ce` and `ca` do not contribute significantly to the accuracy of the reconstituted points, it [black aqua-background]#can# be left out of the data set and its value will default to zero during uncompression.
+Firstly, they [lime-background]#can# often be stored as a lower precision floating point number compared to the tie points, as `ce` and `ca` only describes the position of `P` relative to the midpoint `M` between the tie points `A` and `B`.
+Secondly, if any of `ce` and `ca` do not contribute significantly to the accuracy of the reconstituted points, it [lime-background]#can# be left out of the data set and its value will default to zero during uncompression.
 
-The coefficients [red aqua-background]#may# be represented in three different ways:
+The coefficients [aqua-background]#may# be represented in three different ways:
 
 - For storage in the dataset as the non-dimensional coefficients `cea = (ce, ca)`, referred to as the parametric representation.
 The component `ce` is the offset projected on the line from tie point `B` to tie point `A` and expressed as a fraction of the distance between `A` and `B`.
@@ -249,7 +249,7 @@ vb = fll2v(llb)
 ----
 
 Then calculate the three-dimensional cartesian representation of the interpolation coefficients from the tie points `va` and `vb` as well as the point `vp(i)` at index `i` between the tie points `A` and `B`.
-If the number of points in an interpolation subarea `(ib - ia + 1)` is odd, then the data point at index `i = (ib + ia)/2` [red aqua-background]#shall# be selected for this calculation, otherwise the data point at index `i = (ib + ia - 1)/2` [red aqua-background]#shall# be selected.
+If the number of points in an interpolation subarea `(ib - ia + 1)` is odd, then the data point at index `i = (ib + ia)/2` [aqua-background]#shall# be selected for this calculation, otherwise the data point at index `i = (ib + ia - 1)/2` [aqua-background]#shall# be selected.
 
 The three-dimensional cartesian interpolation coefficients are found from:
 
@@ -278,9 +278,9 @@ vg   = fminus(va, vb)
 gsqr = fdot(vg, vg)
 ----
 
-The interpolation parameter term `interpolation_subarea_flags(is)` [red aqua-background]#shall# have the flag `location_use_3d_cartesian` set if the interpolation subarea intersects the `longitude = 180.0` or if the interpolation subarea extends into `latitude > latitude_limit` or `latitude < -latitude_limit`.
-The value of `latitude_limit` is set by the data set creator and defines the high latitude areas where interpolation in three-dimensional cartesian coordinates is [red aqua-background]#required# for reasons of coordinate reconstitution accuracy.
-The `latitude_limit` is used solely for setting the flag `location_use_3d_cartesian`, and is not [red aqua-background]#required# in a compressed dataset.
+The interpolation parameter term `interpolation_subarea_flags(is)` [aqua-background]#shall# have the flag `location_use_3d_cartesian` set if the interpolation subarea intersects the `longitude = 180.0` or if the interpolation subarea extends into `latitude > latitude_limit` or `latitude < -latitude_limit`.
+The value of `latitude_limit` is set by the data set creator and defines the high latitude areas where interpolation in three-dimensional cartesian coordinates is [aqua-background]#required# for reasons of coordinate reconstitution accuracy.
+The `latitude_limit` is used solely for setting the flag `location_use_3d_cartesian`, and is not [aqua-background]#required# in a compressed dataset.
 
 **Coordinate uncompression calculations** +
 First calculate the tie point vector representations from the tie point latitude-longitude representations:
@@ -362,10 +362,10 @@ image::images/ci_quadratic2.svg[,100%,pdfwidth=50vw,align="center"]
 A two-dimensional quadratic method for interpolation of the geographic coordinates latitude and longitude, typically used for remote sensing products with geographic coordinates on the reference ellipsoid.
 
 Requires a pair of latitude and longitude tie point variables, as defined unambiguously in <<latitude-coordinate>> and <<longitude-coordinate>>.
-For each interpolation subarea, none of the tie points defining the interpolation subarea are permitted to coincide.
+For each interpolation subarea, none of the tie points defining the interpolation subarea are [lime-background]#permitted# to coincide.
 
 The functions `fcv()`, `fcv2cea()`, `fcea2cv()`, `fcll()`, `fqv()` and `fqll()` referenced in the following are defined in <<quadratic_geo>>.
-As for that method, interpolation is performed directly in the latitude and longitude coordinates or in three-dimensional cartesian coordinates, where [red aqua-background]#required# for achieving the desired accuracy.
+As for that method, interpolation is performed directly in the latitude and longitude coordinates or in three-dimensional cartesian coordinates, where [aqua-background]#required# for achieving the desired accuracy.
 Similarly, it shares the three different representations of the quadratic interpolation coefficients, the parametric representation `cea = (ce, ca)` for storage in the dataset, `cll = (cll.lat, cll.lon)` for interpolation in geographic coordinates latitude and longitude and `cv = (cv.x, cv.y, cv.z)` for interpolation in three-dimensional cartesian coordinates.
 
 The parametric representation of the interpolation coefficients, stored in the interpolation parameters `ce1`, `ca1`, `ce2`, `ca2`, `ce3` and `ca3`, is equivalent to five additional tie points for the interpolation subarea as shown in <<quadratic3>>, which also shows the orientation and indices of the parameters.
@@ -390,8 +390,8 @@ vd = fll2v(lld)
 ----
 
 Then calculate the three-dimensional cartesian representation of the interpolation coefficients sets from the tie points as well as a point `vp(i2, i1)` between the tie points.
-If the number of points in the first dimension of the interpolation subarea `(ib1 - ia1 + 1)` is odd, then the data point at index i1 = `(ib1 + ia1)/2` [red aqua-background]#shall# be selected for this calculation, otherwise the data point at index `i1 = (ib1 + ia1 - 1)/2` [red aqua-background]#shall# be selected.
-If the number of points in the second dimension of the interpolation subarea `(ic2 - ia2 + 1)` is odd, then the data point at index `i2 = (ic2 + ica)/2` [red aqua-background]#shall# be selected for this calculation, otherwise the data point at index `i2 = (ic2 + ia2 - 1)/2` [red aqua-background]#shall# be selected.
+If the number of points in the first dimension of the interpolation subarea `(ib1 - ia1 + 1)` is odd, then the data point at index i1 = `(ib1 + ia1)/2` [aqua-background]#shall# be selected for this calculation, otherwise the data point at index `i1 = (ib1 + ia1 - 1)/2` [aqua-background]#shall# be selected.
+If the number of points in the second dimension of the interpolation subarea `(ic2 - ia2 + 1)` is odd, then the data point at index `i2 = (ic2 + ica)/2` [aqua-background]#shall# be selected for this calculation, otherwise the data point at index `i2 = (ic2 + ia2 - 1)/2` [aqua-background]#shall# be selected.
 
 Using the selected `(i2, i1)`, the three-dimensional cartesian interpolation coefficients are found from:
 
@@ -421,9 +421,9 @@ cea2(is2, tpi1+1) = fcv2cea(vb, vd, cv_bd)
 cea3(is2, is1)    = fcv2cea(vab, vcd, cv_z)
 ----
 
-The interpolation parameter term `interpolation_subarea_flags(is2, is1)` [red aqua-background]#shall# have the flag `location_use_3d_cartesian` set if the interpolation subarea intersects the `longitude = 180.0` or if the interpolation subarea extends into `latitude > latitude_limit` or `latitude < -latitude_limit`.
-The value of `latitude_limit` is set by the data set creator and defines the high latitude areas where interpolation in three-dimensional cartesian coordinates is [red aqua-background]#required# for reasons of coordinate reconstitution accuracy.
-The `latitude_limit` is used solely for setting the flag `location_use_3d_cartesian`, and is not [red aqua-background]#required# in a compressed dataset.
+The interpolation parameter term `interpolation_subarea_flags(is2, is1)` [aqua-background]#shall# have the flag `location_use_3d_cartesian` set if the interpolation subarea intersects the `longitude = 180.0` or if the interpolation subarea extends into `latitude > latitude_limit` or `latitude < -latitude_limit`.
+The value of `latitude_limit` is set by the data set creator and defines the high latitude areas where interpolation in three-dimensional cartesian coordinates is [aqua-background]#required# for reasons of coordinate reconstitution accuracy.
+The `latitude_limit` is used solely for setting the flag `location_use_3d_cartesian`, and is not [aqua-background]#required# in a compressed dataset.
 
 **Coordinate uncompression calculations** +
 First calculate the tie point vector representations from the tie point latitude-longitude representations:
@@ -500,7 +500,7 @@ image::images/ci_quadratic3.svg[,50%,pdfwidth=50vw,align="center"]
 | Step | Description | Link
 
 | 1
-| Identify the coordinate and auxillary coordinate variables for which tie point and interpolation variables are required.
+| Identify the coordinate and auxillary coordinate variables for which tie point and interpolation variables are [aqua-background]#required#.
 |
 
 | 2
@@ -517,11 +517,11 @@ For each coordinate variable subset, create an interpolation variable and specif
 | <<compression-by-coordinate-subsampling-dimensions>>
 
 | 5
-| For each set of the interpolated dimensions, identify the continuous areas and select the interpolation subareas and the tie points, taking into account the [red aqua-background]#required# coordinate reconstitution accuracy when selecting the density of tie points.
+| For each set of the interpolated dimensions, identify the continuous areas and select the interpolation subareas and the tie points, taking into account the [aqua-background]#required# coordinate reconstitution accuracy when selecting the density of tie points.
 | <<compression-by-coordinate-subsampling-tie-points-and-interpolation-subareas>>
 
 | 6
-| For each of the interpolated dimensions, add the interpolated dimension, the corresponding subsampled dimension and, if [red aqua-background]#required# by the selected interpolation method, its corresponding interpolation subarea dimension to the **`tie_point_mapping`** attribute of the interpolation variable.
+| For each of the interpolated dimensions, add the interpolated dimension, the corresponding subsampled dimension and, if [aqua-background]#required# by the selected interpolation method, its corresponding interpolation subarea dimension to the **`tie_point_mapping`** attribute of the interpolation variable.
 | <<compression-by-coordinate-subsampling-tie-point-mapping-attribute>> +
 <<compression-by-coordinate-subsampling-tie-point-dimension-mapping>>
 
@@ -544,7 +544,7 @@ Repeat this step for each combination of indices of the non-interpolated dimensi
 | <<compression-by-coordinate-subsampling-interpolation-of-cell-boundaries>>
 
 | 10
-| If [red aqua-background]#required# by the selected interpolation method, follow the steps defined for the method in <<interpolation-methods>> to create any [red aqua-background]#required# interpolation parameter variables.
+| If [aqua-background]#required# by the selected interpolation method, follow the steps defined for the method in <<interpolation-methods>> to create any [aqua-background]#required# interpolation parameter variables.
 As relevant, create the  **`interpolation_parameters`** attribute and populate it with the interpolation parameter variables.
 | <<compression-by-coordinate-subsampling-interpolation-variable>> +
 <<interpolation-methods>>
@@ -562,7 +562,7 @@ As relevant, create the  **`interpolation_parameters`** attribute and populate i
 | Step | Description | Link
 
 | 1
-| From the **`coordinate_interpolation`** attribute of the data variable, identify the coordinate and auxillary coordinate variable subsets, for which tie point interpolation is required, and the interpolation variable corresponding to each subset.
+| From the **`coordinate_interpolation`** attribute of the data variable, identify the coordinate and auxillary coordinate variable subsets, for which tie point interpolation is [aqua-background]#required#, and the interpolation variable corresponding to each subset.
 | <<compression-by-coordinate-subsampling-coordinate-interpolation-attribute>>
 
 | 2
@@ -590,7 +590,7 @@ A full interpolation subarea is defined by one such index pair per interpolated 
 | <<compression-by-coordinate-subsampling-tie-points-and-interpolation-subareas>>
 
 | 7
-| As [red aqua-background]#required# by the selected interpolation method, identify the interpolation parameter variables from the interpolation variable attribute **`interpolation_parameters`**.
+| As [aqua-background]#required# by the selected interpolation method, identify the interpolation parameter variables from the interpolation variable attribute **`interpolation_parameters`**.
 | <<compression-by-coordinate-subsampling-interpolation-parameters>>
 
 | 8
