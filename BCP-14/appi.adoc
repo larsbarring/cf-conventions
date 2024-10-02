@@ -12,26 +12,26 @@ An explicit comprehensive data model promotes the CF conventions being better un
 === Introduction
 
 A data model is an abstract interpretation of the data, that identifies the elements of the dataset and their scientific intent, and describes how they are related to one another and to the real or model world from which the data were derived.
-A data model is necessary because it imposes the rules, constraints, and relationships connecting metadata to the data that are needed to imagine how the quantities included in the dataset [red aqua-background]#should# be combined and processed scientifically.
+A data model is necessary because it imposes the rules, constraints, and relationships connecting metadata to the data that are needed to imagine how the quantities included in the dataset [aqua-background]#should# be combined and processed scientifically.
 
 The CF data model was first created for CF version 1.6 and published externally in journal Geoscientific Model Development (GMD) <<CFDM>>, and that version also includes further discussions on the background and motivation, as well as on the relationships between the CF data model and other data models.
-The data model was transcribed from the GMD paper into the CF conventions at version 1.9, also incorporating the modifications [red aqua-background]#required# to represent new features introduced at versions 1.7, 1.8 and 1.9.
+The data model was transcribed from the GMD paper into the CF conventions at version 1.9, also incorporating the modifications [aqua-background]#required# to represent new features introduced at versions 1.7, 1.8 and 1.9.
 
 [[data-model-design-criteria]]
 === Design criteria of the CF data model
 
-The primary requirement of the data model is that it [red aqua-background]#should# be able to describe all existing and conceivable CF-compliant datasets.
+The primary requirement of the data model is that it [aqua-background]#should# be able to describe all existing and conceivable CF-compliant datasets.
 
-The data model [red aqua-background]#should# comprise a minimal set of elements that are sufficient for accommodating all aspects of the CF conventions.
-The elements of the data model are restricted to those that are explicitly mentioned in CF, but there do not [black aqua-background]#have to# be as many elements in the data model as there are elements described by CF, because a single data model element [black aqua-background]#can# incorporate more than one CF entity.
+The data model [aqua-background]#should# comprise a minimal set of elements that are sufficient for accommodating all aspects of the CF conventions.
+The elements of the data model are restricted to those that are explicitly mentioned in CF, but there do not [lime-background]#have to# be as many elements in the data model as there are elements described by CF, because a single data model element [lime-background]#can# incorporate more than one CF entity.
 For example, in CF, coordinates and coordinate bounds are distinct elements, but coordinate bounds cannot exist without coordinates.
 Therefore, it makes sense in the data model to group them into a single element.
 
 Similarly, while it is possible to introduce additional elements not presently needed or used by CF, this would not be desirable because it would increase the likelihood of the data model becoming outdated or inconsistent with future versions of CF.
 
-The CF data model [red aqua-background]#should# also be independent of the encoding.
-This means that it [red aqua-background]#should not# be constrained by the parts of the CF conventions which describe explicitly how to store (i.e. encode) metadata in a netCDF file.
-The virtue of this is that [red aqua-background]#should# netCDF ever fail to meet the community needs, the groundwork for applying CF to other file formats will already exist.
+The CF data model [aqua-background]#should# also be independent of the encoding.
+This means that it [aqua-background]#should not# be constrained by the parts of the CF conventions which describe explicitly how to store (i.e. encode) metadata in a netCDF file.
+The virtue of this is that [aqua-background]#should# netCDF ever fail to meet the community needs, the groundwork for applying CF to other file formats will already exist.
 
 [[data-model-elements-of-cf-netcdf]]
 === Elements of CF-netCDF
@@ -97,7 +97,7 @@ CF-netCDF element
 [[figure-cf-concepts]]
 [caption="Figure {doc-part}.{counter:figure}. ", reftext=Figure {doc-part}.{figure}]
 [.text-center]
-.The relationships between CF-netCDF elements and their corresponding netCDF variables, dimensions and attributes (identified here with the "NC" prefix). It is useful to define an abstract generic coordinate variable that [black aqua-background]#can# be used to refer to coordinates when the their type (coordinate, auxiliary or scalar coordinate variable) is not an issue.
+.The relationships between CF-netCDF elements and their corresponding netCDF variables, dimensions and attributes (identified here with the "NC" prefix). It is useful to define an abstract generic coordinate variable that [lime-background]#can# be used to refer to coordinates when the their type (coordinate, auxiliary or scalar coordinate variable) is not an issue.
 image::images/cfdm_cf_concepts.svg[,60%,pdfwidth=50vw,align="center"]
 
 [[data-model-the-cf-data-model]]
@@ -152,13 +152,13 @@ CF construct
 |===============
 
 The field construct and domain construct are central to the CF data model in that all the other constructs are included in one or other of them (<<figure-field>>).
-The constructs contained by the field and domain constructs cannot exist independently, with the exception of the domain construct itself that [red aqua-background]#may# be part of a field construct or exist on its own, as is indicated by the nature of the class associations shown in <<figure-field>>.
-All CF-netCDF elements are mapped to field constructs, domain constructs or their components; and the field and domain constructs completely contain all the data and metadata which [black aqua-background]#can# be extracted from the file using the CF conventions.
+The constructs contained by the field and domain constructs cannot exist independently, with the exception of the domain construct itself that [aqua-background]#may# be part of a field construct or exist on its own, as is indicated by the nature of the class associations shown in <<figure-field>>.
+All CF-netCDF elements are mapped to field constructs, domain constructs or their components; and the field and domain constructs completely contain all the data and metadata which [lime-background]#can# be extracted from the file using the CF conventions.
 
 [[figure-field]]
 [caption="Figure {doc-part}.{counter:figure}. ", reftext=Figure {doc-part}.{figure}]
 [.text-center]
-.The constructs of the CF data model. The field and domain constructs correspond to CF-netCDF data and domain variables respectively (defined in <<figure-cf-concepts>> and identified here with the "CN" prefix). Relationships between the other constructs and CF-netCDF are given in <<figure-dim-aux>> and <<figure-coordinate-reference>>. It is useful to define an abstract generic coordinate construct that [black aqua-background]#can# be used to refer to coordinates when the their type (dimension or auxiliary coordinate construct) is not an issue.
+.The constructs of the CF data model. The field and domain constructs correspond to CF-netCDF data and domain variables respectively (defined in <<figure-cf-concepts>> and identified here with the "CN" prefix). Relationships between the other constructs and CF-netCDF are given in <<figure-dim-aux>> and <<figure-coordinate-reference>>. It is useful to define an abstract generic coordinate construct that [lime-background]#can# be used to refer to coordinates when the their type (dimension or auxiliary coordinate construct) is not an issue.
 image::images/cfdm_field.svg[,40%,pdfwidth=50vw,align="center"]
 
 [[data-model-field-construct]]
@@ -173,7 +173,7 @@ The field construct consists of
 * Cell method constructs containing metadata to describe how the cell values represent the variation of the physical quantity within the cells of the domain.
 * Properties to describe aspects of the data that are independent of the domain.
 
-All of the constructs contained by the field construct are [red aqua-background]#optional# (as indicated by "0.." in <<figure-field>>).
+All of the constructs contained by the field construct are [aqua-background]#optional# (as indicated by "0.." in <<figure-field>>).
 The only component of the field which is mandatory is the data array.
 
 The properties of the field construct correspond to some netCDF attributes of variables (e.g. **`units`**, **`long_name`**, and **`standard_name`**); and some netCDF group attributes, which include global attributes in the root group, such as **`history`** and **`institution`**.
@@ -181,20 +181,20 @@ The term "property" is used, rather than "attribute", because not all CF-netCDF 
 
 In the data model, netCDF group attributes apply to every data variable in the file, except where they are overridden by netCDF data variable attributes with the same name.
 This interpretation of group attributes is not stated in the CF conventions, but for the data model it is necessary because there is no notion of a group.
-Hence, metadata stored in attributes of the group as a whole [black aqua-background]#have to# be transferred to the field construct.
+Hence, metadata stored in attributes of the group as a whole [lime-background]#have to# be transferred to the field construct.
 If present, the global file attribute (i.e. root group attribute) **`featureType`** applies to every data variable in the file with a discrete sampling geometry.
 Hence, the feature type is regarded as a property of the field construct.
 
-The **`standard_name`** property constrains the **`units`** property (i.e. only certain units are consistent with each standard name) and in some cases also the dimensions that a data variable [red aqua-background]#must# have.
+The **`standard_name`** property constrains the **`units`** property (i.e. only certain units are consistent with each standard name) and in some cases also the dimensions that a data variable [aqua-background]#must# have.
 These constraints, however, do not supply any further information--they are just for self consistency.
-Similarly the **`featureType`** property imposes some requirements on the axes the domain [red aqua-background]#must# have.
+Similarly the **`featureType`** property imposes some requirements on the axes the domain [aqua-background]#must# have.
 Following the aim of constructing a minimal data model, the standard name and feature type are not regarded as separate constructs within the field, because they do not depend on any other construct for their interpretation.
 
 [[data-model-domain-construct]]
 ==== Domain construct
 
 The domain construct (<<figure-field>>) describes a domain comprising measurement locations and cell properties.
-The domain construct is the only metadata construct that [red aqua-background]#may# also exist independently of a field construct.
+The domain construct is the only metadata construct that [aqua-background]#may# also exist independently of a field construct.
 The domain construct contains properties to describe the domain (in the same sense as for the field construct) and relates the following metadata constructs
 
 * Domain axis constructs.
@@ -205,7 +205,7 @@ The domain construct contains properties to describe the domain (in the same sen
 * Domain topology constructs.
 * Cell connectivity constructs.
 
-All of the constructs contained by the domain construct are [red aqua-background]#optional# (as indicated by "0.." in <<figure-field>>).
+All of the constructs contained by the domain construct are [aqua-background]#optional# (as indicated by "0.." in <<figure-field>>).
 
 In CF-netCDF, domain information is stored either implicitly via data variable attributes (such as `coordinates`), or explicitly in a domain variable.
 In the latter case, the domain exists without reference to a data array.
@@ -214,7 +214,7 @@ In the latter case, the domain exists without reference to a data array.
 
 * explicitly in a domain variable;
 
-* explicitly in a mesh topology variable, in which case the domain [red aqua-background]#may# be one of multiple domains defined by the same variable (for instance, a single mesh topology variable [black aqua-background]#could# contain different domains defined respectively at node, edge, and face mesh elements);
+* explicitly in a mesh topology variable, in which case the domain [aqua-background]#may# be one of multiple domains defined by the same variable (for instance, a single mesh topology variable [lime-background]#could# contain different domains defined respectively at node, edge, and face mesh elements);
 
 * explicitly in a location index set variable that references a subset of another domain defined by a mesh topology variable.
 
@@ -225,51 +225,51 @@ For the explicit cases, the domain exists without reference to a data array.
 
 A domain axis construct (<<figure-dim-aux>>) comprises a positive integer which specifies the number of cells lying along an independent axis of the domain.
 In CF-netCDF, it is usually defined either by a netCDF dimension or by a scalar coordinate variable, which implies a domain axis of size one.
-The field construct's data array spans the domain axis constructs of the domain, except that the size-one axes [red aqua-background]#may# optionally be omitted, because their presence makes no difference to the order of the elements.
-Hence, the data array [red aqua-background]#may# be zero-dimensional (i.e. scalar) if there are no domain axis constructs of size greater than one.
+The field construct's data array spans the domain axis constructs of the domain, except that the size-one axes [aqua-background]#may# optionally be omitted, because their presence makes no difference to the order of the elements.
+Hence, the data array [aqua-background]#may# be zero-dimensional (i.e. scalar) if there are no domain axis constructs of size greater than one.
 
 When a collection of discrete sampling geometry (DSG) features has been combined in a data variable using the incomplete orthogonal or ragged representations to save space, the axis size has to be inferred, but this is an aspect of unpacking the data, rather than its conceptual description.
-In practice, the unpacked data array [red aqua-background]#may# be dominated by missing values (as [black aqua-background]#could# occur, for example, if all features in a collection of time series had no common time coordinates), in which case it [red aqua-background]#may# be preferable to view the collection as if each DSG feature were a separate variable, each one corresponding to a different field construct.
+In practice, the unpacked data array [aqua-background]#may# be dominated by missing values (as [lime-background]#could# occur, for example, if all features in a collection of time series had no common time coordinates), in which case it [aqua-background]#may# be preferable to view the collection as if each DSG feature were a separate variable, each one corresponding to a different field construct.
 
 [[data-model-coordinates]]
 ==== Coordinates: dimension coordinate and auxiliary constructs
 
 Coordinate constructs (<<figure-dim-aux>>) provide information which locate the cells of the domain and which depend on a subset of the domain axis constructs.
-A coordinate construct consists of an [red aqua-background]#optional# data array of the coordinate values spanning the subset of the domain axis constructs, properties to describe the coordinates (in the same sense as for the field construct), an [red aqua-background]#optional# data array of cell bounds recording the extents of each cell, and any extra arrays needed to interpret the cell bounds values.
-The data array of the coordinate values is required, execpt for the special cases described below.
+A coordinate construct consists of an [aqua-background]#optional# data array of the coordinate values spanning the subset of the domain axis constructs, properties to describe the coordinates (in the same sense as for the field construct), an [aqua-background]#optional# data array of cell bounds recording the extents of each cell, and any extra arrays needed to interpret the cell bounds values.
+The data array of the coordinate values is [aqua-background]#required#, execpt for the special cases described below.
 
 There are two distinct types of coordinate construct: dimension coordinate constructs unambiguously describe cell locations for a single domain axis, thus providing independent variables on which the field construct's data depend; and auxiliary coordinate constructs provide any type of coordinate information for one or more of the domain axes.
 
 A dimension coordinate construct contains numeric coordinates for a single domain axis that are non-missing and strictly monotonically increasing or decreasing.
 CF-netCDF coordinate variables and numeric scalar coordinate variables correspond to dimension coordinate constructs.
 
-Auxiliary coordinate constructs [black aqua-background]#have to# be used, instead of dimension coordinate constructs, when a single domain axis requires more than one set of coordinate values, when coordinate values are not numeric, strictly monotonic, or contain missing values, or when they vary along more than one domain axis construct simultaneously.
+Auxiliary coordinate constructs [lime-background]#have to# be used, instead of dimension coordinate constructs, when a single domain axis [lime-background]#requires# more than one set of coordinate values, when coordinate values are not numeric, strictly monotonic, or contain missing values, or when they vary along more than one domain axis construct simultaneously.
 CF-netCDF auxiliary coordinate variables and non-numeric scalar coordinate variables correspond to auxiliary coordinate constructs.
 
 When cell bounds are provided, each cell comprises one or more parts, and each part is either a collection of points, a line defined by a connected series of points, or a polygonal area (i.e. the region enclosed by a connected series of points, where the first and last points are connected as well).
-All parts of all the cells [red aqua-background]#must# be of the same one of these three kinds, which are called "geometry types".
+All parts of all the cells [aqua-background]#must# be of the same one of these three kinds, which are called "geometry types".
 The bounds array spans the domain axis constructs of the coordinate construct, with the addition of two trailing ragged dimensions.
 The first extra dimension indexes the parts of each cell and the second indexes the points that describe each part.
 
-If cell bounds are provided for a dimension coordinate construct then each cell [red aqua-background]#must# have exactly two vertices forming a line geometry.
-For climatological time coordinates the actual cell extent comprises multiple time segments equivalent to multiple line geometry parts, but the bounds require just two points to define each cell, namely the earliest and latest times of the sequence.
-The cell method constructs indicate how the multiple time segments [red aqua-background]#should# be inferred from these climatological bounds.
+If cell bounds are provided for a dimension coordinate construct then each cell [aqua-background]#must# have exactly two vertices forming a line geometry.
+For climatological time coordinates the actual cell extent comprises multiple time segments equivalent to multiple line geometry parts, but the bounds [lime-background]#require# just two points to define each cell, namely the earliest and latest times of the sequence.
+The cell method constructs indicate how the multiple time segments [aqua-background]#should# be inferred from these climatological bounds.
 
-If a polygonal cell is composed of multiple parts it [red aqua-background]#may# have holes, i.e. polygon regions that are to be omitted from, as opposed to included in, the cell extent.
-When such holes are present an "interior ring" array is [red aqua-background]#required# that records whether each polygon is to be included or excluded from the cell, and is supplied by an interior ring variable in CF-netCDF.
+If a polygonal cell is composed of multiple parts it [aqua-background]#may# have holes, i.e. polygon regions that are to be omitted from, as opposed to included in, the cell extent.
+When such holes are present an "interior ring" array is [aqua-background]#required# that records whether each polygon is to be included or excluded from the cell, and is supplied by an interior ring variable in CF-netCDF.
 The interior ring array spans the domain axis constructs of the coordinate construct, with the addition of an extra ragged dimension that indexes the parts for each cell.
-For example, a cell describing the land area surrounding a lake would require two polygon parts: one defines the outer boundary of the land area; the other, recorded as an interior ring, is the lake boundary, defining the inner boundary of the land area.
+For example, a cell describing the land area surrounding a lake would [lime-background]#require# two polygon parts: one defines the outer boundary of the land area; the other, recorded as an interior ring, is the lake boundary, defining the inner boundary of the land area.
 
 If a domain axis construct does not correspond to a continuous physical quantity, then it is not necessary for it to be associated with a dimension coordinate construct.
 For example, this is the case for an axis that runs over ocean basins or area types, or for a domain axis that indexes a time series at scattered points.
 These axes are discrete axes in CF-netCDF.
-In such cases cells [red aqua-background]#may# be described with one-dimensional auxiliary coordinate constructs for which, provided that there is a cell bounds array to describe the cell extents, the coordinate array is optional, since coordinates are not always well defined for such cells.
+In such cases cells [aqua-background]#may# be described with one-dimensional auxiliary coordinate constructs for which, provided that there is a cell bounds array to describe the cell extents, the coordinate array is [aqua-background]#optional#, since coordinates are not always well defined for such cells.
 A CF-netCDF geometry container variable or mesh topology variable is used to store cell bounds without coordinates for a discrete axis.
 
 In CF-netCDF, when a geometry container variable is present it explicitly describes the geometry type and identifies the node coordinate variables that contain the cell vertices.
 The geometry container variable also identifies a node count variable that contains the number of nodes per cell when more than one cell is present, and a part node count variable that contains the number of nodes per cell part when cells are composed of multipart lines, multipart polygons, or polygons with holes.
 When a geometry container variable is not present then the bounds contain exactly one part and their geometry type is implied by convention: for multidimensional auxiliary coordinates each cell is a single polygon, and for all other types of coordinate each cell is a single line segment defined by two points.
-In the case of climatological time coordinates, the two points of the cell bounds, in conjunction with the cell methods, imply the existence of multiple line parts, different subsets of which are associated with the different cell methods [red aqua-background]#required# to define the climatology.
+In the case of climatological time coordinates, the two points of the cell bounds, in conjunction with the cell methods, imply the existence of multiple line parts, different subsets of which are associated with the different cell methods [aqua-background]#required# to define the climatology.
 For example, when the field construct's data are multiannual averages of monthly minima, the implied cell parts define the individual months over which the original data was minimised; and all of the implied parts taken together define the exact temporal extent of the average of the monthly minima.
 
 [[figure-dim-aux]]
@@ -281,26 +281,26 @@ image::images/cfdm_coordinates.svg[,50%,pdfwidth=50vw,align="center"]
 [[data-model-coordinate-reference]]
 ==== Coordinate reference construct
 
-The domain [red aqua-background]#may# contain various coordinate systems, each of which is constructed from a subset of the dimension and auxiliary coordinate constructs.
-For example, the domain of a four-dimensional field construct [red aqua-background]#may# contain horizontal (__y__-__x__), vertical (_z_), and temporal (_t_) coordinate systems.
-There [red aqua-background]#may# be more than one of each of these, if there is more than one coordinate construct applying to a particular spatiotemporal dimension (for example, there [black aqua-background]#could# be both latitude-longitude and __y__-__x__ projection coordinate systems).
+The domain [aqua-background]#may# contain various coordinate systems, each of which is constructed from a subset of the dimension and auxiliary coordinate constructs.
+For example, the domain of a four-dimensional field construct [aqua-background]#may# contain horizontal (__y__-__x__), vertical (_z_), and temporal (_t_) coordinate systems.
+There [aqua-background]#may# be more than one of each of these, if there is more than one coordinate construct applying to a particular spatiotemporal dimension (for example, there [lime-background]#could# be both latitude-longitude and __y__-__x__ projection coordinate systems).
 
-A coordinate system [red aqua-background]#may# be constructed _implicitly_ from any subset of the coordinate constructs, yet a coordinate construct does not need to be explicitly or exclusively associated with any coordinate system.
-A coordinate system of the field construct [black aqua-background]#can# be _explicitly_ defined by a coordinate reference construct (<<figure-coordinate-reference>>) which relates the coordinate values of the coordinate system to locations in a planetary reference frame and consists of the following:
+A coordinate system [aqua-background]#may# be constructed _implicitly_ from any subset of the coordinate constructs, yet a coordinate construct does not need to be explicitly or exclusively associated with any coordinate system.
+A coordinate system of the field construct [lime-background]#can# be _explicitly_ defined by a coordinate reference construct (<<figure-coordinate-reference>>) which relates the coordinate values of the coordinate system to locations in a planetary reference frame and consists of the following:
 
 * The dimension coordinate and auxiliary coordinate constructs that define the coordinate system to which the coordinate reference construct applies.
 Note that the coordinate values are not relevant to the coordinate reference construct, only their properties.
 * A definition of a datum specifying the zeroes of the dimension and auxiliary coordinate constructs which define the coordinate system.
-The datum [red aqua-background]#may# be explicitly indicated via properties, or it [red aqua-background]#may# be implied by the metadata of the contained dimension and auxiliary coordinate constructs.
+The datum [aqua-background]#may# be explicitly indicated via properties, or it [aqua-background]#may# be implied by the metadata of the contained dimension and auxiliary coordinate constructs.
 For example, in a two-dimensional geographical latitude-longitude coordinate system based upon a spherical Earth, the datum is assumed to be 0^o^N, 0^o^E.
-Note that the datum [red aqua-background]#may# contain the definition of a geophysical surface which corresponds to the zero of a vertical coordinate construct, and this [red aqua-background]#may# be [red aqua-background]#required# for both horizontal and vertical coordinate systems.
-* A coordinate conversion, which defines a formula for converting coordinate values taken from the dimension or auxiliary coordinate constructs to a different coordinate system. A term of the conversion formula [black aqua-background]#can# be a scalar or vector parameter which does not depend on any domain axis constructs, [red aqua-background]#may# have units (such as a reference pressure value), or [red aqua-background]#may# be a descriptive string (such as the projection name "mercator"), or it [black aqua-background]#can# be a domain ancillary construct (such as one containing spatially varying orography data).
+Note that the datum [aqua-background]#may# contain the definition of a geophysical surface which corresponds to the zero of a vertical coordinate construct, and this [aqua-background]#may# be [aqua-background]#required# for both horizontal and vertical coordinate systems.
+* A coordinate conversion, which defines a formula for converting coordinate values taken from the dimension or auxiliary coordinate constructs to a different coordinate system. A term of the conversion formula [lime-background]#can# be a scalar or vector parameter which does not depend on any domain axis constructs, [aqua-background]#may# have units (such as a reference pressure value), or [aqua-background]#may# be a descriptive string (such as the projection name "mercator"), or it [lime-background]#can# be a domain ancillary construct (such as one containing spatially varying orography data).
 
 For __y__-__x__ coordinates, the coordinate conversion is either a map projection, which converts between Cartesian coordinates and spherical or ellipsoidal coordinates on the vertical datum, or a conversion between different spherical coordinate systems (as in the case of rotated pole coordinates).
 In the case of _z_ coordinates, the conversion is between a coordinate construct with parameterised values (such as ocean sigma coordinates) and a coordinate construct with dimensional values (such as depths), again with respect to the vertical datum.
-The coordinate conversion is not [red aqua-background]#required# if no other coordinate systems are described.
+The coordinate conversion is not [aqua-background]#required# if no other coordinate systems are described.
 
-Some parts of the coordinate reference construct [red aqua-background]#may# not be relevant to a given coordinate construct which it contains.
+Some parts of the coordinate reference construct [aqua-background]#may# not be relevant to a given coordinate construct which it contains.
 The relevant parts are determined by an application using the coordinate reference construct.
 For example, for a coordinate reference construct which contained coordinate constructs for __y__-__x__ projection and latitude and longitude coordinates, a datum comprising a reference ellipsoid would apply to all of them, but projection parameters would only apply to the projection coordinates.
 
@@ -322,11 +322,11 @@ image::images/cfdm_coordinate_reference.svg[,75%,pdfwidth=100vw,align="center"]
 A domain ancillary construct (<<figure-coordinate-reference, Figure I.4>>) provides information which is needed for computing the location of cells in an alternative coordinate system.
 It is the value of a term of a coordinate conversion formula that contains a data array which is either scalar or which depends on one, more or all of the domain axis constructs.
 
-It also contains an [red aqua-background]#optional# array of cell bounds recording the extents of each cell (only applicable if the array contains coordinate data) and properties to describe the data (in the same sense as for the field construct).
+It also contains an [aqua-background]#optional# array of cell bounds recording the extents of each cell (only applicable if the array contains coordinate data) and properties to describe the data (in the same sense as for the field construct).
 An array of cell bounds spans the same domain axes as the data array, with the addition of an extra dimension whose size is that of the number of vertices of each cell.
 
 CF-netCDF variables named by the **`formula_terms`** attribute of a CF-netCDF coordinate variable correspond to domain ancillary constructs.
-These CF-netCDF variables [red aqua-background]#may# be coordinate, scalar coordinate, or auxiliary coordinate variables, or they [red aqua-background]#may# be data variables.
+These CF-netCDF variables [aqua-background]#may# be coordinate, scalar coordinate, or auxiliary coordinate variables, or they [aqua-background]#may# be data variables.
 For example, in a coordinate conversion for converting between ocean sigma and height coordinate systems, the value of the "depth" term for horizontally varying distance from ocean datum to sea floor would correspond to a domain ancillary construct.
 In the case of a named term being a type of coordinate variable, that variable will correspond to an independent domain ancillary construct in addition to the coordinate construct; that is, a single CF-netCDF variable is translated into two constructs (see <<cdl-domain-anc-coordinate, Example I.1>>).
 
@@ -363,21 +363,21 @@ Similarly for the netCDF variable **`B`**.
 ==== Cell measure construct
 
 A cell measure (<<figure-field>>) construct provides information about the size or shape of the cells and depending on one, more or all of the domain axis constructs.
-Cell measure constructs [black aqua-background]#have to# be used when the size or shape of the cells cannot be deduced from the dimension or auxiliary coordinate constructs without special knowledge that a generic application cannot be expected to have.
+Cell measure constructs [lime-background]#have to# be used when the size or shape of the cells cannot be deduced from the dimension or auxiliary coordinate constructs without special knowledge that a generic application cannot be expected to have.
 
 The cell measure construct consists of a numeric array of the metric data which span one, more or all of the domain axis constructs, and properties to describe the data (in the same sense as for the field construct).
-The properties [red aqua-background]#must# contain a "measure" property, which indicates which metric of the space it supplies, e.g. cell horizontal areas, and a units property consistent with the measure property, e.g. m2.
+The properties [aqua-background]#must# contain a "measure" property, which indicates which metric of the space it supplies, e.g. cell horizontal areas, and a units property consistent with the measure property, e.g. m2.
 It is assumed that the metric does not depend on axes of the domain which are not spanned by the array, along which the values are implicitly propagated.
 CF-netCDF cell measure variables correspond to cell measure constructs.
 
 [[data-model-domain-topology]]
 ==== Domain topology construct
 
-A domain topology construct defines the geospatial topology of cells arranged in two or three dimensions in real space but indexed by a single (discrete) domain axis construct, and at most one domain topology construct [red aqua-background]#may# be associated with any such domain axis.
+A domain topology construct defines the geospatial topology of cells arranged in two or three dimensions in real space but indexed by a single (discrete) domain axis construct, and at most one domain topology construct [aqua-background]#may# be associated with any such domain axis.
 The topology describes topological relationships between the cells - spatial relationships which do not depend on the cell locations - and is represented by an undirected graph, i.e. a mesh in which pairs of nodes are connected by links.
-Each node has a unique arbitrary identity that is independent of its spatial location, and different nodes [red aqua-background]#may# be spatially co-located.
+Each node has a unique arbitrary identity that is independent of its spatial location, and different nodes [aqua-background]#may# be spatially co-located.
 
-The topology [red aqua-background]#may# only describe cells that have a common spatial dimensionality, one of:
+The topology [aqua-background]#may# only describe cells that have a common spatial dimensionality, one of:
 
 * Point: A point is zero-dimensional and has no boundary vertices.
 * Edge: An edge is one-dimensional and corresponds to a line connecting two boundary vertices.
@@ -385,7 +385,7 @@ The topology [red aqua-background]#may# only describe cells that have a common s
 
 Each type of cell implies a restricted topology for which only some kinds of mesh are allowed.
 For point cells, every node corresponds to exactly one cell; and two cells have a topological relationship if and only if their nodes are connected by a mesh link.
-For edge and face cells, every node corresponds to a boundary vertex of a cell; the same node [black aqua-background]#can# represent vertices in multiple cells; every link in the mesh connects two cell boundary vertices; and two cells have a topological relationship if and only if they share at least one node.
+For edge and face cells, every node corresponds to a boundary vertex of a cell; the same node [lime-background]#can# represent vertices in multiple cells; every link in the mesh connects two cell boundary vertices; and two cells have a topological relationship if and only if they share at least one node.
 
 [[figure-mesh-example]]
 [caption="Figure {doc-part}.{counter:figure}. ", reftext=Figure {doc-part}.{figure}]
@@ -393,11 +393,11 @@ For edge and face cells, every node corresponds to a boundary vertex of a cell; 
 .A topology defined by a mesh with five nodes and six links.
 image::images/mesh_figure.svg[,25%,pdfwidth=25vw,align="center"]
 
-For example, the mesh depicted in <<figure-mesh-example>> [red aqua-background]#may# be used with any of three domain topology constructs for domains comprising two face cells (one triangle and one quadrilateral), six edge cells, and five point cells respectively.
+For example, the mesh depicted in <<figure-mesh-example>> [aqua-background]#may# be used with any of three domain topology constructs for domains comprising two face cells (one triangle and one quadrilateral), six edge cells, and five point cells respectively.
 
 A domain topology construct contains an array defining the mesh, and properties to describe it.
-There [red aqua-background]#must# be a property indicating the spatial dimensionality of the cells.
-The array values comprise the node identities, and all array elements that refer to the same node [red aqua-background]#must# contain the same value, which [red aqua-background]#must# differ from any other value in the array.
+There [aqua-background]#must# be a property indicating the spatial dimensionality of the cells.
+The array values comprise the node identities, and all array elements that refer to the same node [aqua-background]#must# contain the same value, which [aqua-background]#must# differ from any other value in the array.
 The array spans the domain axis construct and also has a ragged dimension, whose function depends on the spatial dimensionality of the cells.
 
 For each point cell, the first element along the ragged dimension contains the node identity of the cell, and the following elements contain in arbitrary order the identities of all the cells to which it is connected by a mesh link.
@@ -405,42 +405,42 @@ For each point cell, the first element along the ragged dimension contains the n
 For each edge or face cell, the elements along the ragged dimension contain the node identities of the boundary vertices of the cell, in the same order that the boundary vertices are stored by the auxiliary coordinate constructs.
 Each boundary vertex except the last is connected by a mesh link to the next vertex along the ragged dimension, and the last vertex is connected to the first.
 
-When a domain topology construct is present it is considered to be definitive and [red aqua-background]#must# be used in preference to the topology implied by inspection of any other constructs, which is not guaranteed to be the same.
+When a domain topology construct is present it is considered to be definitive and [aqua-background]#must# be used in preference to the topology implied by inspection of any other constructs, which is not guaranteed to be the same.
 
-In CF-netCDF a domain topology construct [black aqua-background]#can# only be provided for a UGRID mesh topology variable.
+In CF-netCDF a domain topology construct [lime-background]#can# only be provided for a UGRID mesh topology variable.
 The information in the construct array is supplied by the UGRID "edge_nodes_connectivity" variable (for edge cells) or "face_nodes_connectivity" variable (for face cells).
-The topology for node cells [red aqua-background]#may# be provided by any of these three UGRID variables.
-The integer indices contained in the UGRID variable [red aqua-background]#may# be used as the mesh node identities, although the CF data model attaches no significance to the values other than the fact that some values are the same as others.
+The topology for node cells [aqua-background]#may# be provided by any of these three UGRID variables.
+The integer indices contained in the UGRID variable [aqua-background]#may# be used as the mesh node identities, although the CF data model attaches no significance to the values other than the fact that some values are the same as others.
 The spatial dimensionality property is provided by the "location" attribute of a variable that references the UGRID mesh topology variable, i.e. a data variable or a UGRID location index set variable.
 
 A single UGRID mesh topology defines multiple domain constructs and defines how they relate to each other.
 For instance, when "face_node_connectivity" and "edge_node_connectivity" variables are both present there are three implied domain constructs - one each for face, edge and point cells - all of which have the same mesh and so are explicitly linked (e.g. it is known which edge cells define each face cell).
 The CF data model has no mechanism for explicitly recording such relationships between multiple domain constructs.
-Whether or not two domains have the same mesh [red aqua-background]#may# be reliably deternined by inspection, thereby allowing the creation of netCDF datasets containing UGRID mesh topology variables.
+Whether or not two domains have the same mesh [aqua-background]#may# be reliably deternined by inspection, thereby allowing the creation of netCDF datasets containing UGRID mesh topology variables.
 
-The restrictions on the type of mesh that [red aqua-background]#may# be used with a given cell spatial dimensionality excludes some meshes which [black aqua-background]#can# be described by an undirected graph, but is consistent with UGRID encoding within CF-netCDF.
+The restrictions on the type of mesh that [aqua-background]#may# be used with a given cell spatial dimensionality excludes some meshes which [lime-background]#can# be described by an undirected graph, but is consistent with UGRID encoding within CF-netCDF.
 UGRID also describes meshes for three-dimensional volume cells that correspond to a volume enclosed by a set of faces, but how the nodes relate to volume boundary vertices is undefined and so volume cells are currently omitted from the CF data model.
 
 [[data-model-cell-connectivity]]
 ==== Cell connectivity construct
 
 A cell connectivity construct defines explicitly how cells arranged in two or three dimensions in real space but indexed by a single domain (discrete) axis are connected.
-Connectivity [black aqua-background]#can# only be provided when the domain axis construct also has a domain topology construct, and two cells [black aqua-background]#can# only be connected if they also have a topological relationship.
-For instance, the connectivity of two-dimensional face cells [black aqua-background]#could# be characterised by whether or not they have shared edges, where the edges are defined by connected nodes of the domain topology construct.
+Connectivity [lime-background]#can# only be provided when the domain axis construct also has a domain topology construct, and two cells [lime-background]#can# only be connected if they also have a topological relationship.
+For instance, the connectivity of two-dimensional face cells [lime-background]#could# be characterised by whether or not they have shared edges, where the edges are defined by connected nodes of the domain topology construct.
 
 The cell connectivity construct consists of an array recording the connectivity, and properties to describe the data.
-There [red aqua-background]#must# be a property indicating the condition by which the connectivity is derived from the domain topology.
+There [aqua-background]#must# be a property indicating the condition by which the connectivity is derived from the domain topology.
 The array spans the domain axis construct with the addition of a ragged dimension.
 For each cell, the first element along the ragged dimension contains the unique identity of the cell, and the following elements contain in arbitrary order the identities of all the other cells to which the cell is connected.
 Note that the connectivity array for point cells is, by definition, equivalent to the array of the domain topology construct.
 
 When cell connectivity constructs are present, they are considered to define the connectivity of the cells.
-Exactly the same connectivity information [black aqua-background]#could# be derived from the domain topology construct.
+Exactly the same connectivity information [lime-background]#could# be derived from the domain topology construct.
 Connectivity information inferred from inspection of any other constructs is not guaranteed to be the same.
 
-In CF-netCDF a cell topology construct [black aqua-background]#can# only be provided by a UGRID mesh topology variable.
+In CF-netCDF a cell topology construct [lime-background]#can# only be provided by a UGRID mesh topology variable.
 The construct array is supplied either indirectly by any of the UGRID variables that are used to define a domain topology construct, or directly by the UGRID "face_face_connectivity" variable (for face cells).
-In the direct case, the integer indices contained in the UGRID variable [red aqua-background]#may# be used as the cell identities, although the CF data model attaches no significance to the values other than the fact that some values are the same as others.
+In the direct case, the integer indices contained in the UGRID variable [aqua-background]#may# be used as the cell identities, although the CF data model attaches no significance to the values other than the fact that some values are the same as others.
 
 Restricting the types of connectivity to those implied by the geospatial topology of the cells precludes connectivity derived from any other sources, but is consistent with UGRID encoding within CF-netCDF.
 
@@ -448,7 +448,7 @@ Restricting the types of connectivity to those implied by the geospatial topolog
 ==== Field ancillary constructs
 
 The field ancillary construct (<<figure-field>>) provides metadata which are distributed over the same sampling domain as the field itself.
-For example, if a data variable holds a variable retrieved from a satellite instrument, a related ancillary data variable might provide the uncertainty estimates for those retrievals (varying over the same spatiotemporal domain).
+For example, if a data variable holds a variable retrieved from a satellite instrument, a related ancillary data variable [lime-background]#might# provide the uncertainty estimates for those retrievals (varying over the same spatiotemporal domain).
 
 The field ancillary construct consists of an array of the ancillary data which is either scalar or which depends on one, more or all of the domain axis constructs, and properties to describe the data (in the same sense as for the field construct).
 It is assumed that the data do not depend on axes of the domain which are not spanned by the array, along which the values are implicitly propagated.
@@ -459,15 +459,15 @@ Note that a field ancillary construct is constrained by the domain definition of
 ==== Cell method construct
 
 The cell method constructs (<<figure-field>>) describe how the cell values represent the variation of the physical quantity within its cells--the structure of the data at a higher resolution.
-A single cell method construct consists of a set of axes (see below), a "method" property which describes how a value of the field construct's data array describes the variation of the quantity within a cell over those axes (e.g. a value might represent the cell area average), and properties serving to indicate more precisely how the method was applied (e.g. recording the spacing of the original data, or the fact the method was applied only over El Niño years).
+A single cell method construct consists of a set of axes (see below), a "method" property which describes how a value of the field construct's data array describes the variation of the quantity within a cell over those axes (e.g. a value [lime-background]#might# represent the cell area average), and properties serving to indicate more precisely how the method was applied (e.g. recording the spacing of the original data, or the fact the method was applied only over El Niño years).
 
-The field construct [red aqua-background]#may# contain an ordered sequence of cell method constructs describing multiple processes which have been applied to the data, e.g. a temporal maximum of the areal mean has two components--a mean and a maximum, each acting over different sets of axes.
+The field construct [aqua-background]#may# contain an ordered sequence of cell method constructs describing multiple processes which have been applied to the data, e.g. a temporal maximum of the areal mean has two components--a mean and a maximum, each acting over different sets of axes.
 It is an ordered sequence because the methods specified are not necessarily commutative.
 There are properties to indicate climatological time processing, e.g. multiannual means of monthly maxima, in which case multiple cell method constructs need to be considered together to define a special interpretation of boundary coordinate array values.
 The **`cell_methods`** attribute of a CF-netCDF data variable corresponds to one or more cell method constructs.
 
 The axes over which a cell method applies are either a subset of the domain axis constructs or a collection of strings which identify axes that are not part of the domain.
 The latter case is particularly useful when the coordinate range for an axis cannot be precisely defined, making it impossible to define a domain axis construct.
-For example, a climatological time mean might be based on data which are not available over the same time periods at every horizontal location--the useful information that the data have been temporally averaged [black aqua-background]#can# be recorded without specifying the range of times.
-The strings which identify such axes are well defined in that they [red aqua-background]#must# be standard names (e.g. time, longitude) or the special string **`area`**, indicating a combination of horizontal axes.
+For example, a climatological time mean [lime-background]#might# be based on data which are not available over the same time periods at every horizontal location--the useful information that the data have been temporally averaged [lime-background]#can# be recorded without specifying the range of times.
+The strings which identify such axes are well defined in that they [aqua-background]#must# be standard names (e.g. time, longitude) or the special string **`area`**, indicating a combination of horizontal axes.
 

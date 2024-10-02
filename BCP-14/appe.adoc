@@ -51,6 +51,6 @@ This is the default method for a quantity that is extensive with respect to the 
 | `variance` | __u^2^__ | *Variance
 |===============
 
-*The definition of this method implies that if _u_ is a either a unit of temperature, or a unit of temperature multiplied by some other unit, the temperature in _u_ [red aqua-background]#must# be interpreted as a temperature difference.
-Therefore the **`units_metadata`** attribute, if present, [red aqua-background]#must# have the value `temperature: difference`.
+*The definition of this method implies that if _u_ is a either a unit of temperature, or a unit of temperature multiplied by some other unit, the temperature in _u_ [aqua-background]#must# be interpreted as a temperature difference.
+Therefore the **`units_metadata`** attribute, if present, [aqua-background]#must# have the value `temperature: difference`.
 See <<temperature-units>> for explanation.

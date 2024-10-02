@@ -10,7 +10,9 @@ BCP14 = ["MUST NOT", "SHALL NOT", "SHOULD NOT",
 ]
 EXTENDED_BCP14 = [
     "NOT RECOMMENDED", "RECOMMENDS* NOT","RECOMMENDS*",
-    "CAN NOT", "COULD NOT", "CAN", "COULD", 
+    "NOT PERMITTED", "PERMITTED", "PERMITS*",
+    "NOT REQUIRED", "NOT REQUIRES*", "REQUIRES*",
+    "CAN NOT", "COULD NOT", "CAN", "COULD", "MIGHT",
     "DEPRECATED", "HAVE TO"
 ]
 KEYWORDS = {"BCP14": BCP14, "Extended BCP14": EXTENDED_BCP14}
@@ -20,25 +22,19 @@ KEYWORDS = {"BCP14": BCP14, "Extended BCP14": EXTENDED_BCP14}
 #    no background = "white" = ""
 COLOR_DICT = {
 # code: fore., back.,  use  
-    0: ("red", "aqua", "not worked on"),       # Before anyone starts working: set by this program
-    1: ("red", "lime", "suggested change"),    # Manually change to this when there is a suggestion
-    2: ("red", "yellow", "needs discussion"),  # Manually change to this if input/discussion is needed
-    3: ("red", "", "agreed"),                  # Manually change to this when group is in agreement 
-    4: ("", "", "ready to merge"),             # Manually change to this when the whole text piece is ready
+    "BCP14": ("", "aqua", "BCP14"),
+    "Extended BCP14": ("", "lime", "Extended BCP14"),
 }
 
-def adoc_colors(color_code, fg_modifier):
-    if fg_modifier:
-        fg = COLOR_DICT[color_code][0]
-    else:
-        fg = "black"
-    bg = COLOR_DICT[color_code][1]
+def adoc_colors(kw):
+    fg = COLOR_DICT[kw][0]
+    bg = COLOR_DICT[kw][1]
     if fg and bg:
         color = f"[{fg} {bg}-background]"
     elif fg:
         color = f"[{fg}]"
-    else:
-        color = ""
+    elif bg:
+        color = f"[{bg}-background]"
     return color
 
 def color_help(color_code):
@@ -53,11 +49,11 @@ def color_help(color_code):
     return text
 
 
-def paint(text, keywords, color_code, fg_modifier):
-    color = adoc_colors(color_code, fg_modifier)
+def paint(text, selected):
+    color = adoc_colors(selected)
     count = 0
-    for k in keywords:
-        kin = rf"(?<= )({k.lower()})(?= )"
+    for k in KEYWORDS[selected]:
+        kin = rf"(?<= )({k.lower()})(?=[ ,.:;])"
         if color:
             kout = rf"{color}#\1#"
         else:
@@ -67,17 +63,16 @@ def paint(text, keywords, color_code, fg_modifier):
     return text, count
 
 
-def process_file_list(file_list, keywords, color_code):
+def process_file_list(file_list, selection):
     for file in file_list:
         file_out = f"{file[1:]}"
         with open(file, "r") as fin:
             text = fin.read()
         count = 0
-        for kw in keywords:
+        for selected in selection:
             # print(f'{kw:>14}:  {",   ".join(KEYWORDS[kw])}')
             # print()
-            fg_modifier = "Extended" not in kw
-            text, n = paint(text, KEYWORDS[kw], color_code, fg_modifier)
+            text, n = paint(text, selected)
             count += n
         with open(file_out, "w") as fut:
             fut.write(text)
@@ -110,19 +105,20 @@ def get_going():
     vocab = args.vocabulary
     print("\nKeywords:")
     if vocab.lower() == "both":
-        keywords = ["BCP14", "Extended BCP14"]
+        selection = ["BCP14", "Extended BCP14"]
         print(f"BCP14:    {BCP14}")
         print(f"Extended: {EXTENDED_BCP14}")
     elif vocab.lower().startswith("ext"):
-        keywords = ["Extended BCP14"]
+        selection = ["Extended BCP14"]
         print(f"Extended: {EXTENDED_BCP14}")
     else:
-        keywords = ["BCP14"]
+        selection = ["BCP14"]
         print(f"BCP14:    {BCP14}")
-    process_file_list(file_list, keywords, args.color_code)
+    process_file_list(file_list, selection)
 
 
 if __name__ == "__main__":
     print()
     get_going()
     system('asciidoctor --verbose ${FINAL_TAG} -a docprodtime="$(date -u ${DATE_FMT})" cf-conventions.adoc -D conventions_build')
+    system('./fix_style.sh')

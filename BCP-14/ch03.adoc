@@ -2,50 +2,50 @@
 
 The attributes described in this section are used to provide a description of the content and the units of measurement for each variable.
 We continue to support the use of the **`units`** and **`long_name`** attributes as defined in COARDS.
-We extend COARDS by adding the [red aqua-background]#optional# **`standard_name`** attribute which is used to provide unique identifiers for variables.
+We extend COARDS by adding the [aqua-background]#optional# **`standard_name`** attribute which is used to provide unique identifiers for variables.
 This is important for data exchange since one cannot necessarily identify a particular variable based on the name assigned to it by the institution that provided the data.
 
-The **`standard_name`** attribute [black aqua-background]#can# be used to identify variables that contain coordinate data.
-But since it is an [red aqua-background]#optional# attribute, applications that implement these standards [red aqua-background]#must# continue to be able to identify coordinate types based on the COARDS conventions.
+The **`standard_name`** attribute [lime-background]#can# be used to identify variables that contain coordinate data.
+But since it is an [aqua-background]#optional# attribute, applications that implement these standards [aqua-background]#must# continue to be able to identify coordinate types based on the COARDS conventions.
 
 [[units, Section 3.1, "Units"]]
 === Units
 
-The **`units`** attribute is [red aqua-background]#required# for all variables that represent dimensional quantities (except for boundary variables defined in <<cell-boundaries>> and climatology variables defined in <<climatological-statistics>>).
-The **`units`** attribute is permitted but not [red aqua-background]#required# for dimensionless quantities (see <<dimensionless-units>>).
+The **`units`** attribute is [aqua-background]#required# for all variables that represent dimensional quantities (except for boundary variables defined in <<cell-boundaries>> and climatology variables defined in <<climatological-statistics>>).
+The **`units`** attribute is [lime-background]#permitted# but not [aqua-background]#required# for dimensionless quantities (see <<dimensionless-units>>).
 
-The value of the **`units`** attribute is a string that [black aqua-background]#can# be recognized by the UDUNITS package <<UDUNITS>>, with the exceptions that are given in <<dimensionless-units>> and <<units-multiples>>.
+The value of the **`units`** attribute is a string that [lime-background]#can# be recognized by the UDUNITS package <<UDUNITS>>, with the exceptions that are given in <<dimensionless-units>> and <<units-multiples>>.
 Note that case is significant in the **`units`** strings.
 Note also that CF depends on UDUNITS only for the definition of legal **`units`** strings.
-CF does not assume or require that the UDUNITS software will be used for **`units`** conversion.
+CF does not assume or [lime-background]#require# that the UDUNITS software will be used for **`units`** conversion.
 In most **`units`** conversions, the sole operation on the data is multiplication by a scale factor.
-Special treatment is [red aqua-background]#required# in converting the **`units`** of variables that involve temperature (<<temperature-units>>) and the **`units`** of time coordinate variables (<<time-coordinate>>).
+Special treatment is [aqua-background]#required# in converting the **`units`** of variables that involve temperature (<<temperature-units>>) and the **`units`** of time coordinate variables (<<time-coordinate>>).
 
-The COARDS convention prohibits the unit `degrees` altogether, but this unit is not forbidden by the CF convention because it [red aqua-background]#may# in fact be appropriate for a variable containing, say, solar zenith angle.
+The COARDS convention prohibits the unit `degrees` altogether, but this unit is not forbidden by the CF convention because it [aqua-background]#may# in fact be appropriate for a variable containing, say, solar zenith angle.
 The unit `degrees` is also allowed on coordinate variables such as the latitude and longitude coordinates of a transformed grid.
-In this case the coordinate values are not true latitudes and longitudes, which [red aqua-background]#must# always be identified using the more specific forms of `degrees` as described in <<latitude-coordinate>> and <<longitude-coordinate>>.
+In this case the coordinate values are not true latitudes and longitudes, which [aqua-background]#must# always be identified using the more specific forms of `degrees` as described in <<latitude-coordinate>> and <<longitude-coordinate>>.
 
 
 [[dimensionless-units, Section 3.1.1, "Dimensionless units"]]
 ==== Dimensionless units
 
 A variable with no **`units`** attribute is assumed to be dimensionless.
-However, a **`units`** attribute specifying a dimensionless unit [red aqua-background]#may# optionally be included.
+However, a **`units`** attribute specifying a dimensionless unit [aqua-background]#may# optionally be included.
 The canonical unit (see also <<standard-name>>) for dimensionless quantities that represent fractions, or parts of a whole, is `1`.
 The UDUNITS package defines a few dimensionless units, such as `percent`, `ppm` (parts per million, 1e-6), and `ppb` (parts per billion, 1e-9).
-As an alternative to the canonical **`units`** of `1` or some other unitless number, the **`units`** for a dimensionless quantity [red aqua-background]#may# be given as a ratio of dimensional units, for instance `mg kg-1` for a mass ratio of 1e-6, or `microlitre litre-1` for a volume ratio of 1e-6. Data-producers are invited to consider whether this alternative would be more helpful to the users of their data.
+As an alternative to the canonical **`units`** of `1` or some other unitless number, the **`units`** for a dimensionless quantity [aqua-background]#may# be given as a ratio of dimensional units, for instance `mg kg-1` for a mass ratio of 1e-6, or `microlitre litre-1` for a volume ratio of 1e-6. Data-producers are invited to consider whether this alternative would be more helpful to the users of their data.
 
 The CF convention supports dimensionless units that are UDUNITS compatible, with one exception, concerning the dimensionless units defined by UDUNITS for volume ratios, such as `ppmv` and `ppbv`.
 These units are allowed in the **`units`** attribute by CF only if the data variable has no **`standard_name`**.
 These units are prohibited by CF if there is a **`standard_name`**, because the **`standard_name`** defines whether the quantity is a volume ratio, so the **`units`** are needed only to indicate a dimensionless number.
  
 Information describing a dimensionless physical quantity itself (e.g.
-"area fraction" or "probability") does not belong in the **`units`** attribute, but [red aqua-background]#should# be given in the **`long_name`** or **`standard_name`** attributes (see <<long-name>> and <<standard-name>>), in the same way as for physical quantities with dimensional units.
+"area fraction" or "probability") does not belong in the **`units`** attribute, but [aqua-background]#should# be given in the **`long_name`** or **`standard_name`** attributes (see <<long-name>> and <<standard-name>>), in the same way as for physical quantities with dimensional units.
 As an exception, to maintain backwards compatibility with COARDS, the text strings `level`, `layer`, and `sigma_level` are allowed in the **`units`** attribute, in order to indicate dimensionless vertical coordinates.
-This use of **`units`** is not compatible with UDUNITS, and is [black aqua-background]#deprecated# by this standard because conventions for more precisely identifying dimensionless vertical coordinates are available (see <<dimensionless-vertical-coordinate>>).
+This use of **`units`** is not compatible with UDUNITS, and is [lime-background]#deprecated# by this standard because conventions for more precisely identifying dimensionless vertical coordinates are available (see <<dimensionless-vertical-coordinate>>).
 
 The UDUNITS syntax that allows scale factors and offsets to be applied to a unit is not supported by this standard, except for case of specifying reference time, see section <<time-coordinate>>.
-The application of any scale factors or offsets to data [red aqua-background]#should# be indicated by the **`scale_factor`** and **`add_offset`** attributes.
+The application of any scale factors or offsets to data [aqua-background]#should# be indicated by the **`scale_factor`** and **`add_offset`** attributes.
 Use of these attributes for data packing, which is their most important application, is discussed in detail in <<packed-data>>.
 
 
@@ -54,25 +54,25 @@ Use of these attributes for data packing, which is their most important applicat
 
 The **`units`** of temperature imply an origin (i.e. zero point) for the associated measurement scale.
 When the temperature value is the degree of warmth with respect to the origin of the measurement scale, we call it an _on-scale temperature_.
-When **`units`** of on-scale temperature are converted, the data [red aqua-background]#may# require the addition of an offset as well as multiplication by a scale factor, because the physical meaning of a numerical value of zero for an on-scale temperature depends on the unit of measurement.
+When **`units`** of on-scale temperature are converted, the data [aqua-background]#may# [lime-background]#require# the addition of an offset as well as multiplication by a scale factor, because the physical meaning of a numerical value of zero for an on-scale temperature depends on the unit of measurement.
 On-scale temperature is _unique_ among quantities in the respect that the origin and the unit of measurement are both defined by the **`units`** and therefore cannot be chosen independently.
 For all other quantities, the origin and the unit of measurement are independent.
 Converting the unit of measurement alone, without changing the origin, does not change the meaning of zero.
 For example (using **bold** to indicate a numerical data value), **0** `kilogram` is the same mass as **0** `pound`, and **0** `seconds since 1970-1-1` means the same as **0** `days since 1970-1-1`, but **0** `degC` is not the same temperature as **0** `degF` (= **-17.8** `degC`), because these two temperature **`units`** implicitly refer to measurement scales which have different origins.
 
 On the other hand, when the temperature value is a _temperature difference_, which compares two on-scale temperatures with the same origin, the value of that origin is irrelevant as it cancels out when taking the difference.
-Therefore to convert the **`units`** of a temperature difference requires only multiplication by a scale factor, without the addition of an offset.
+Therefore to convert the **`units`** of a temperature difference [lime-background]#requires# only multiplication by a scale factor, without the addition of an offset.
 
 The **`units`** attribute does not distinguish between on-scale temperatures and temperature differences.
 This ambiguity also affects units of temperature raised to some power e.g. `K^2` or multiplied by other units e.g. `W m-2 K-1`, `degF/foot` or `degC m s-1`.
-A **`standard_name`** (<<standard-name>>) or **`standard_name`** modifier (<<standard-name-modifiers>>) [red aqua-background]#may# clarify the intention, but they are optional.
-Some statistical operations described by the **`cell_methods`** attribute (<<cell-methods>>; <<appendix-cell-methods>>) imply that temperature [red aqua-background]#must# be interpreted as temperature difference, but this attribute is [red aqua-background]#optional# too.
+A **`standard_name`** (<<standard-name>>) or **`standard_name`** modifier (<<standard-name-modifiers>>) [aqua-background]#may# clarify the intention, but they are [aqua-background]#optional#.
+Some statistical operations described by the **`cell_methods`** attribute (<<cell-methods>>; <<appendix-cell-methods>>) imply that temperature [aqua-background]#must# be interpreted as temperature difference, but this attribute is [aqua-background]#optional# too.
 
 In order to convert the **`units`** correctly, it is essential to know whether a temperature is on-scale or a difference.
-Therefore this standard strongly [black aqua-background]#recommends# that any variable whose **`units`** involve a temperature unit [red aqua-background]#should# also have a **`units_metadata`** attribute to make the distinction.
-This attribute [red aqua-background]#must# have one of the following three values: `temperature: on_scale`, `temperature: difference`, `temperature: unknown`.
-The **`units_metadata`** attribute, **`standard_name`** modifier (<<standard-name-modifiers>>) and **`cell_methods`** attribute (<<appendix-cell-methods>>) [red aqua-background]#must# be consistent if present.
-A variable [red aqua-background]#must not# have a **`units_metadata`** attribute if it has no **`units`** attribute or if its **`units`** do not involve a temperature unit.
+Therefore this standard strongly [lime-background]#recommends# that any variable whose **`units`** involve a temperature unit [aqua-background]#should# also have a **`units_metadata`** attribute to make the distinction.
+This attribute [aqua-background]#must# have one of the following three values: `temperature: on_scale`, `temperature: difference`, `temperature: unknown`.
+The **`units_metadata`** attribute, **`standard_name`** modifier (<<standard-name-modifiers>>) and **`cell_methods`** attribute (<<appendix-cell-methods>>) [aqua-background]#must# be consistent if present.
+A variable [aqua-background]#must not# have a **`units_metadata`** attribute if it has no **`units`** attribute or if its **`units`** do not involve a temperature unit.
 
 [[use-of-units-metadata-ex]]
 [caption="Example 3.1. "]
@@ -98,14 +98,14 @@ variables:
 
 With `temperature: unknown`, correct conversion of the **`units`** cannot be guaranteed.
 This value of **`units_metadata`** indicates that the data-writer does not know whether the temperature is on-scale or a difference.
-If the **`units_metadata`** attribute is not present, the data-reader [red aqua-background]#should# assume `temperature: unknown`.
+If the **`units_metadata`** attribute is not present, the data-reader [aqua-background]#should# assume `temperature: unknown`.
 The **`units_metadata`** attribute was introduced in CF 1.11.
-In data written according to versions before 1.11, `temperature: unknown` [red aqua-background]#should# be assumed for all **`units`** involving temperature, if it cannot be deduced from other metadata.
+In data written according to versions before 1.11, `temperature: unknown` [aqua-background]#should# be assumed for all **`units`** involving temperature, if it cannot be deduced from other metadata.
 We note (for guidance _only_ regarding `temperature: unknown`, _not_ as a CF convention) that the UDUNITS software assumes `temperature: on_scale` for **`units`** strings containing only a unit of temperature, and `temperature: difference` for **`units`** strings in which a unit of temperature is raised to any power other than unity, or multiplied or divided by any other unit.
 
-With `temperature: on_scale`, correct conversion [black aqua-background]#can# be guaranteed only for pure temperature **`units`**.
+With `temperature: on_scale`, correct conversion [lime-background]#can# be guaranteed only for pure temperature **`units`**.
 If the quantity is an on-scale temperature multiplied by some other quantity, it is not possible to convert the data from the **`units`** given to any other **`units`** that involve a temperature with a different origin, given only the **`units`**.
-For instance, when temperature is on-scale, a value in `kg degree_C m-2` [black aqua-background]#can# be converted to a value in `kg K m-2` only if we know separately the values in `degree_C` and `kg m-2` of which it is the product.
+For instance, when temperature is on-scale, a value in `kg degree_C m-2` [lime-background]#can# be converted to a value in `kg K m-2` only if we know separately the values in `degree_C` and `kg m-2` of which it is the product.
 
 
 [[units-multiples, Section 3.1.3, "Scale factors and offsets"]]
@@ -115,7 +115,7 @@ UDUNITS recognises the SI prefixes shown in <<table-supported-units>> for decima
 UDUNITS offers a syntax for indicating arbitrary scale factors and offsets to be applied to a unit.
 (Note that this is different from the scale factors and offsets used for converting between **`units`**, as discussed for temperature in <<temperature-units>>.)
 This UDUNITS syntax for arbitrary transformation of **`units`** is not supported by the CF standard, except for the case of specifying reference time (<<time-coordinate>>).
-The application of any scale factors or offsets to data [red aqua-background]#should# be indicated by the **`scale_factor`** and **`add_offset`** attributes.
+The application of any scale factors or offsets to data [aqua-background]#should# be indicated by the **`scale_factor`** and **`add_offset`** attributes.
 Use of these attributes for data packing, which is their most important application, is discussed in detail in <<packed-data>>.
 
 [[table-supported-units]]
@@ -139,10 +139,10 @@ Use of these attributes for data packing, which is their most important applicat
 [[long-name, Section 3.2, "Long Name"]]
 === Long Name
 
-The **`long_name`** attribute is defined by the NUG to contain a long descriptive name which may, for example, be used for labeling plots.
-For backwards compatibility with COARDS this attribute is optional.
-But it is highly [red aqua-background]#recommended# that either this or the **`standard_name`** attribute defined in the next section be provided to make the file self-describing.
-If a variable has no **`long_name`** attribute then an application [red aqua-background]#may# use, as a default, the **`standard_name`** if it exists, or the variable name itself.
+The **`long_name`** attribute is defined by the NUG to contain a long descriptive name which [aqua-background]#may#, for example, be used for labeling plots.
+For backwards compatibility with COARDS this attribute is [aqua-background]#optional#.
+But it is highly [aqua-background]#recommended# that either this or the **`standard_name`** attribute defined in the next section be provided for all data variables and variables containing coordinate data, in order to make the file self-describing.
+If a variable has no **`long_name`** attribute then an application [aqua-background]#may# use, as a default, the **`standard_name`** if it exists, or the variable name itself.
 
 [[standard-name, Section 3.3, "Standard Name"]]
 === Standard Name
@@ -150,9 +150,9 @@ If a variable has no **`long_name`** attribute then an application [red aqua-bac
 A fundamental requirement for exchange of scientific data is the ability to describe precisely the physical quantities being represented.
 To some extent this is the role of the **`long_name`** attribute as defined in the NUG.
 However, usage of **`long_name`** is completely ad-hoc.
-For many applications it is desirable to have a more definitive description of the quantity, which allows users of data from different sources (some of which might be models and others observational) to determine whether quantities are in fact comparable.
-For this reason each variable [red aqua-background]#may# optionally be given a "standard name", whose meaning is defined by this convention.
-There [red aqua-background]#may# be several variables in a dataset with any given standard name, and these [red aqua-background]#may# be distinguished by other metadata, such as coordinates (<<coordinate-types>>) and **`cell_methods`** (<<cell-methods>>).
+For many applications it is desirable to have a more definitive description of the quantity, which allows users of data from different sources (some of which [lime-background]#might# be models and others observational) to determine whether quantities are in fact comparable.
+For this reason each variable [aqua-background]#may# optionally be given a "standard name", whose meaning is defined by this convention.
+There [aqua-background]#may# be several variables in a dataset with any given standard name, and these [aqua-background]#may# be distinguished by other metadata, such as coordinates (<<coordinate-types>>) and **`cell_methods`** (<<cell-methods>>).
 
 A standard name is associated with a variable via the attribute **`standard_name`** which takes a string value comprised of a standard name optionally followed by one or more blanks and a standard name modifier (a string value from <<standard-name-modifiers>>).
 
@@ -163,11 +163,11 @@ standard name:: The name used to identify the physical quantity.
 A standard name contains no whitespace and is case sensitive.
 
 canonical units:: Representative units of the physical quantity.
-Unless it is dimensionless, a variable with a **`standard_name`** attribute [red aqua-background]#must# have units which are physically equivalent (not necessarily identical) to the canonical units, possibly modified by an operation specified by the standard name modifier (see below and <<standard-name-modifiers>>) or by the **`cell_methods`** attribute (see <<cell-methods>> and <<appendix-cell-methods>>) or both.
+Unless it is dimensionless, a variable with a **`standard_name`** attribute [aqua-background]#must# have units which are physically equivalent (not necessarily identical) to the canonical units, possibly modified by an operation specified by the standard name modifier (see below and <<standard-name-modifiers>>) or by the **`cell_methods`** attribute (see <<cell-methods>> and <<appendix-cell-methods>>) or both.
 
 description:: The description is meant to clarify the qualifiers of the fundamental quantities such as which surface a quantity is defined on or what the flux sign conventions are.
-We don't attempt to provide precise definitions of fundumental physical quantities (e.g., temperature) which [red aqua-background]#may# be found in the literature.
-The description [red aqua-background]#may# define rules on the variable type, attributes and coordinates which [red aqua-background]#must# be complied with by any variable carrying that standard name (such as in Example 3.5).
+We don't attempt to provide precise definitions of fundumental physical quantities (e.g., temperature) which [aqua-background]#may# be found in the literature.
+The description [aqua-background]#may# define rules on the variable type, attributes and coordinates which [aqua-background]#must# be complied with by any variable carrying that standard name (such as in Example 3.5).
 
 When appropriate, the table entry also contains the corresponding GRIB parameter code(s) (from ECMWF and NCEP) and AMIP identifiers.
 
@@ -177,16 +177,16 @@ written in compliance with the XML format, as described in <<standard-name-table
 Knowledge of the XML format is only necessary for application writers who plan to directly access the table.
 A formatted text version of the table is provided at
 link:$$https://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html$$[https://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html],
-and this table [red aqua-background]#may# be consulted in order to find the standard name that [red aqua-background]#should# be assigned to a variable.
-Some standard names (e.g. **`region`** and **`area_type`**) are used to indicate quantities which are permitted to take only certain standard values.
-This is indicated in the definition of the quantity in the standard name table, accompanied by a list or a link to a list of the permitted values.
+and this table [aqua-background]#may# be consulted in order to find the standard name that [aqua-background]#should# be assigned to a variable.
+Some standard names (e.g. **`region`** and **`area_type`**) are used to indicate quantities which are [lime-background]#permitted# to take only certain standard values.
+This is indicated in the definition of the quantity in the standard name table, accompanied by a list or a link to a list of the [lime-background]#permitted# values.
 
 Standard names by themselves are not always sufficient to describe a quantity.
-For example, a variable [red aqua-background]#may# contain data to which spatial or temporal operations have been applied.
-Or the data [red aqua-background]#may# represent an uncertainty in the measurement of a quantity.
+For example, a variable [aqua-background]#may# contain data to which spatial or temporal operations have been applied.
+Or the data [aqua-background]#may# represent an uncertainty in the measurement of a quantity.
 These quantity attributes are expressed as modifiers of the standard name.
 Modifications due to common statistical operations are expressed via the **`cell_methods`** attribute (see <<cell-methods>> and <<appendix-cell-methods>>).
-Other types of quantity modifiers are expressed using the [red aqua-background]#optional# modifier part of the **`standard_name`** attribute.
+Other types of quantity modifiers are expressed using the [aqua-background]#optional# modifier part of the **`standard_name`** attribute.
 The permissible values of these modifiers are given in <<standard-name-modifiers>>.
 
 [[use-of-standard-name-ex]]
@@ -208,14 +208,14 @@ The description in the standard name table entry for `air_pressure_at_sea_level`
 [[ancillary-data, Section 3.4, "Ancillary Data"]]
 === Ancillary Data
 
-When one data variable provides metadata about the individual values of another data variable it [red aqua-background]#may# be desirable to express this association by providing a link between the variables.
-For example, instrument data [red aqua-background]#may# have associated measures of uncertainty.
+When one data variable provides metadata about the individual values of another data variable it [aqua-background]#may# be desirable to express this association by providing a link between the variables.
+For example, instrument data [aqua-background]#may# have associated measures of uncertainty.
 The attribute **`ancillary_variables`** is used to express these types of relationships.
 It is a string attribute whose value is a blank separated list of variable names.
-The nature of the relationship between variables associated via **`ancillary_variables`** [red aqua-background]#must# be determined by other attributes.
+The nature of the relationship between variables associated via **`ancillary_variables`** [aqua-background]#must# be determined by other attributes.
 The variables listed by the **`ancillary_variables`** attribute will often have the standard name of the variable which points to them including a modifier (<<standard-name-modifiers>>) to indicate the relationship.
-The dimensions of an ancillary variable [red aqua-background]#must# be the same as or a subset of the dimensions of the variable to which it is related, but their order is not restricted, and with one exception:
-If an ancillary variable of a data variable that has been compressed by gathering (<<compression-by-gathering>>) does not span the compressed dimension, then its dimensions [red aqua-background]#may# be any subset of the data variable's uncompressed dimensions, i.e. any of the dimensions of the data variable except the compressed dimension, and any of the dimensions listed by the **`compress`** attribute of the compressed coordinate variable.
+The dimensions of an ancillary variable [aqua-background]#must# be the same as or a subset of the dimensions of the variable to which it is related, but their order is not restricted, and with one exception:
+If an ancillary variable of a data variable that has been compressed by gathering (<<compression-by-gathering>>) does not span the compressed dimension, then its dimensions [aqua-background]#may# be any subset of the data variable's uncompressed dimensions, i.e. any of the dimensions of the data variable except the compressed dimension, and any of the dimensions listed by the **`compress`** attribute of the compressed coordinate variable.
 
 [[instrument-data-ex]]
 [caption="Example 3.3. "]
@@ -239,7 +239,7 @@ If an ancillary variable of a data variable that has been compressed by gatherin
 
 ====
 
-Alternatively, **`ancillary_variables`** [red aqua-background]#may# be used as status flags indicating the operational status of an instrument producing the data or as quality flags indicating the results of a quality control test, or some other quantitative quality assessment, performed against the measurements contained in the source variable. 
+Alternatively, **`ancillary_variables`** [aqua-background]#may# be used as status flags indicating the operational status of an instrument producing the data or as quality flags indicating the results of a quality control test, or some other quantitative quality assessment, performed against the measurements contained in the source variable. 
 In these cases, the flag variable will include a standard name that differs from that of the source variable and indicates the specific type of flag the variable represents.
 
 The standard names table includes many names intended to be used in this situation, both general names meant to be used to flexibly represent any type of status or quality assessment, as well as names for specific quality control tests commonly applied to geophysical phenomena timeseries data.
@@ -284,13 +284,13 @@ Note that the ancillary variables in this example are simplified to exclude  **`
 === Flags
 
 The attributes **`flag_values`**, **`flag_masks`** and **`flag_meanings`** are intended to make variables that contain flag values self describing.
-Status codes and Boolean (binary) condition flags [red aqua-background]#may# be expressed with different combinations of **`flag_values`** and **`flag_masks`** attribute definitions.
+Status codes and Boolean (binary) condition flags [aqua-background]#may# be expressed with different combinations of **`flag_values`** and **`flag_masks`** attribute definitions.
 
 The **`flag_values`** and **`flag_meanings`** attributes describe a status flag consisting of mutually exclusive coded values.
 The **`flag_values`** attribute is the same type as the variable to which it is attached, and contains a list of the possible flag values.
 The **`flag_meanings`** attribute is a string whose value is a blank separated list of descriptive words or phrases, one for each flag value.
-Each word or phrase [red aqua-background]#should# consist of characters from the alphanumeric set and the following five: '_', '-', '.', '+', '@'.
-If multi-word phrases are used to describe the flag values, then the words within a phrase [red aqua-background]#should# be connected with underscores.
+Each word or phrase [aqua-background]#should# consist of characters from the alphanumeric set and the following five: '_', '-', '.', '+', '@'.
+If multi-word phrases are used to describe the flag values, then the words within a phrase [aqua-background]#should# be connected with underscores.
 The following example illustrates the use of flag values to express a speed quality with an enumerated status code.
 
 [[flag-variable-flag-values-ex]]
@@ -317,7 +317,7 @@ The flag_masks and flag_meanings attributes describe a number of independent Boo
 The flag_masks attribute is the same type as the variable to which it is attached, and contains a list of values matching unique bit fields.
 The flag_meanings attribute is defined as above, one for each flag_masks value.
 A flagged condition is identified by performing a bitwise AND of the variable value and each flag_masks value; a non-zero result indicates a true condition.
-Thus, any or all of the flagged conditions [red aqua-background]#may# be true, depending on the variable bit settings.
+Thus, any or all of the flagged conditions [aqua-background]#may# be true, depending on the variable bit settings.
 The following example illustrates the use of flag_masks to express six sensor status conditions.
 
 [[flag-variable-flag-masks-ex]]
@@ -340,7 +340,7 @@ The following example illustrates the use of flag_masks to express six sensor st
 
 ====
 
-A variable with standard name of `region`, `area_type` or any other standard name which requires string-valued values from a defined list [red aqua-background]#may# use flags together with `flag_values` and `flag_meanings` attributes to record the translation to the string values.
+A variable with standard name of `region`, `area_type` or any other standard name which [lime-background]#requires# string-valued values from a defined list [aqua-background]#may# use flags together with `flag_values` and `flag_meanings` attributes to record the translation to the string values.
 The following example illustrates this using integer flag values for a variable with standard name `region` and `flag_values` selected from the link:$$https://cfconventions.org/Data/cf-standard-names/docs/standardized-region-names.html$$[standardized region names] (see section 6.1.1).
 
 [[region-variable-flag-values-ex]]
@@ -364,7 +364,7 @@ The **`flag_masks`** and **`flag_values`** attributes are both the same type as 
 A flagged condition is identified by a bitwise AND of the variable value and each **`flag_masks`** value; a result that matches the **`flag_values`** value indicates a **`true`** condition.
 Repeated **`flag_masks`** define a bit field mask that identifies a number of status conditions with different **`flag_values`**.
 The **`flag_meanings`** attribute is defined as above, one for each **`flag_masks`** bit field and **`flag_values`** definition.
-Each **`flag_values`** and **`flag_masks`** value [red aqua-background]#must# coincide with a **`flag_meanings`** value.
+Each **`flag_values`** and **`flag_masks`** value [aqua-background]#must# coincide with a **`flag_meanings`** value.
 The following example illustrates the use of **`flag_masks`** and **`flag_values`** to express two sensor status conditions and one enumerated status code.
 
 [[flag-variable-flag-masks-flag-values-ex]]
@@ -415,7 +415,7 @@ The remaining bits (Bit 2 and Bit 3) are decoded as follows:
 | 1 | 1 | maintenance_mode
 |===============
 
-The "12b" flag mask is repeated in the **`sensor_status_qc`** **`flag_masks`** definition to explicitly declare the [red aqua-background]#recommended# bit field masks to repeatedly AND with the variable value while searching for matching enumerated values.
+The "12b" flag mask is repeated in the **`sensor_status_qc`** **`flag_masks`** definition to explicitly declare the [aqua-background]#recommended# bit field masks to repeatedly AND with the variable value while searching for matching enumerated values.
 An application determines if any of the conditions declared in the **`flag_meanings`** list are **`true`** by simply iterating through each of the **`flag_masks`** and AND'ing them with the variable.
 When a result is equal to the corresponding **`flag_values`** element, that condition is **`true`**.
 The repeated **`flag_masks`** enable a simple mechanism for clients to detect all possible conditions.

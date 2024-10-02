@@ -4,11 +4,13 @@
 == Attributes
 
 All CF attributes are listed here except for those that are used to describe grid mappings and mesh topologies.
-See Appendix F for the grid mapping attributes, and Appendix K for mesh topology attributes.
+See <<appendix-grid-mappings>> for the grid mapping attributes, and <<appendix-mesh-topology-attributes>> for mesh topology attributes.
 
 The "Type" values are **S** for string, **N** for numeric, and **D** for the type of the data variable.
-Each attribute [red aqua-background]#may# be used in any of the ways shown in its "Use" entry.
-**G** indicates it [black aqua-background]#can# appear as a global attribute, and **Gr** as a group attribute; if use of an attribute is restricted to certain kinds of variables this is indicated as follows: **C** for variables containing coordinate data, **D** for data variables, **M** for geometry container variables, **Do** for domain variables, **BI** and **BO** for boundary variables (see <<cell-boundaries>> for the distinction between **BI** and **BO**), and **-** for variables with some other purpose.
+Each attribute [aqua-background]#may# be used in any of the ways shown in its "Use" entry.
+**G** indicates it [lime-background]#can# appear as a global attribute, and **Gr** as a group attribute.
+For variable attributes, the possible values of "Use" are: **C** for variables containing coordinate data, **D** for data variables, **M** for geometry container variables, **Q** for quantization container variables, **Do** for domain variables, **BI** and **BO** for boundary variables (see <<cell-boundaries>> for the distinction between **BI** and **BO**), and **-** for variables with some other purpose.
+CF does not prohibit any of these attributes from being attached to variables of different kinds from those listed as their "Use" in this table, but their meanings are not defined by CF if they are used in these other ways.
 "Links" indicates the location of the attribute"s original definition (first link) and sections where the attribute is discussed in this document (additional links as necessary).
 
 [[table-attributes]]
@@ -34,7 +36,13 @@ Attribute
 | link:$$https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html$$[NUG Appendix A, "Attribute Conventions"], and <<packed-data>>
 | If present for a variable, this number is to be added to the data after it is read by an application.
 If both **`scale_factor`** and **`add_offset`** attributes are present, the data are first scaled before the offset is added.
-In cases where there is a strong constraint on dataset size, it is allowed to pack the coordinate variables (using add_offset and/or scale_factor), but this is not [red aqua-background]#recommended# in general.
+In cases where there is a strong constraint on dataset size, it is allowed to pack the coordinate variables (using add_offset and/or scale_factor), but this is not [aqua-background]#recommended# in general.
+
+| **`algorithm`**
+| S
+| Q
+| <<quantization-variables>>, and <<quantization-algorithms-description>>
+| Name of the quantization algorithm employed.
 
 | **`ancillary_variables`**
 | S
@@ -75,8 +83,9 @@ In cases where there is a strong constraint on dataset size, it is allowed to pa
 | **`cf_role`**
 | S
 | C, BI
-| <<coordinates-metadata>>, and <<mesh-topology-variables>> 
-| Identifies the roles of variables that identify features in discrete sampling geometries; and the roles of mesh topology and location index set variables.
+| <<coordinates-metadata>>
+| Identifies the roles of variables that identify features in discrete sampling geometries.
+Identifies the roles of mesh topology and location index set variables (see <<appendix-mesh-topology-attributes>>).
 
 | **`climatology`**
 | S
@@ -158,7 +167,7 @@ Allowed for auxiliary coordinate variables but not allowed for coordinate variab
 | D
 | <<flags>>
 | Use in conjunction with **`flag_values`**  to provide descriptive words or phrases for each flag value.
-If multi-word phrases are used to describe the flag values, then the words within a phrase [red aqua-background]#should# be connected with underscores.
+If multi-word phrases are used to describe the flag values, then the words within a phrase [aqua-background]#should# be connected with underscores.
 
 | **`flag_values`**
 | D
@@ -196,6 +205,12 @@ Use in conjunction with **`flag_meanings`**.
 | G, Gr
 | link:$$https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html$$[NUG Appendix A, "Attribute Conventions"]
 | List of the applications that have modified the original data.
+
+| **`implementation`**
+| S
+| Q
+| <<quantization-variables>>, and <<quantization-algorithms-description>>
+| The name and version of the library or client software that performed the quantization with **`algorithm`**.
 
 | **`instance_dimension`**
 | S
@@ -297,6 +312,26 @@ Allowed for auxiliary coordinate variables but not allowed for coordinate variab
 | <<COARDS>>
 | Direction of increasing vertical coordinate value.
 
+| **`quantization`**
+| S
+| D
+| <<quantization-variables>>
+| Identifies a variable that defines a quantization algorithm and its provenance.
+
+| **`quantization_nsb`**
+| N
+| D
+| <<per-variable-quantization-attributes>>, and <<quantization-algorithms-description>>
+| Specifies the number of significant bits retained in the IEEE mantissa of data quantized with the BitRound algorithm.
+Use in conjunction with **`quantization`**.
+
+| **`quantization_nsd`**
+| N
+| D
+| <<per-variable-quantization-attributes>>, and <<quantization-algorithms-description>>
+| Specifies the number of significant base-10 digits retained in the IEEE mantissa of data quantized with base-10 quantization algorithms.
+Use in conjunction with **`quantization`**.
+
 | **`references`**
 | S
 | G, D
@@ -316,7 +351,7 @@ The count variable indicates that the contiguous ragged array representation is 
 | link:$$https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html$$[NUG Appendix A, "Attribute Conventions"], and <<packed-data>>
 | If present for a variable, the data are to be multiplied by this factor after the data are read by an application.
 See also the **`add_offset`** attribute.
-In cases where there is a strong constraint on dataset size, it is allowed to pack the coordinate variables (using add_offset and/or scale_factor), but this is not [red aqua-background]#recommended# in general.
+In cases where there is a strong constraint on dataset size, it is allowed to pack the coordinate variables (using add_offset and/or scale_factor), but this is not [aqua-background]#recommended# in general.
 
 | **`source`**
 | S

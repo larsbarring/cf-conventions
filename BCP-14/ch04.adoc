@@ -1,35 +1,33 @@
 [[coordinate-types, Chapter 4, Coordinate Types]]
 ==  Coordinate Types 
 
-The commonest use of coordinate variables is to locate the data in space and time, but coordinates [red aqua-background]#may# be provided for any other continuous geophysical quantity (e.g. density, temperature, radiation wavelength, zenith angle of radiance, sea surface wave frequency) or discrete category (see <<discrete-axis>>, e.g. area type, model level number, ensemble member number) on which the data variable depends.
+The commonest use of coordinate variables is to locate the data in space and time, but coordinates [aqua-background]#may# be provided for any other continuous geophysical quantity (e.g. density, temperature, radiation wavelength, zenith angle of radiance, sea surface wave frequency) or discrete category (see <<discrete-axis>>, e.g. area type, model level number, ensemble member number) on which the data variable depends.
 
 Four types of coordinates receive special treatment by these conventions: latitude, longitude, vertical, and time.
 We continue to support the special role that the **`units`** and **`positive`** attributes play in the COARDS convention to identify coordinate type.
-We extend COARDS by providing explicit definitions of dimensionless vertical coordinates.
-The definitions are associated with a coordinate variable via the **`standard_name`** and **`formula_terms`** attributes.
-For backwards compatibility with COARDS use of these attributes is not required, but is strongly recommended.
+As an extension to COARDS, we strongly [lime-background]#recommend# that a parametric (usually dimensionless) vertical coordinate variable [aqua-background]#should# be associated, via **`standard_name`** and **`formula_terms`** attributes, with its explicit definition, which provides a mapping between its values and dimensional vertical coordinate values that [lime-background]#can# be uniquely located with respect to a point on the earth's surface.
 
-Because identification of a coordinate type by its units is complicated by requiring the use of an external package <<UDUNITS>>, we provide two [red aqua-background]#optional# methods that yield a direct identification.
-The attribute **`axis`** [red aqua-background]#may# be attached to a coordinate variable and given one of the values **`X`**, **`Y`**, **`Z`** or **`T`** which stand for a longitude, latitude, vertical, or time axis respectively.
-Alternatively the **`standard_name`** attribute [red aqua-background]#may# be used for direct identification.
-But note that these [red aqua-background]#optional# attributes are in addition to the [red aqua-background]#required# COARDS metadata.
+Because identification of a coordinate type by its units is complicated by requiring the use of an external package <<UDUNITS>>, we provide two [aqua-background]#optional# methods that yield a direct identification.
+The attribute **`axis`** [aqua-background]#may# be attached to a coordinate variable and given one of the values **`X`**, **`Y`**, **`Z`** or **`T`** which stand for a longitude, latitude, vertical, or time axis respectively.
+Alternatively the **`standard_name`** attribute [aqua-background]#may# be used for direct identification.
+But note that these [aqua-background]#optional# attributes are in addition to the [aqua-background]#required# COARDS metadata.
 
-To identify generic spatial coordinates we [black aqua-background]#recommend# that the **`axis`** attribute be attached to these coordinates and given one of the values **`X`**, **`Y`** or **`Z`**.
-The values **`X`** and **`Y`** for the axis attribute [red aqua-background]#should# be used to identify horizontal coordinate variables.
-If both X- and Y-axis are identified, **`X-Y-up`** [red aqua-background]#should# define a right-handed coordinate system, i.e. rotation from the positive X direction to the positive Y direction is anticlockwise if viewed from above.
-We strongly [black aqua-background]#recommend# that coordinate variables be used for all coordinate types whenever they are applicable.
+To identify generic spatial coordinates we [lime-background]#recommend# that the **`axis`** attribute be attached to these coordinates and given one of the values **`X`**, **`Y`** or **`Z`**.
+The values **`X`** and **`Y`** for the axis attribute [aqua-background]#should# be used to identify horizontal coordinate variables.
+If both X- and Y-axis are identified, **`X-Y-up`** [aqua-background]#should# define a right-handed coordinate system, i.e. rotation from the positive X direction to the positive Y direction is anticlockwise if viewed from above.
+We strongly [lime-background]#recommend# that coordinate variables be used for all coordinate types whenever they are applicable.
 
 The methods of identifying coordinate types described in this section apply both to coordinate variables and to auxiliary coordinate variables named by the **`coordinates`** attribute (see <<coordinate-system>>).
 
 The values of a coordinate variable or auxiliary coordinate variable indicate the locations of the gridpoints.
 The locations of the boundaries between cells are indicated by bounds variables (see <<cell-boundaries>>).
-If bounds are not provided, an application might reasonably assume the gridpoints to be at the centers of the cells, but we do not require that in this standard.
+If bounds are not provided, an application [lime-background]#might# reasonably assume the gridpoints to be at the centers of the cells, but we do [lime-background]#not require# that in this standard.
 
 [[latitude-coordinate, Section 4.1, "Latitude Coordinate"]]
 === Latitude Coordinate
 
-Variables representing latitude [red aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
-The [red aqua-background]#recommended# value of the **`units`** attribute is the string **`degrees_north`**. Also accepted are **`degree_north`**, **`degree_N`**, **`degrees_N`**, **`degreeN`**, and **`degreesN`**.
+Variables representing latitude [aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
+The [aqua-background]#recommended# value of the **`units`** attribute is the string **`degrees_north`**. Also accepted are **`degree_north`**, **`degree_N`**, **`degrees_N`**, **`degreeN`**, and **`degreesN`**.
 
 [[latitude-axis-ex]]
 [caption="Example 4.1. "]
@@ -47,20 +45,20 @@ float lat(lat) ;
 
 ====
 
-Application writers [red aqua-background]#should# note that the UDUNITS package does not recognize the directionality implied by the "north" part of the unit specification.
+Application writers [aqua-background]#should# note that the UDUNITS package does not recognize the directionality implied by the "north" part of the unit specification.
 It only recognizes its size, i.e., 1 degree is defined to be pi/180 radians.
-Hence, determination that a coordinate is a latitude type [red aqua-background]#should# be done via a string match between the given unit and one of the acceptable forms of **`degrees_north`**.
+Hence, determination that a coordinate is a latitude type [aqua-background]#should# be done via a string match between the given unit and one of the acceptable forms of **`degrees_north`**.
 
 
-Optionally, the latitude type [red aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with the value **`latitude`**, and/or the **`axis`** attribute with the value **`Y`**.
+Optionally, the latitude type [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with the value **`latitude`**, and/or the **`axis`** attribute with the value **`Y`**.
 
-Coordinates of latitude with respect to a rotated pole [red aqua-background]#should# be given units of **`degrees`**, not **`degrees_north`** or equivalents, because applications which use the units to identify axes would have no means of distinguishing such an axis from real latitude, and might draw incorrect coastlines, for instance.
+Coordinates of latitude with respect to a rotated pole [aqua-background]#should# be given units of **`degrees`**, not **`degrees_north`** or equivalents, because applications which use the units to identify axes would have no means of distinguishing such an axis from real latitude, and [lime-background]#might# draw incorrect coastlines, for instance.
 
 [[longitude-coordinate, Section 4.2, "Longitude Coordinate"]]
 === Longitude Coordinate
 
-Variables representing longitude [red aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
-The [red aqua-background]#recommended# value of the **`units`** attribute is the string **`degrees_east`**. Also accepted are **`degree_east`**, **`degree_E`**, **`degrees_E`**, **`degreeE`**, and **`degreesE`**.
+Variables representing longitude [aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
+The [aqua-background]#recommended# value of the **`units`** attribute is the string **`degrees_east`**. Also accepted are **`degree_east`**, **`degree_E`**, **`degrees_E`**, **`degreeE`**, and **`degreesE`**.
 
 
 
@@ -80,24 +78,24 @@ float lon(lon) ;
 
 ====
 
-Application writers [red aqua-background]#should# note that the UDUNITS package has limited recognition of the directionality implied by the "east" part of the unit specification.
+Application writers [aqua-background]#should# note that the UDUNITS package has limited recognition of the directionality implied by the "east" part of the unit specification.
 It defines **`degrees_east`** to be pi/180 radians, and hence equivalent to **`degrees_north`**.
-We [black aqua-background]#recommend# the determination that a coordinate is a longitude type [red aqua-background]#should# be done via a string match between the given unit and one of the acceptable forms of **`degrees_east`**.
+We [lime-background]#recommend# the determination that a coordinate is a longitude type [aqua-background]#should# be done via a string match between the given unit and one of the acceptable forms of **`degrees_east`**.
 
-Optionally, the longitude type [red aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with the value **`longitude`**, and/or the **`axis`** attribute with the value **`X`**.
+Optionally, the longitude type [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with the value **`longitude`**, and/or the **`axis`** attribute with the value **`X`**.
 
-Coordinates of longitude with respect to a rotated pole [red aqua-background]#should# be given units of **`degrees`**, not **`degrees_east`** or equivalents, because applications which use the units to identify axes would have no means of distinguishing such an axis from real longitude, and might draw incorrect coastlines, for instance.
+Coordinates of longitude with respect to a rotated pole [aqua-background]#should# be given units of **`degrees`**, not **`degrees_east`** or equivalents, because applications which use the units to identify axes would have no means of distinguishing such an axis from real longitude, and [lime-background]#might# draw incorrect coastlines, for instance.
 
 [[vertical-coordinate, Section 4.3, "Vertical Coordinate"]]
 === Vertical (Height or Depth) Coordinate
 
-Variables representing dimensional height or depth axes [red aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
+Variables representing dimensional height or depth axes [aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
 
 The direction of positive (i.e., the direction in which the coordinate values are increasing), whether up or down, cannot in all cases be inferred from the units.
 The direction of positive is useful for applications displaying the data.
-For this reason the attribute **`positive`** as defined in the COARDS standard is [red aqua-background]#required# if the vertical axis units are not a valid unit of pressure (as determined by the UDUNITS package <<UDUNITS>>) -- otherwise its inclusion is optional.
-The **`positive`** attribute [red aqua-background]#may# have the value **`up`** or **`down`** (case insensitive).
-This attribute [red aqua-background]#may# be applied to either coordinate variables or auxiliary coordinate variables that contain vertical coordinate data.
+For this reason the attribute **`positive`** as defined in the COARDS standard is [aqua-background]#required# if the vertical axis units are not a valid unit of pressure (as determined by the UDUNITS package <<UDUNITS>>) -- otherwise its inclusion is [aqua-background]#optional#.
+The **`positive`** attribute [aqua-background]#may# have the value **`up`** or **`down`** (case insensitive).
+This attribute [aqua-background]#may# be applied to either coordinate variables or auxiliary coordinate variables that contain vertical coordinate data.
 
 For example, if an oceanographic netCDF file encodes the depth of the surface as 0 and the depth of 1000 meters as 1000 then the axis would use attributes as follows: 
 
@@ -114,43 +112,43 @@ A vertical coordinate will be identifiable by:
 * units of pressure; or
 * the presence of the **`positive`** attribute with a value of **`up`** or **`down`** (case insensitive).
 
-Optionally, the vertical type [red aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with an appropriate value, and/or the **`axis`** attribute with the value **`Z`**. 
-If both **`positive`** and **`standard_name`** are provided, it is [red aqua-background]#recommended# that they [red aqua-background]#should# be consistent. 
+Optionally, the vertical type [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with an appropriate value, and/or the **`axis`** attribute with the value **`Z`**. 
+If both **`positive`** and **`standard_name`** are provided, it is [aqua-background]#recommended# that they [aqua-background]#should# be consistent. 
 For instance, if a depth of 1000 metres is represented by -1000 and **`positive`** is **`up`**, it would be inconsistent to give the **`standard_name`** as **`depth`**, whose definition (vertical distance below the surface) implies positive down. 
-If an application detects such an inconsistency, the user [red aqua-background]#should# be warned, and the **`positive`** attribute [red aqua-background]#should# be used to determine the sign convention.
+If an application detects such an inconsistency, the user [aqua-background]#should# be warned, and the **`positive`** attribute [aqua-background]#should# be used to determine the sign convention.
 
-Recommendations:  The **`positive`** attribute [red aqua-background]#should# be consistent with the sign convention implied by the definition of the **`standard_name`**, if both are provided.
+Recommendations:  The **`positive`** attribute [aqua-background]#should# be consistent with the sign convention implied by the definition of the **`standard_name`**, if both are provided.
 
 ==== Dimensional Vertical Coordinate
 
 
-Variables representing dimensional vertical coordinates for or height [red aqua-background]#must# always explicitly include the  **`units`** attribute.
-The acceptable units for a vertical (depth or height) coordinate variable [red aqua-background]#must# a UDUNITS <<UDUNITS>> representation of one of the following:
+Variables representing dimensional vertical coordinates for or height [aqua-background]#must# always explicitly include the  **`units`** attribute.
+The acceptable units for a vertical (depth or height) coordinate variable [aqua-background]#must# a UDUNITS <<UDUNITS>> representation of one of the following:
 
 * units of pressure.
 For vertical axes the most commonly used of these include **`bar`**, **`millibar`**, **`decibar`**, **`atmosphere (atm)`**, **`pascal (Pa)`**, and **`hPa`**.
 * units of length.
 For vertical axes the most commonly used of these include **`meter (metre, m)`**, and **`kilometer (km)`**.
-* other units that [red aqua-background]#may# under certain circumstances reference vertical position such as units of density or temperature.
+* other units that [aqua-background]#may# under certain circumstances reference vertical position such as units of density or temperature.
 
 Plural forms are also acceptable.
 
 [[dimensionless-vertical-coordinate, Section 4.3.2, "Dimensionless Vertical Coordinate"]]
 ==== Dimensionless Vertical Coordinate
 
-The **`units`** attribute is not [red aqua-background]#required# for dimensionless coordinates.
+The **`units`** attribute is not [aqua-background]#required# for dimensionless coordinates.
 For backwards compatibility with COARDS we continue to allow the **`units`** attribute to take one of the values: **`level`**, **`layer`**, or **`sigma_level`**.
-These values are not recognized by the UDUNITS package, and are considered a [black aqua-background]#deprecated# feature in the CF standard.
+These values are not recognized by the UDUNITS package, and are considered a [lime-background]#deprecated# feature in the CF standard.
 
 [[parametric-vertical-coordinate, Section 4.3.3, "Parametric Vertical Coordinate"]]
 ==== Parametric Vertical Coordinate
 
 In some cases dimensional vertical coordinates are a function of horizontal location as well as parameters which depend on vertical location, and therefore cannot be stored in the one-dimensional vertical coordinate variable, which is in most of these cases is dimensionless.
-The `standard_name` of the parametric (usually dimensionless) vertical coordinate variable [black aqua-background]#can# be used to find the definition of the associated computed (always dimensional) vertical coordinate in <<parametric-v-coord>>.
-The definition provides a mapping between the parametric vertical coordinate values and computed values that [black aqua-background]#can# positively and uniquely indicate the location of the data.
-The `formula_terms` attribute [black aqua-background]#can# be used to associate terms in the definitions with variables in a netCDF file, and the `computed_standard_name` attribute [black aqua-background]#can# be used to supply the `standard_name` of the computed vertical coordinate values computed according to the definition.
-To maintain backwards compatibility with COARDS the use of these attributes is not required, but is strongly recommended.
-Some of the definitions [red aqua-background]#may# be supplemented with information stored in the `grid_mapping` variable about the datum used as a vertical reference (e.g. geoid, other geopotential datum or reference ellipsoid; see <<grid-mappings-and-projections>> and <<appendix-grid-mappings>>).
+The `standard_name` of the parametric (usually dimensionless) vertical coordinate variable [lime-background]#can# be used to find the definition of the associated computed (always dimensional) vertical coordinate in <<parametric-v-coord>>.
+The definition provides a mapping between the parametric vertical coordinate values and computed values that [lime-background]#can# positively and uniquely indicate the location of the data.
+The `formula_terms` attribute [lime-background]#can# be used to associate terms in the definitions with variables in a netCDF file, and the `computed_standard_name` attribute [lime-background]#can# be used to supply the `standard_name` of the computed vertical coordinate values computed according to the definition.
+To maintain backwards compatibility with COARDS the use of these attributes is not [aqua-background]#required#, but is strongly [aqua-background]#recommended#.
+Some of the definitions [aqua-background]#may# be supplemented with information stored in the `grid_mapping` variable about the datum used as a vertical reference (e.g. geoid, other geopotential datum or reference ellipsoid; see <<grid-mappings-and-projections>> and <<appendix-grid-mappings>>).
 
 [[atm-sigma-coord-ex]]
 [caption="Example 4.3. "]
@@ -187,25 +185,25 @@ The `computed_standard_name` attribute indicates that the values in variable
 [[time-coordinate, Section 4.4, "Time Coordinate"]]
 === Time Coordinate
 
-Variables representing reference time [red aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
-The **`units`** attribute takes a string value that follows the formatting requirements of the <<UDUNITS>> package. These requirements [black aqua-background]#can# best be described by an example with explanatory comments:
+Variables representing reference time [aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
+The **`units`** attribute takes a string value that follows the formatting requirements of the <<UDUNITS>> package. These requirements [lime-background]#can# best be described by an example with explanatory comments:
 
 The time unit specification **`seconds since 1992-10-8 15:15:42.5 -6:00`** indicates seconds since October 8th, 1992  at  3 hours,  15 minutes  and  42.5 seconds in the afternoon in the time zone which is six hours to the west of Coordinated Universal Time (i.e.  Mountain Daylight Time).
-The time zone specification [black aqua-background]#can# also be written without a colon using one or two digits (indicating hours) or three or four digits (indicating hours and minutes).
+The time zone specification [lime-background]#can# also be written without a colon using one or two digits (indicating hours) or three or four digits (indicating hours and minutes).
 
 The acceptable units for time are given by the UDUNITS package.
 The most commonly used of these strings (and their abbreviations) includes **`day`** (**`d`**), **`hour`** (**`hr`**, **`h`**), **`minute`** (**`min`**) and **`second`** (**`sec`**, **`s`**).
 Plural forms are also acceptable.
 
-UDUNITS permits a number of alternatives to the word **`since`** in the units of time coordinates. All the alternatives have exactly the same meaning in UDUNITS. For compatibility with other software, CF strongly [black aqua-background]#recommends# that `since` [red aqua-background]#should# be used.
+UDUNITS [lime-background]#permits# a number of alternatives to the word **`since`** in the units of time coordinates. All the alternatives have exactly the same meaning in UDUNITS. For compatibility with other software, CF strongly [lime-background]#recommends# that `since` [aqua-background]#should# be used.
 
-The reference date/time string (appearing after the identifier **`since`**) is required.
-It [red aqua-background]#may# include date alone, or date and time, or date, time and time zone.
+The reference date/time string (appearing after the identifier **`since`**) is [aqua-background]#required#.
+It [aqua-background]#may# include date alone, or date and time, or date, time and time zone.
 If the time zone is omitted the default is UTC, and if both time and time zone are omitted the default is 00:00:00 UTC.
 
 UDUNITS defines a **`year`** to be exactly 365.242198781 days (the interval between 2 successive passages of the sun through vernal equinox).
 __It is not a calendar year.__ UDUNITS defines a  **`month`** to be exactly **`year/12`**, which is __not a calendar month__.
-The CF standard follows UDUNITS in the definition of units, but we [black aqua-background]#recommend# that **`year`** and **`month`** [red aqua-background]#should not# be used, because of the potential for mistakes and confusion.
+The CF standard follows UDUNITS in the definition of units, but we [lime-background]#recommend# that **`year`** and **`month`** [aqua-background]#should not# be used, because of the potential for mistakes and confusion.
 
 [[time-axis-ex]]
 [caption="Example 4.4. "]
@@ -222,42 +220,42 @@ double time(time) ;
 
 A reference time coordinate is identifiable from its units string alone.
 
-Optionally, the time coordinate [red aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with an appropriate value, and/or the **`axis`** attribute with the value **`T`**.
+Optionally, the time coordinate [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with an appropriate value, and/or the **`axis`** attribute with the value **`T`**.
 
 [[calendar, Section 4.4.1, "Calendar"]]
 ==== Calendar
 
-A date/time is the set of numbers which together identify an instant of time, namely its year, month, day, hour, minute and second, where the second [red aqua-background]#may# have a fraction but the others are all integer.
+A date/time is the set of numbers which together identify an instant of time, namely its year, month, day, hour, minute and second, where the second [aqua-background]#may# have a fraction but the others are all integer.
 A time coordinate value represents a date/time.
-In order to calculate a time coordinate value from a date/time, or the reverse, one [red aqua-background]#must# know the **`units`** attribute of the time coordinate variable (containing the time unit of the coordinate values and the reference date/time) and the calendar.
-The choice of calendar defines the set of dates (year-month-day combinations) which are permitted, and therefore it specifies the number of days between the times of **`0:0:0`** (midnight) on any two dates.
-Date/times which are not permitted in a given calendar are prohibited in both the encoded time coordinate values, and in the reference date/time string.
-It is [red aqua-background]#recommended# that the calendar be specified by the **`calendar`** attribute of the time coordinate variable.
+In order to calculate a time coordinate value from a date/time, or the reverse, one [aqua-background]#must# know the **`units`** attribute of the time coordinate variable (containing the time unit of the coordinate values and the reference date/time) and the calendar.
+The choice of calendar defines the set of dates (year-month-day combinations) which are [lime-background]#permitted#, and therefore it specifies the number of days between the times of **`0:0:0`** (midnight) on any two dates.
+Date/times which are [lime-background]#not permitted# in a given calendar are prohibited in both the encoded time coordinate values, and in the reference date/time string.
+It is [aqua-background]#recommended# that the calendar be specified by the **`calendar`** attribute of the time coordinate variable.
 
 When a time coordinate value is calculated from a date/time, or the reverse, it is assumed that the coordinate value increases by exactly 60 seconds from the start of any minute (identified by year, month, day, hour, minute, all being integers) to the start of the next minute, with no leap seconds, in all CF calendars.
 This assumption has various consequences when real-world date/times from calendars which do contain leap seconds (such as UTC) are stored in time coordinate variables:
 
 * Any date/times between the end of the 60th second of the last minute of one hour and the start of the first second of the next hour cannot be represented by time coordinates e.g. **`2016-12-31 23:59:60.5`** cannot be represented.
-* A time coordinate value [red aqua-background]#must not# be interpreted as representing a date/time in the excluded range.
+* A time coordinate value [aqua-background]#must not# be interpreted as representing a date/time in the excluded range.
 For instance, **`60 seconds after 23:59`** means **`00:00`** on the next day.
-* A date/time in the excluded range [red aqua-background]#must not# be used as a reference date/time e.g. **`seconds since 2016-12-31 23:59:60`** is not a permitted value for **`units`**.
+* A date/time in the excluded range [aqua-background]#must not# be used as a reference date/time e.g. **`seconds since 2016-12-31 23:59:60`** is not a [lime-background]#permitted# value for **`units`**.
 * It is important to realise that a time coordinate value does not necessarily exactly equal the actual length of the interval of time between the reference date/time and the date/time it represents.
 
 The values currently defined for **`calendar`** are listed below.
 In all calendars except **`360_day`** and **`none`**, the lengths of the months are the same as in the Gregorian calendar for leap years and non-leap years.
-In the **`julian`** and the default **`standard`** mixed Gregorian/Julian calendar, dates in years before year 0 (i.e. before 0-1-1 0:0:0) are not allowed, and the year in the reference date/time of the units [red aqua-background]#must not# be negative.
-In these calendars, year zero has a special use to indicate a climatology (see <<climatological-statistics>>), but this use of year zero is deprecated.
+In the **`julian`** and the default **`standard`** mixed Gregorian/Julian calendar, dates in years before year 0 (i.e. before 0-1-1 0:0:0) are not allowed, and the year in the reference date/time of the units [aqua-background]#must not# be negative.
+In these calendars, year zero has a special use to indicate a climatology (see <<climatological-statistics>>), but this use of year zero is [lime-background]#deprecated#.
 In other calendars, years before year 1 are allowed.
 
 **`standard`**:: Mixed Gregorian/Julian calendar as defined by UDUNITS.
 This is the default.
-A [black aqua-background]#deprecated# alternative name for this calendar is **`gregorian`**.
+A [lime-background]#deprecated# alternative name for this calendar is **`gregorian`**.
 In this calendar, date/times after (and including) 1582-10-15 0:0:0 are in the Gregorian calendar, in which a year is a leap year if either (i) it is divisible by 4 but not by 100 or (ii) it is divisible by 400.
 Date/times before (and excluding) 1582-10-5 0:0:0 are in the Julian calendar.
 Year 1 AD or CE in the **`standard`** calendar is also year 1 of the **`julian`** calendar.
 In the **`standard`** calendar, 1582-10-15 0:0:0 is exactly 1 day later than 1582-10-4 0:0:0 and the intervening dates are undefined.
-Therefore it is [red aqua-background]#recommended# that date/times in the range from (and including) 1582-10-5 0:0:0 until (but excluding) 1582-10-15 0:0:0 [red aqua-background]#should not# be used as reference in **`units`**, and that a time coordinate variable [red aqua-background]#should not# include any date/times in this range, because their interpretation is unclear.
-It is also [red aqua-background]#recommended# that a reference date/time before the discontinuity [red aqua-background]#should not# be used for date/times after the discontinuity, and vice-versa.
+Therefore it is [aqua-background]#recommended# that date/times in the range from (and including) 1582-10-5 0:0:0 until (but excluding) 1582-10-15 0:0:0 [aqua-background]#should not# be used as reference in **`units`**, and that a time coordinate variable [aqua-background]#should not# include any date/times in this range, because their interpretation is unclear.
+It is also [aqua-background]#recommended# that a reference date/time before the discontinuity [aqua-background]#should not# be used for date/times after the discontinuity, and vice-versa.
 
 **`proleptic_gregorian`**:: A calendar with the Gregorian rules for leap-years extended to dates before 1582-10-15.
 All dates consistent with these rules are allowed, both before and after 1582-10-15 0:0:0.
@@ -272,9 +270,9 @@ All dates consistent with these rules are allowed, both before and after 1582-10
 
 **`none`**:: No calendar.
 
-The **`calendar`** attribute [red aqua-background]#may# be set to **`none`** in climate experiments that simulate a fixed time of year.
+The **`calendar`** attribute [aqua-background]#may# be set to **`none`** in climate experiments that simulate a fixed time of year.
 The time of year is indicated by the date in the reference time of the **`units`** attribute.
-The time coordinates that might apply in a perpetual July experiment are given in the following example.
+The time coordinates that [lime-background]#might# apply in a perpetual July experiment are given in the following example.
 
 [[perpetual-time-axis-ex]]
 [caption="Example 4.5. "]
@@ -296,12 +294,12 @@ data:
 Here, all days simulate the conditions of 15th July, so it does not make sense to give them different dates.
 The time coordinates are interpreted as 0, 1, 2, etc. days since the start of the experiment.
 
-If none of the calendars defined above applies (e.g., calendars appropriate to a different paleoclimate era), a non-standard calendar [black aqua-background]#can# be defined.
+If none of the calendars defined above applies (e.g., calendars appropriate to a different paleoclimate era), a non-standard calendar [lime-background]#can# be defined.
 The lengths of each month are explicitly defined with the **`month_lengths`** attribute of the time axis:
 
 **`month_lengths`**:: A vector of size 12, specifying the number of days in the months from January to December (in a non-leap year).
 
-If leap years are included, then two other attributes of the time axis [red aqua-background]#should# also be defined:
+If leap years are included, then two other attributes of the time axis [aqua-background]#should# also be defined:
 
 **`leap_year`**:: An example of a leap year.
 It is assumed that all years that differ from this year by a multiple of four are also leap years.
@@ -311,9 +309,9 @@ If this attribute is absent, it is assumed there are no leap years.
 If this attribute is not present, February (2) is assumed.
 This attribute is ignored if **`leap_year`** is not specified.
 
-The **`calendar`** attribute is not [red aqua-background]#required# when a non-standard calendar is being used.
+The **`calendar`** attribute is not [aqua-background]#required# when a non-standard calendar is being used.
 It is sufficient to define the calendar using the **`month_lengths`** attribute, along with **`leap_year`**, and **`leap_month`** as appropriate.
-However, the **`calendar`** attribute is allowed to take non-standard values and in that case defining the non-standard calendar using the appropriate attributes is required.
+However, the **`calendar`** attribute is allowed to take non-standard values and in that case defining the non-standard calendar using the appropriate attributes is [aqua-background]#required#.
 
 [[paleoclimate-time-axis-ex]]
 [caption="Example 4.6. "]
@@ -333,10 +331,10 @@ double time(time) ;
 [[discrete-axis, Section 4.5, "Discrete Axis"]]
 === Discrete Axis
 
-The spatiotemporal coordinates described in sections 4.1-4.4 are continuous variables, and other geophysical quantities [red aqua-background]#may# likewise serve as continuous coordinate variables, for instance density, temperature or radiation wavelength.
+The spatiotemporal coordinates described in sections 4.1-4.4 are continuous variables, and other geophysical quantities [aqua-background]#may# likewise serve as continuous coordinate variables, for instance density, temperature or radiation wavelength.
 By contrast, for some purposes there is a need for an axis of a data variable which indicates either an ordered list or an unordered collection, and does not correspond to any continuous coordinate variable.
-Consequently such an axis [red aqua-background]#may# be called {ldquo}discrete{rdquo}.
-A discrete axis has a dimension but might not have a coordinate variable.
-Instead, there might be one or more auxiliary coordinate variables with this dimension (see preamble to section 5).
+Consequently such an axis [aqua-background]#may# be called {ldquo}discrete{rdquo}.
+A discrete axis has a dimension but [lime-background]#might# not have a coordinate variable.
+Instead, there [lime-background]#might# be one or more auxiliary coordinate variables with this dimension (see preamble to section 5).
 Following sections define various applications of discrete axes, for instance section 6.1.1 {ldquo}Geographical regions{rdquo}, section 7.3.3 {ldquo}Statistics applying to portions of cells{rdquo}, section 9.3 {ldquo}Representation of collections of features in data variables{rdquo}.
 

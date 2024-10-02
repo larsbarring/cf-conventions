@@ -4,8 +4,8 @@
 [appendix]
 == Mesh Topologies
 
-The CF attributes listed here [red aqua-background]#may# be used to define mesh topologies (<<mesh-topology-variables>>).
-This list is intended as a summary of the attributes that have been standardized via the UGRID conventions <<UGRID>>, which [red aqua-background]#should# be consulted for further details.
+The CF attributes listed here [aqua-background]#may# be used to define mesh topologies (<<mesh-topology-variables>>).
+This list is intended as a summary of the attributes that have been standardized via the UGRID conventions <<UGRID>>, which [aqua-background]#should# be consulted for further details.
 UGRID attributes that are not currently recognised by the CF convensions are included in the list.
 
 The "Type" values are **S** for string and **I** for integer.
@@ -99,7 +99,7 @@ Attribute
 | **`node_coordinates`**
 | S
 | MT
-| Specifies the auxiliary coordinate variables representing the node locations (latitude, longitude, or other spatial coordinates, and [red aqua-background]#optional# elevation or other coordinates).
+| Specifies the auxiliary coordinate variables representing the node locations (latitude, longitude, or other spatial coordinates, and [aqua-background]#optional# elevation or other coordinates).
 
 | **`start_index`**
 | I

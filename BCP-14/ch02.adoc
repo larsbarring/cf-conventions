@@ -6,24 +6,24 @@ We also introduce new attributes for describing the contents of a file.
 
 === Filename
 
-NetCDF files [red aqua-background]#should# have the file name extension "**`.nc`**".
+NetCDF files [aqua-background]#should# have the file name extension "**`.nc`**".
 
 === Data Types
 
-// TODO: Check, [red aqua-background]#should# this be a bullet list?
-Data variables [red aqua-background]#must# be one of the following data types: **`string`**, **`char`**, **`byte`**, **`unsigned byte`**, **`short`**, **`unsigned short`**, **`int`**, **`unsigned int`**, **`int64`**, **`unsigned int64`**, **`float`** or **`real`**, and **`double`** (which are all the link:$$https://docs.unidata.ucar.edu/nug/current/md_types.html$$[netCDF external data types] supported by netCDF-4).
+// TODO: Check, [aqua-background]#should# this be a bullet list?
+Data variables [aqua-background]#must# be one of the following data types: **`string`**, **`char`**, **`byte`**, **`unsigned byte`**, **`short`**, **`unsigned short`**, **`int`**, **`unsigned int`**, **`int64`**, **`unsigned int64`**, **`float`** or **`real`**, and **`double`** (which are all the link:$$https://docs.unidata.ucar.edu/nug/current/md_types.html$$[netCDF external data types] supported by netCDF-4).
 The **`string`** type is only available in files using the netCDF version 4 (netCDF-4) format.
 The **`char`** and **`string`** types are not intended for numeric data.
-One byte numeric data [red aqua-background]#should# be stored using the **`byte`** or **`unsigned byte`** data types.
+One byte numeric data [aqua-background]#should# be stored using the **`byte`** or **`unsigned byte`** data types.
 It is possible to treat the **`byte`** and **`short`** types as unsigned by using the NUG convention of indicating the unsigned range using the **`valid_min`**, **`valid_max`**, or **`valid_range`** attributes.
-In many situations, any integer type [red aqua-background]#may# be used.
-When the phrase "integer type" is used in this document, it [red aqua-background]#should# be understood to mean **`byte`**, **`unsigned byte`**, **`short`**, **`unsigned short`**, **`int`**, **`unsigned int`**, **`int64`**, or **`unsigned int64`**.
+In many situations, any integer type [aqua-background]#may# be used.
+When the phrase "integer type" is used in this document, it [aqua-background]#should# be understood to mean **`byte`**, **`unsigned byte`**, **`short`**, **`unsigned short`**, **`int`**, **`unsigned int`**, **`int64`**, or **`unsigned int64`**.
 
-Strings in variables [red aqua-background]#may# be represented one of two ways - as atomic strings or as character arrays.
-An n-dimensional array of strings [red aqua-background]#may# be implemented as a variable of type **`string`** with n dimensions, or as a variable of type **`char`** with n+1 dimensions where the last (most rapidly varying) dimension is large enough to contain the longest string in the variable.
+Strings in variables [aqua-background]#may# be represented one of two ways - as atomic strings or as character arrays.
+An n-dimensional array of strings [aqua-background]#may# be implemented as a variable of type **`string`** with _n_ dimensions, or as a variable of type **`char`** with _n_+1 dimensions, where the most rapidly varying dimension (the last dimension in CDL order) is large enough to contain the longest string in the variable.
 For example, a character array variable of strings containing the names of the months would be dimensioned (12,9) in order to accommodate "September", the month with the longest name.
-The other strings, such as "May", [red aqua-background]#should# be padded with trailing NULL or space characters so that every array element is filled.
-If the atomic string option is chosen, each element of the variable [black aqua-background]#can# be assigned a string with a different length.
+The other strings, such as "May", [aqua-background]#should# be padded with trailing NULL or space characters so that every array element is filled.
+If the atomic string option is chosen, each element of the variable [lime-background]#can# be assigned a string with a different length.
 The CDL example below shows one variable of each type.
 
 [[char-and-string-variables-ex]]
@@ -46,39 +46,40 @@ The examples in this document that use string-valued variables alternate between
 
 === Naming Conventions
 
-Variable, dimension, attribute and group names [red aqua-background]#should# begin with a letter and be composed of letters, digits, and underscores.
+It is [aqua-background]#recommended# that variable, dimension, attribute and group names begin with a letter and be composed of letters, digits, and underscores.
 By the word _letters_ we mean the standard ASCII letters uppercase `A` to `Z` and lowercase `a` to `z`.
 By the word _digits_ we mean the standard ASCII digits `0` to `9`, and similarly _underscores_ means the standard ASCII underscore `_`.
 Note that this is in conformance with the COARDS conventions, but is more restrictive than the netCDF interface which allows almost all Unicode characters encoded as multibyte UTF-8 characters (link:$$https://docs.unidata.ucar.edu/nug/current/file_format_specifications.html$$[NUG Appendix B]).
 The netCDF interface also allows leading underscores in names, but the NUG states that this is reserved for system use.
+ASCII period (.) and ASCII hyphen (-) are also allowed in attribute names only.
 
-Case is significant in netCDF names, but it is [red aqua-background]#recommended# that names [red aqua-background]#should not# be distinguished purely by case, i.e., if case is disregarded, no two names [red aqua-background]#should# be the same.
-It is also [red aqua-background]#recommended# that names [red aqua-background]#should# be obviously meaningful, if possible, as this renders the file more effectively self-describing.
+Case is significant in netCDF names, but it is [aqua-background]#recommended# that names [aqua-background]#should not# be distinguished purely by case, i.e., if case is disregarded, no two names [aqua-background]#should# be the same.
+It is also [aqua-background]#recommended# that names [aqua-background]#should# be obviously meaningful, if possible, as this renders the file more effectively self-describing.
 
 This convention does not standardize any variable or dimension names.
-Attribute names and their contents, where standardized, are given in English in this document and [red aqua-background]#should# appear in English in conforming netCDF files for the sake of portability.
-Languages other than English are permitted for variables, dimensions, and non-standardized attributes.
-The content of some standardized attributes are string values that are not standardized, and thus are not [red aqua-background]#required# to be in English.
-For example, a description of what a variable represents [red aqua-background]#may# be given in a non-English language using the **`long_name`** attribute (see <<long-name>>) whose contents are not standardized, but a description given by the **`standard_name`** attribute (see <<standard-name>>) [red aqua-background]#must# be taken from the standard name table which is in English.
+Attribute names and their contents, where standardized, are given in English in this document and [aqua-background]#should# appear in English in conforming netCDF files for the sake of portability.
+Languages other than English are [lime-background]#permitted# for variables, dimensions, and non-standardized attributes.
+The content of some standardized attributes are string values that are not standardized, and thus are not [aqua-background]#required# to be in English.
+For example, a description of what a variable represents [aqua-background]#may# be given in a non-English language using the **`long_name`** attribute (see <<long-name>>) whose contents are not standardized, but a description given by the **`standard_name`** attribute (see <<standard-name>>) [aqua-background]#must# be taken from the standard name table which is in English.
 
 [[dimensions]]
 === Dimensions
 
-A variable [red aqua-background]#may# have any number of dimensions, including zero, and the dimensions [red aqua-background]#must# all have different names.
-__COARDS strongly [black aqua-background]#recommends# limiting the number of dimensions to four, but we wish to allow greater flexibility__.
+A variable [aqua-background]#may# have any number of dimensions, including zero, and the dimensions [aqua-background]#must# all have different names.
+__COARDS strongly [lime-background]#recommends# limiting the number of dimensions to four, but we wish to allow greater flexibility__.
 The dimensions of the variable define the axes of the quantity it contains.
-Dimensions other than those of space and time [red aqua-background]#may# be included.
-Several examples [black aqua-background]#can# be found in this document.
-Under certain circumstances, one [red aqua-background]#may# need more than one dimension in a particular quantity.
-For instance, a variable containing a two-dimensional probability density function might correlate the temperature at two different vertical levels, and hence would have temperature on both axes.
+Dimensions other than those of space and time [aqua-background]#may# be included.
+Several examples [lime-background]#can# be found in this document.
+Under certain circumstances, one [aqua-background]#may# need more than one dimension in a particular quantity.
+For instance, a variable containing a two-dimensional probability density function [lime-background]#might# correlate the temperature at two different vertical levels, and hence would have temperature on both axes.
 
-If any or all of the dimensions of a variable have the interpretations of "date or time" (**`T`**), "height or depth" (**`Z`**), "latitude" (**`Y`**), or "longitude" (**`X`**) then we recommend, but do not require (see <<coards-relationship>>), those dimensions to appear in the relative order **`T`**, then **`Z`**, then **`Y`**, then **`X`** in the CDL definition corresponding to the file.
-All other dimensions should, whenever possible, be placed to the left of the spatiotemporal dimensions.
+If any or all of the dimensions of a variable have the interpretations of "date or time" (**`T`**), "height or depth" (**`Z`**), "latitude" (**`Y`**), or "longitude" (**`X`**) then we [lime-background]#recommend#, but do [lime-background]#not require# (see <<coards-relationship>>), those dimensions to appear in the relative order **`T`**, then **`Z`**, then **`Y`**, then **`X`** in the CDL definition corresponding to the file.
+All other dimensions [aqua-background]#should#, whenever possible, be placed to the left of the spatiotemporal dimensions.
 
-Dimensions [red aqua-background]#may# be of any size, including unity.
-When a single value of some coordinate applies to all the values in a variable, the [red aqua-background]#recommended# means of attaching this information to the variable is by use of a dimension of size unity with a one-element coordinate variable.
+Dimensions [aqua-background]#may# be of any size, including unity.
+When a single value of some coordinate applies to all the values in a variable, the [aqua-background]#recommended# means of attaching this information to the variable is by use of a dimension of size unity with a one-element coordinate variable.
 It is also acceptable to use a scalar coordinate variable which eliminates the need for an associated size one dimension in the data variable.
-The advantage of using either a coordinate variable or an auxiliary coordinate variable is that all its attributes [black aqua-background]#can# be used to describe the single-valued quantity, including boundaries.
+The advantage of using either a coordinate variable or an auxiliary coordinate variable is that all its attributes [lime-background]#can# be used to describe the single-valued quantity, including boundaries.
 For example, a variable containing data for temperature at 1.5 m above the ground has a single-valued coordinate supplying a height of 1.5 m, and a time-mean quantity has a single-valued time coordinate with an associated boundary variable to record the start and end of the averaging period.
 
 [[variables]]
@@ -95,56 +96,56 @@ The NUG conventions
 (link:$$https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html$$[NUG Appendix A, Attribute Conventions])
 provide the **`_FillValue`**, **`missing_value`**, **`valid_min`**, **`valid_max`**, and **`valid_range`** attributes to indicate missing data.
 Missing data is allowed in data variables and auxiliary coordinate variables.
-Generic applications [red aqua-background]#should# treat the data as missing where any auxiliary coordinate variables have missing values; special-purpose applications might be able to make use of the data.
+Generic applications [aqua-background]#should# treat the data as missing where any auxiliary coordinate variables have missing values; special-purpose applications [lime-background]#might# be able to make use of the data.
 Missing data is not allowed in coordinate variables.
 
 The NUG conventions for missing data changed significantly between version 2.3 and version 2.4.
-Since version 2.4 the NUG defines missing data as all values outside of the **`valid_range`**, and specifies how the **`valid_range`** [red aqua-background]#should# be defined from the **`_FillValue`** (which has library specified default values) if it hasn't been explicitly specified.
-If only one missing value is needed for a variable then we [black aqua-background]#recommend#  that this value be specified using the **`_FillValue`** attribute.
+Since version 2.4 the NUG defines missing data as all values outside of the **`valid_range`**, and specifies how the **`valid_range`** [aqua-background]#should# be defined from the **`_FillValue`** (which has library specified default values) if it hasn't been explicitly specified.
+If only one missing value is needed for a variable then we [lime-background]#recommend#  that this value be specified using the **`_FillValue`** attribute.
 Doing this guarantees that the missing value will be recognized by generic applications that follow either the before or after version 2.4 conventions.
 
 The scalar attribute with the name **`_FillValue`** and of the same type as its variable is recognized by the netCDF library as the value used to pre-fill disk space allocated to the variable.
 This value is considered to be a special value that indicates undefined or missing data, and is returned when reading values that were not written.
-The **`_FillValue`** [red aqua-background]#should# be outside the range specified by **`valid_range`** (if used) for a variable.
+The **`_FillValue`** [aqua-background]#should# be outside the range specified by **`valid_range`** (if used) for a variable.
 The netCDF library defines a default fill value for each data type (See the "Note on fill values" in link:$$https://www.unidata.ucar.edu/software/netcdf/docs/file_format_specifications.html#classic_format_spec$$[NUG Appendix B, File Format Specifications]).
 
 The missing values of a variable with **`scale_factor`** and/or **`add_offset`** attributes (see <<packed-data>>) are interpreted relative to the variable's external values (a.k.a. the packed values, the raw values, the values stored in the netCDF file), not the values that result after the scale and offset are applied.
-Applications that process variables that have attributes to indicate both a transformation (via a scale and/or offset) and missing values [red aqua-background]#should# first check that a data value is valid, and then apply the transformation.
-Note that values that are identified as missing [red aqua-background]#should not# be transformed.
-Since the missing value is outside the valid range it is possible that applying a transformation to it [black aqua-background]#could# result in an invalid operation.
+Applications that process variables that have attributes to indicate both a transformation (via a scale and/or offset) and missing values [aqua-background]#should# first check that a data value is valid, and then apply the transformation.
+Note that values that are identified as missing [aqua-background]#should not# be transformed.
+Since the missing value is outside the valid range it is possible that applying a transformation to it [lime-background]#could# result in an invalid operation.
 For example, the default **`_FillValue`** is very close to the maximum representable value of IEEE single precision floats, and multiplying it by 100 produces an "Infinity" (using single precision arithmetic).
 
 This convention defines a two-element vector attribute **`actual_range`** for variables containing numeric data.
-If the variable is packed using the **`scale_factor`** and **`add_offset`** attributes (see <<packed-data>>), the elements of the **`actual_range`** [red aqua-background]#should# have the type intended for the unpacked data.
-The elements of **`actual_range`** [red aqua-background]#must# be exactly equal to the minimum and the maximum data values which occur in the variable (when unpacked if packing is used), and both [red aqua-background]#must# be within the **`valid_range`** if specified.
+If the variable is packed using the **`scale_factor`** and **`add_offset`** attributes (see <<packed-data>>), the elements of the **`actual_range`** [aqua-background]#should# have the type intended for the unpacked data.
+The elements of **`actual_range`** [aqua-background]#must# be exactly equal to the minimum and the maximum data values which occur in the variable (when unpacked if packing is used), and both [aqua-background]#must# be within the **`valid_range`** if specified.
 If the data is all missing or invalid, the **`actual_range`** attribute cannot be used.
 
 === Attributes
 
-This standard describes many attributes (some mandatory, others optional), but a file [red aqua-background]#may# also contain non-standard attributes.
+This standard describes many attributes (some mandatory, others optional), but a file [aqua-background]#may# also contain non-standard attributes.
 Such attributes do not represent a violation of this standard.
-Application programs [red aqua-background]#should# ignore attributes that they do not recognise or which are irrelevant for their purposes.
-Conventional attribute names [red aqua-background]#should# be used wherever applicable.
-Non-standard names [red aqua-background]#should# be as meaningful as possible.
-Before introducing an attribute, consideration [red aqua-background]#should# be given to whether the information would be better represented as a variable.
-In general, if a proposed attribute requires ancillary data to describe it, is multidimensional, requires any of the defined netCDF dimensions to index its values, or requires a significant amount of storage, a variable [red aqua-background]#should# be used instead.
-When this standard defines string attributes that [red aqua-background]#may# take various prescribed values, the possible values are generally given in lower case.
-However, applications programs [red aqua-background]#should not# be sensitive to case in these attributes.
+Application programs [aqua-background]#should# ignore attributes that they do not recognise or which are irrelevant for their purposes.
+Conventional attribute names [aqua-background]#should# be used wherever applicable.
+Non-standard names [aqua-background]#should# be as meaningful as possible.
+Before introducing an attribute, consideration [aqua-background]#should# be given to whether the information would be better represented as a variable.
+In general, if a proposed attribute [lime-background]#requires# ancillary data to describe it, is multidimensional, [lime-background]#requires# any of the defined netCDF dimensions to index its values, or [lime-background]#requires# a significant amount of storage, a variable [aqua-background]#should# be used instead.
+When this standard defines string attributes that [aqua-background]#may# take various prescribed values, the possible values are generally given in lower case.
+However, applications programs [aqua-background]#should not# be sensitive to case in these attributes.
 Several string attributes are defined by this standard to contain "blank-separated lists".
 Consecutive words in such a list are separated by one or more adjacent spaces.
-The list [red aqua-background]#may# begin and end with any number of spaces.
+The list [aqua-background]#may# begin and end with any number of spaces.
 See <<attribute-appendix>> for a list of attributes described by this standard.
 
 [[identification-of-conventions]]
 ==== Identification of Conventions
 
-Files that follow this version of the CF Conventions [red aqua-background]#must# indicate this by setting the NUG defined global attribute **`Conventions`** to a string value that contains "**`CF-{current-version-as-attribute}`**".
-The Conventions version number contained in that string [black aqua-background]#can# be used to find the web based versions of this document are from the link:$$https://cfconventions.org/$$[netCDF Conventions web page].
+Files that follow this version of the CF Conventions [aqua-background]#must# indicate this by setting the NUG defined global attribute **`Conventions`** to a string value that contains "**`CF-{current-version-as-attribute}`**".
+The Conventions version number contained in that string [lime-background]#can# be used to find the web based versions of this document are from the link:$$https://cfconventions.org/$$[netCDF Conventions web page].
 Subsequent versions of the CF Conventions will not make invalid a compliant usage of this or earlier versions of the CF terms and forms.
 
 It is possible for a netCDF file to adhere to more than one set of conventions, even when there is no inheritance relationship among the conventions.
-In this case, the value of the Conventions attribute [red aqua-background]#may# be a single text string containing a list of the convention names separated by blank space (recommended) or commas (if a convention name contains blanks).
-This is the Unidata [red aqua-background]#recommended# syntax from NetCDF Users Guide, Appendix A.
+In this case, the value of the Conventions attribute [aqua-background]#may# be a single text string containing a list of the convention names separated by blank space (recommended) or commas (if a convention name contains blanks).
+This is the Unidata [aqua-background]#recommended# syntax from NetCDF Users Guide, Appendix A.
 If the string contains any commas, it is assumed to be a comma-separated list.
 
 When CF is listed with other conventions, this asserts the same full compliance with CF requirements and interpretations as if CF was the sole convention.
@@ -158,8 +159,8 @@ The UGRID conventions, which are fully incorporated into the CF conventions, do 
 The following attributes are intended to provide information about where the data came from and what has been done to it.
 This information is mainly for the benefit of human readers.
 The attribute values are all character strings.
-For readability in ncdump outputs it is [red aqua-background]#recommended# to embed newline characters into long strings to break them into lines.
-For backwards compatibility with COARDS none of these global attributes is required.
+For readability in ncdump outputs it is [aqua-background]#recommended# to embed newline characters into long strings to break them into lines.
+For backwards compatibility with COARDS none of these global attributes is [aqua-background]#required#.
 
 The NUG defines **`title`** and **`history`** to be global attributes.
 We wish to allow the newly defined attributes, i.e., **`institution`**, **`source`**, **`references`**, and **`comment`**, to be either global or assigned to individual variables.
@@ -170,12 +171,12 @@ When an attribute appears both globally and as a variable attribute, the variabl
 **`institution`**:: Specifies where the original data was produced.
 
 **`source`**:: The method of production of the original data.
-If it was model-generated, **`source`** [red aqua-background]#should# name the model and its version, as specifically as [black aqua-background]#could# be useful.
-If it is observational, **`source`** [red aqua-background]#should# characterize it (e.g., "**`surface observation`**" or "**`radiosonde`**").
+If it was model-generated, **`source`** [aqua-background]#should# name the model and its version, as specifically as [lime-background]#could# be useful.
+If it is observational, **`source`** [aqua-background]#should# characterize it (e.g., "**`surface observation`**" or "**`radiosonde`**").
 
 **`history`**:: Provides an audit trail for modifications to the original data.
 Well-behaved generic netCDF filters will automatically append their name and the parameters with which they were invoked to the global history attribute of an input netCDF file.
-We [black aqua-background]#recommend# that each line begin with a timestamp indicating the date and time of day that the program was executed.
+We [lime-background]#recommend# that each line begin with a timestamp indicating the date and time of day that the program was executed.
 
 **`references`**:: Published or web-based references that describe the data or methods used to produce it.
 
@@ -192,19 +193,19 @@ The only attribute for which CF standardises the use of external variables is **
 
 Groups provide a powerful mechanism to structure data hierarchically.
 This convention does not standardize group names.
-It [red aqua-background]#may# be of benefit to name groups in such a way that human readers [black aqua-background]#can# interpret them.
-However, files that conform to this standard [red aqua-background]#shall not# require software to interpret or decode information from group names.
-References to out-of-group variable and dimensions [red aqua-background]#shall# be found by applying the scoping rules outlined below.
+It [aqua-background]#may# be of benefit to name groups in such a way that human readers [lime-background]#can# interpret them.
+However, files that conform to this standard [aqua-background]#shall not# [lime-background]#require# software to interpret or decode information from group names.
+References to out-of-group variable and dimensions [aqua-background]#shall# be found by applying the scoping rules outlined below.
 
 ==== Scope
 
-The scoping mechanism is in keeping with the following principal:
+The scoping mechanism is in keeping with the following principle:
 
 [quote, 'https://www.unidata.ucar.edu/software/netcdf/docs/groups.html[The NetCDF Data Model: Groups]']
 "Dimensions are scoped such that they are visible to all child groups.
-For example, you [black aqua-background]#can# define a dimension in the root group, and use its dimension id when defining a variable in a sub-group."
+For example, you [lime-background]#can# define a dimension in the root group, and use its dimension id when defining a variable in a sub-group."
 
-Any variable or dimension [black aqua-background]#can# be referred to, as long as it [black aqua-background]#can# be found with one of the following search strategies:
+Any variable or dimension [lime-background]#can# be referred to, as long as it [lime-background]#can# be found with one of the following search strategies:
 
 * Search by absolute path
 * Search by relative path
@@ -212,7 +213,7 @@ Any variable or dimension [black aqua-background]#can# be referred to, as long a
 
 These strategies are explained in detail in the following sections.
 
-If any dimension of an out-of-group variable has the same name as a dimension of the referring variable, the two [red aqua-background]#must# be the same dimension (i.e. they [red aqua-background]#must# have the same netCDF dimension ID).
+If any dimension of an out-of-group variable has the same name as a dimension of the referring variable, the two [aqua-background]#must# be the same dimension (i.e. they [aqua-background]#must# have the same netCDF dimension ID).
 
 ===== Search by absolute path
 
@@ -232,37 +233,37 @@ A variable or dimension specified with no path (for example, `lat`) refers to th
 If not, the ancestors of the referring group are searched for it, starting from the direct ancestor and proceeding toward the root group, until it is found.
 
 A special case exists for coordinate variables.
-Because coordinate variables [red aqua-background]#must# share dimensions with the variables that reference them, the ancestor search is executed only until the local apex group is reached.
+Because coordinate variables [aqua-background]#must# share dimensions with the variables that reference them, the ancestor search is executed only until the local apex group is reached.
 For coordinate variables that are not found in the referring group or its ancestors, a further strategy is provided, called lateral search.
 The lateral search proceeds downwards from the local apex group width-wise through each level of groups until the sought coordinate is found.
-The lateral search algorithm [red aqua-background]#may# only be used for NUG coordinate variables; it [red aqua-background]#shall not# be used for auxiliary coordinate variables.
+The lateral search algorithm [aqua-background]#may# only be used for NUG coordinate variables; it [aqua-background]#shall not# be used for auxiliary coordinate variables.
 
 [NOTE]
 ====
 This use of the lateral search strategy to find them is discouraged.
-They are allowed mainly for backwards-compatibility with existing datasets, and [red aqua-background]#may# be [black aqua-background]#deprecated# in future versions of the standard.
+They are allowed mainly for backwards-compatibility with existing datasets, and [aqua-background]#may# be [lime-background]#deprecated# in future versions of the standard.
 ====
 
 ==== Application of attributes
 
-The following attributes are [red aqua-background]#optional# for non-root groups.
+The following attributes are [aqua-background]#optional# for non-root groups.
 They are allowed in order to provide additional provenance and description of the subsidiary data.
 They do not override attributes from parent groups.
 
 * `title`
 * `history`
 
-If these attributes are present, they [red aqua-background]#may# be applied additively to the parent attributes of the same name.
+If these attributes are present, they [aqua-background]#may# be applied additively to the parent attributes of the same name.
 If a file containing groups is modified, the user or application need only update these attributes in the root group, rather than traversing all groups and updating all attributes that are found with the same name.
 In the case of conflicts, the root group attribute takes precedence over per-group instances of these attributes.
 
-The following attributes [red aqua-background]#may# only be used in the root group and [red aqua-background]#shall not# be duplicated or overridden in child groups:
+The following attributes [aqua-background]#may# only be used in the root group and [aqua-background]#shall not# be duplicated or overridden in child groups:
 
 * `Conventions`
 * `external_variables`
 
-Furthermore, per-variable attributes [red aqua-background]#must# be attached to the variables to which they refer.
-They [red aqua-background]#may# not be attached to a group, even if all variables within that group use the same attribute and value.
+Furthermore, per-variable attributes [aqua-background]#must# be attached to the variables to which they refer.
+They [aqua-background]#may# not be attached to a group, even if all variables within that group use the same attribute and value.
 
 If attributes are present within groups without being attached to a variable, these attributes apply to the group where they are defined, and to that group's descendants, but not to ancestor or sibling groups.
 If a group attribute is defined in a parent group, and one of the child group redefines the same attribute, the definition within the child group applies for the child and all of its descendants.
