@@ -36,7 +36,7 @@ Attribute
 | link:$$https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html$$[NUG Appendix A, "Attribute Conventions"], and <<packed-data>>
 | If present for a variable, this number is to be added to the data after it is read by an application.
 If both **`scale_factor`** and **`add_offset`** attributes are present, the data are first scaled before the offset is added.
-In cases where there is a strong constraint on dataset size, it is allowed to pack the coordinate variables (using add_offset and/or scale_factor), but this is not [aqua-background]#recommended# in general.
+In cases where there is a strong constraint on dataset size, it is [lime-background]#allowed# to pack the coordinate variables (using add_offset and/or scale_factor), but this is not [aqua-background]#recommended# in general.
 
 | **`algorithm`**
 | S
@@ -148,7 +148,7 @@ Identifies the roles of mesh topology and location index set variables (see <<ap
 | link:$$https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html$$[NUG Appendix A, "Attribute Conventions"], and <<missing-data>>, and <<ch9-missing-data>>.
 
 | A value used to represent missing or undefined data.
-Allowed for auxiliary coordinate variables but not allowed for coordinate variables.
+Allowed for auxiliary coordinate variables but [lime-background]#not allowed# for coordinate variables.
 
 | **`featureType`**
 | S
@@ -274,7 +274,7 @@ This name is not standardized.
 | C, D, BO
 | <<missing-data>>, and <<ch9-missing-data>>
 | A value or values used to represent missing or undefined data.
-Allowed for auxiliary coordinate variables but not allowed for coordinate variables.
+Allowed for auxiliary coordinate variables but [lime-background]#not allowed# for coordinate variables.
 
 | **`month_lengths`**
 | N
@@ -351,7 +351,7 @@ The count variable indicates that the contiguous ragged array representation is 
 | link:$$https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html$$[NUG Appendix A, "Attribute Conventions"], and <<packed-data>>
 | If present for a variable, the data are to be multiplied by this factor after the data are read by an application.
 See also the **`add_offset`** attribute.
-In cases where there is a strong constraint on dataset size, it is allowed to pack the coordinate variables (using add_offset and/or scale_factor), but this is not [aqua-background]#recommended# in general.
+In cases where there is a strong constraint on dataset size, it is [lime-background]#allowed# to pack the coordinate variables (using add_offset and/or scale_factor), but this is not [aqua-background]#recommended# in general.
 
 | **`source`**
 | S

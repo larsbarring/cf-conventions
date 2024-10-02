@@ -332,7 +332,7 @@ To indicate more precisely how the cell method was applied, extra information [a
 This information includes standardized and non-standardized parts.
 Currently the only standardized information is to provide the typical interval between the original data values to which the method was applied, in the situation where the present data values are statistically representative of original data values which had a finer spacing.
 The syntax is (**`interval`**: __value unit__), where __value__ is a numerical value and __unit__ is a string that [lime-background]#can# be recognized by UNIDATA's UDUNITS package <<UDUNITS>>.
-The __unit__ will usually be dimensionally equivalent to the unit of the corresponding dimension, but this is not [aqua-background]#required# (which allows, for example, the interval for a standard deviation calculated from points evenly spaced in distance along a parallel to be reported in units of length even if the zonal coordinate of the cells is given in degrees).
+The __unit__ will usually be dimensionally equivalent to the unit of the corresponding dimension, but this is not [aqua-background]#required# (which [lime-background]#allows#, for example, the interval for a standard deviation calculated from points evenly spaced in distance along a parallel to be reported in units of length even if the zonal coordinate of the cells is given in degrees).
 Recording the original interval is particularly important for standard deviations.
 For example, the standard deviation of daily values [lime-background]#could# be indicated by **`cell_methods="time: standard_deviation (interval: 1 day)"`** and of annual values by **`cell_methods="time: standard_deviation (interval: 1 year)"`**.
 
@@ -416,8 +416,8 @@ data:
   land_sea="land","sea";
 ----
 If the _method_ is `mean`, various ways of calculating the mean [lime-background]#can# be distinguished in the `cell_methods` attribute with a string of the form "mean where  _type1_ [over _type2_]".
-Here, _type1_ [lime-background]#can# be any of the possibilities allowed for _typevar_ or _type_ (as specified in the two paragraphs preceding above Example).
-The same options apply to _type2_, except it is not allowed to be the name of an auxiliary coordinate variable with a dimension greater than one (ignoring the possible dimension accommodating the maximum string length).
+Here, _type1_ [lime-background]#can# be any of the possibilities [lime-background]#allowed# for _typevar_ or _type_ (as specified in the two paragraphs preceding above Example).
+The same options apply to _type2_, except it is [lime-background]#not allowed# to be the name of an auxiliary coordinate variable with a dimension greater than one (ignoring the possible dimension accommodating the maximum string length).
 A `cell_methods` attribute with a string of the form "mean where _type1_ over _type2_" indicates the mean is calculated by summing over the _type1_ portion of the cell and dividing by the area of the _type2_ portion.
 In particular, a `cell_methods` string of the form "mean where all_area_types over _type2_" indicates the mean is calculated by summing over all types of area within the cell and dividing by the area of the _type2_ portion.
 (Note that `all_area_types` is one of the valid strings [lime-background]#permitted# for a variable with the `standard_name` `area_type`.)
@@ -450,14 +450,14 @@ To provide an indication that a particular cell method is relevant to the data w
 This convention cannot be used, however, if the name of a dimension or scalar coordinate variable is identical to __name__.
 There are two situations where this convention is useful.
 
-First, it allows one to provide some indication of the method when the cell coordinate range cannot be precisely defined.
+First, it [lime-background]#allows# one to provide some indication of the method when the cell coordinate range cannot be precisely defined.
 For example, a climatological mean [lime-background]#might# be based on any data that exists, and, in general, the data [lime-background]#might# not be available over the same time periods everywhere.
 In this case, the time range would not be well defined (because it would vary, depending on location), and it [lime-background]#could not# be precisely specified through a time dimension's bounds.
 Nevertheless, useful information [lime-background]#can# be conveyed by a **`cell_methods`** entry of "**`time: mean`**" (where **`time`**, it [aqua-background]#should# be noted, is a valid **`standard_name`**).
 (As [aqua-background]#required# by this convention, it is assumed here that for the data referred to by this **`cell_methods`** attribute, "time" is not a dimension or coordinate variable.)
 
-Second, for a few special dimensions, this convention allows one to indicate (without explicitly defining the coordinates) that the method applies to the domain covering the entire [lime-background]#permitted# range of those dimensions.
-This is allowed only for longitude, latitude, and area (indicating a combination of horizontal coordinates).
+Second, for a few special dimensions, this convention [lime-background]#allows# one to indicate (without explicitly defining the coordinates) that the method applies to the domain covering the entire [lime-background]#permitted# range of those dimensions.
+This is [lime-background]#allowed# only for longitude, latitude, and area (indicating a combination of horizontal coordinates).
 For longitude, the domain is indicated according to this provision by the string "longitude" (rather than the name of a longitude coordinate variable), and this implies that the method applies to all possible longitudes (i.e., from 0E to 360E).
 For latitude, the string "latitude" is used and implies the method applies to all possible latitudes (i.e., from 90S to 90N).
 For area, the string "area" is used and implies the method applies to the whole world.
@@ -489,7 +489,7 @@ Using the units and calendar of the time coordinate variable, element (i,0) of t
 The time coordinates [aqua-background]#should# be values that are representative of the climatological time intervals, such that an application which does not recognise climatological time will nonetheless be able to make a reasonable interpretation.
 
 For compatibility with the COARDS standard, a climatological time coordinate in the default **`standard`** and **`julian`** calendars [aqua-background]#may# be indicated by setting the date/time reference string in the time coordinate's **`units`** attribute to midnight on 1 January in year 0 (i.e., **`since 0-1-1`**).
-This convention is [lime-background]#deprecated# because it does not provide any information about the intervals used to compute the climatology, and there [aqua-background]#may# be inconsistencies among software packages in the interpretation of the time coordinates with a reference time of year 0.
+This convention is deprecated because it does not provide any information about the intervals used to compute the climatology, and there [aqua-background]#may# be inconsistencies among software packages in the interpretation of the time coordinates with a reference time of year 0.
 Use of year 0 for this purpose is impossible in all other calendars, because year 0 is a valid year.
 
 A climatological axis [aqua-background]#may# use different statistical methods to represent variation among years, within years and within days.
@@ -699,7 +699,7 @@ All geometries are made up of one or more nodes.
 The geometry type specifies the set of topological assumptions to be applied to relate the nodes (see Table 7.1).
 For example, multipoint and line geometries are nearly the same except nodes are interpreted as being connected for lines.
 Lines and polygons are also nearly the same except that the first and last nodes are assumed to be connected for polygons.
-Note that CF does [lime-background]#not require# the first and last node to be identical but allows them to be coincident if desired.
+Note that CF does [lime-background]#not require# the first and last node to be identical but [lime-background]#allows# them to be coincident if desired.
 Polygons that have holes, such as waterbodies in a land unit, are encoded as a collection of polygon ring parts, each identified as __exterior__ or __interior__ polygons.
 Multipart geometries, such as multiple lines representing the same river or multiple islands representing the same jurisdiction, are encoded as collections of unconnected points, lines, or polygons that are logically grouped into a single geometry.
 
@@ -775,7 +775,7 @@ The **`grid_mapping`** and **`coordinates`** attributes [lime-background]#can# b
 
 The **`geometry_type`** attribute indicates the type of geometry present.
 Its allowable values are: __point__, __line__, __polygon__.
-Multipart geometries are allowed for all three geometry types.
+Multipart geometries are [lime-background]#allowed# for all three geometry types.
 For example, polygon geometries [lime-background]#could# include single part geometries like the State of Colorado and multipart geometries like the State of Hawaii.
 
 The **`node_coordinates`** attribute contains the blank-separated names of the variables that contain geometry node coordinates (one variable for each spatial dimension).

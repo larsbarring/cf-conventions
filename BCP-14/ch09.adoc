@@ -12,7 +12,7 @@ The term {ldquo} **feature** {rdquo} refers herein to a single instance of the *
 The representation of such features in a CF dataset was supported previous to the introduction of this chapter using a particular convention, which is still supported (that described by section 9.3.1).
 This chapter describes further conventions which offer advantages of efficiency and clarity for storing a collection of features in a single file.
 When using these new conventions, __the features contained within a collection [aqua-background]#must# always be of the same type; and all the collections in a CF file [aqua-background]#must# be of the same feature type__.
-(Future versions of CF [aqua-background]#may# allow mixing of multiple feature types within a file.)
+(Future versions of CF [aqua-background]#may# [lime-background]#allow# mixing of multiple feature types within a file.)
 Table 9.1 presents the feature types covered by this chapter.
 Details and examples of storage of each of these feature types are provided in Appendix H, as indicated in the table.
 
@@ -91,7 +91,7 @@ The instance variables will be scalar coordinate variables; the data variable an
 The individual features within a collection need not necessarily contain the same number of elements.  
 For instance observed in situ time series will commonly contain unique numbers of time points, reflecting different deployment dates of the instruments.  
 Other data sources, such as the output of numerical models, [aqua-background]#may# commonly generate features of identical size.
-CF offers multiple representations to allow the storage to be optimized for the character of the data.
+CF offers multiple representations to [lime-background]#allow# the storage to be optimized for the character of the data.
 Four types of representation are utilized in this chapter:
 
 * two **multidimensional array representations**, in which each feature instance is allocated the identical amount of storage space. 
@@ -424,7 +424,7 @@ For those indices of the sample dimension, into which data have not yet been wri
 === The featureType  attribute
 
 A global attribute, **featureType**, is [aqua-background]#required# for all Discrete Geometry representations except the orthogonal multidimensional array representation, for which it is highly [aqua-background]#recommended#.
-The exception is allowed for backwards compatibility, as discussed in 9.3.1.
+The exception is [lime-background]#allowed# for backwards compatibility, as discussed in 9.3.1.
 A Discrete Geometry file [aqua-background]#may# include arbitrary numbers of data variables, but (as of CF v1.6) all of the data variables contained in a single file [aqua-background]#must# be of the single feature type indicated by the global **`featureType`** attribute, if it is present.1   The value assigned to the **`featureType`** attribute is case-insensitive;  it [aqua-background]#must# be one of the string values listed in the left column of Table 9.1.
 
 [[coordinates-metadata, Section 9.5, "Coordinates and metadata"]]

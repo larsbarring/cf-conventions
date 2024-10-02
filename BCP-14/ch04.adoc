@@ -137,8 +137,8 @@ Plural forms are also acceptable.
 ==== Dimensionless Vertical Coordinate
 
 The **`units`** attribute is not [aqua-background]#required# for dimensionless coordinates.
-For backwards compatibility with COARDS we continue to allow the **`units`** attribute to take one of the values: **`level`**, **`layer`**, or **`sigma_level`**.
-These values are not recognized by the UDUNITS package, and are considered a [lime-background]#deprecated# feature in the CF standard.
+For backwards compatibility with COARDS we continue to [lime-background]#allow# the **`units`** attribute to take one of the values: **`level`**, **`layer`**, or **`sigma_level`**.
+These values are not recognized by the UDUNITS package, and are considered a deprecated feature in the CF standard.
 
 [[parametric-vertical-coordinate, Section 4.3.3, "Parametric Vertical Coordinate"]]
 ==== Parametric Vertical Coordinate
@@ -229,7 +229,7 @@ A date/time is the set of numbers which together identify an instant of time, na
 A time coordinate value represents a date/time.
 In order to calculate a time coordinate value from a date/time, or the reverse, one [aqua-background]#must# know the **`units`** attribute of the time coordinate variable (containing the time unit of the coordinate values and the reference date/time) and the calendar.
 The choice of calendar defines the set of dates (year-month-day combinations) which are [lime-background]#permitted#, and therefore it specifies the number of days between the times of **`0:0:0`** (midnight) on any two dates.
-Date/times which are [lime-background]#not permitted# in a given calendar are prohibited in both the encoded time coordinate values, and in the reference date/time string.
+Date/times which are [lime-background]#not permitted# in a given calendar are [lime-background]#prohibited# in both the encoded time coordinate values, and in the reference date/time string.
 It is [aqua-background]#recommended# that the calendar be specified by the **`calendar`** attribute of the time coordinate variable.
 
 When a time coordinate value is calculated from a date/time, or the reverse, it is assumed that the coordinate value increases by exactly 60 seconds from the start of any minute (identified by year, month, day, hour, minute, all being integers) to the start of the next minute, with no leap seconds, in all CF calendars.
@@ -243,13 +243,13 @@ For instance, **`60 seconds after 23:59`** means **`00:00`** on the next day.
 
 The values currently defined for **`calendar`** are listed below.
 In all calendars except **`360_day`** and **`none`**, the lengths of the months are the same as in the Gregorian calendar for leap years and non-leap years.
-In the **`julian`** and the default **`standard`** mixed Gregorian/Julian calendar, dates in years before year 0 (i.e. before 0-1-1 0:0:0) are not allowed, and the year in the reference date/time of the units [aqua-background]#must not# be negative.
-In these calendars, year zero has a special use to indicate a climatology (see <<climatological-statistics>>), but this use of year zero is [lime-background]#deprecated#.
-In other calendars, years before year 1 are allowed.
+In the **`julian`** and the default **`standard`** mixed Gregorian/Julian calendar, dates in years before year 0 (i.e. before 0-1-1 0:0:0) are [lime-background]#not allowed#, and the year in the reference date/time of the units [aqua-background]#must not# be negative.
+In these calendars, year zero has a special use to indicate a climatology (see <<climatological-statistics>>), but this use of year zero is deprecated.
+In other calendars, years before year 1 are [lime-background]#allowed#.
 
 **`standard`**:: Mixed Gregorian/Julian calendar as defined by UDUNITS.
 This is the default.
-A [lime-background]#deprecated# alternative name for this calendar is **`gregorian`**.
+A deprecated alternative name for this calendar is **`gregorian`**.
 In this calendar, date/times after (and including) 1582-10-15 0:0:0 are in the Gregorian calendar, in which a year is a leap year if either (i) it is divisible by 4 but not by 100 or (ii) it is divisible by 400.
 Date/times before (and excluding) 1582-10-5 0:0:0 are in the Julian calendar.
 Year 1 AD or CE in the **`standard`** calendar is also year 1 of the **`julian`** calendar.
@@ -258,7 +258,7 @@ Therefore it is [aqua-background]#recommended# that date/times in the range from
 It is also [aqua-background]#recommended# that a reference date/time before the discontinuity [aqua-background]#should not# be used for date/times after the discontinuity, and vice-versa.
 
 **`proleptic_gregorian`**:: A calendar with the Gregorian rules for leap-years extended to dates before 1582-10-15.
-All dates consistent with these rules are allowed, both before and after 1582-10-15 0:0:0.
+All dates consistent with these rules are [lime-background]#allowed#, both before and after 1582-10-15 0:0:0.
 
 **`julian`**:: Julian calendar, in which a year is a leap year if it is divisible by 4, even if it is also divisible by 100.
 
@@ -311,7 +311,7 @@ This attribute is ignored if **`leap_year`** is not specified.
 
 The **`calendar`** attribute is not [aqua-background]#required# when a non-standard calendar is being used.
 It is sufficient to define the calendar using the **`month_lengths`** attribute, along with **`leap_year`**, and **`leap_month`** as appropriate.
-However, the **`calendar`** attribute is allowed to take non-standard values and in that case defining the non-standard calendar using the appropriate attributes is [aqua-background]#required#.
+However, the **`calendar`** attribute is [lime-background]#allowed# to take non-standard values and in that case defining the non-standard calendar using the appropriate attributes is [aqua-background]#required#.
 
 [[paleoclimate-time-axis-ex]]
 [caption="Example 4.6. "]

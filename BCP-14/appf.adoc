@@ -76,7 +76,7 @@ __Map parameters:__::
 
 __Map coordinates:__:: The x (abscissa) and y (ordinate) rectangular coordinates are identified by the **`standard_name`** attribute values **`projection_x_angular_coordinate`** and **`projection_y_angular_coordinate`**, respectively.
 It is assumed that the y-axis is aligned to the Earth's N/S axis, whereas the x-axis aligns with the E/W axis.
-CF specified the standard names **`projection_x_coordinate`** and **`projection_y_coordinate`** for these coordinates prior to version 1.9, but that use is [lime-background]#deprecated#.
+CF specified the standard names **`projection_x_coordinate`** and **`projection_y_coordinate`** for these coordinates prior to version 1.9, but that use is deprecated.
 In the case of this projection, the projection coordinates are the scanning angle of the satellite instrument.
 
 __Notes:__:: The geostationary projection assumes a hypothetical view of the Earth from a perspective above the Earth where the azimuth and elevation viewing angles are described using a hypothetical gimbal model.
@@ -109,7 +109,7 @@ Only one of those the attributes **`fixed_angle_axis`** or **`sweep_angle_axis`*
 Note also that the values "x" and "y" are not case-sensitive.
 
 +
-The use of `projection_x_coordinate` and `projection_y_coordinate` was [lime-background]#deprecated# in version 1.9 of the CF Conventions.
+The use of `projection_x_coordinate` and `projection_y_coordinate` was deprecated in version 1.9 of the CF Conventions.
 The initial definition of this projection used these standard names to identify the projection coordinates even though their canonical units (meters) do not match those [aqua-background]#required# for this projection (radians).
 
 [[lambert-azimuthal-equal-area]]
@@ -561,7 +561,7 @@ Corresponds to a OGC WKT TOWGS84 node.
 
 Notes:
 
-. The various **`*_name`** attributes are [aqua-background]#optional# but [aqua-background]#recommended# when known as they allow for a better description and interoperability with WKT definitions.
+. The various **`*_name`** attributes are [aqua-background]#optional# but [aqua-background]#recommended# when known as they [lime-background]#allow# for a better description and interoperability with WKT definitions.
 . **`reference_ellipsoid_name`**, **`prime_meridian_name`**, **`horizontal_datum_name`** and **`geographic_crs_name`** [aqua-background]#must# be all defined if any one is defined, and if **`projected_crs_name`** is defined then **`geographic_crs_name`** [aqua-background]#must# be also.
 
 

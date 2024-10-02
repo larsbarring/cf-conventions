@@ -49,9 +49,9 @@ The examples in this document that use string-valued variables alternate between
 It is [aqua-background]#recommended# that variable, dimension, attribute and group names begin with a letter and be composed of letters, digits, and underscores.
 By the word _letters_ we mean the standard ASCII letters uppercase `A` to `Z` and lowercase `a` to `z`.
 By the word _digits_ we mean the standard ASCII digits `0` to `9`, and similarly _underscores_ means the standard ASCII underscore `_`.
-Note that this is in conformance with the COARDS conventions, but is more restrictive than the netCDF interface which allows almost all Unicode characters encoded as multibyte UTF-8 characters (link:$$https://docs.unidata.ucar.edu/nug/current/file_format_specifications.html$$[NUG Appendix B]).
-The netCDF interface also allows leading underscores in names, but the NUG states that this is reserved for system use.
-ASCII period (.) and ASCII hyphen (-) are also allowed in attribute names only.
+Note that this is in conformance with the COARDS conventions, but is more restrictive than the netCDF interface which [lime-background]#allows# almost all Unicode characters encoded as multibyte UTF-8 characters (link:$$https://docs.unidata.ucar.edu/nug/current/file_format_specifications.html$$[NUG Appendix B]).
+The netCDF interface also [lime-background]#allows# leading underscores in names, but the NUG states that this is reserved for system use.
+ASCII period (.) and ASCII hyphen (-) are also [lime-background]#allowed# in attribute names only.
 
 Case is significant in netCDF names, but it is [aqua-background]#recommended# that names [aqua-background]#should not# be distinguished purely by case, i.e., if case is disregarded, no two names [aqua-background]#should# be the same.
 It is also [aqua-background]#recommended# that names [aqua-background]#should# be obviously meaningful, if possible, as this renders the file more effectively self-describing.
@@ -66,7 +66,7 @@ For example, a description of what a variable represents [aqua-background]#may# 
 === Dimensions
 
 A variable [aqua-background]#may# have any number of dimensions, including zero, and the dimensions [aqua-background]#must# all have different names.
-__COARDS strongly [lime-background]#recommends# limiting the number of dimensions to four, but we wish to allow greater flexibility__.
+__COARDS strongly [lime-background]#recommends# limiting the number of dimensions to four, but we wish to [lime-background]#allow# greater flexibility__.
 The dimensions of the variable define the axes of the quantity it contains.
 Dimensions other than those of space and time [aqua-background]#may# be included.
 Several examples [lime-background]#can# be found in this document.
@@ -95,9 +95,9 @@ NetCDF variables that contain coordinate data are referred to as __coordinate va
 The NUG conventions
 (link:$$https://www.unidata.ucar.edu/software/netcdf/docs/attribute_conventions.html$$[NUG Appendix A, Attribute Conventions])
 provide the **`_FillValue`**, **`missing_value`**, **`valid_min`**, **`valid_max`**, and **`valid_range`** attributes to indicate missing data.
-Missing data is allowed in data variables and auxiliary coordinate variables.
+Missing data is [lime-background]#allowed# in data variables and auxiliary coordinate variables.
 Generic applications [aqua-background]#should# treat the data as missing where any auxiliary coordinate variables have missing values; special-purpose applications [lime-background]#might# be able to make use of the data.
-Missing data is not allowed in coordinate variables.
+Missing data is [lime-background]#not allowed# in coordinate variables.
 
 The NUG conventions for missing data changed significantly between version 2.3 and version 2.4.
 Since version 2.4 the NUG defines missing data as all values outside of the **`valid_range`**, and specifies how the **`valid_range`** [aqua-background]#should# be defined from the **`_FillValue`** (which has library specified default values) if it hasn't been explicitly specified.
@@ -163,7 +163,7 @@ For readability in ncdump outputs it is [aqua-background]#recommended# to embed 
 For backwards compatibility with COARDS none of these global attributes is [aqua-background]#required#.
 
 The NUG defines **`title`** and **`history`** to be global attributes.
-We wish to allow the newly defined attributes, i.e., **`institution`**, **`source`**, **`references`**, and **`comment`**, to be either global or assigned to individual variables.
+We wish to [lime-background]#allow# the newly defined attributes, i.e., **`institution`**, **`source`**, **`references`**, and **`comment`**, to be either global or assigned to individual variables.
 When an attribute appears both globally and as a variable attribute, the variable's version has precedence.
 
 **`title`**:: A succinct description of what is in the dataset.
@@ -241,13 +241,13 @@ The lateral search algorithm [aqua-background]#may# only be used for NUG coordin
 [NOTE]
 ====
 This use of the lateral search strategy to find them is discouraged.
-They are allowed mainly for backwards-compatibility with existing datasets, and [aqua-background]#may# be [lime-background]#deprecated# in future versions of the standard.
+They are [lime-background]#allowed# mainly for backwards-compatibility with existing datasets, and [aqua-background]#may# be deprecated in future versions of the standard.
 ====
 
 ==== Application of attributes
 
 The following attributes are [aqua-background]#optional# for non-root groups.
-They are allowed in order to provide additional provenance and description of the subsidiary data.
+They are [lime-background]#allowed# in order to provide additional provenance and description of the subsidiary data.
 They do not override attributes from parent groups.
 
 * `title`
