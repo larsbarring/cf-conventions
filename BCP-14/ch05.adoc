@@ -5,38 +5,38 @@ A data variable's dimensions are used to locate data values in time and space or
 This is accomplished by associating these dimensions with the relevant set of latitude, longitude, vertical, time and any non-spatiotemporal coordinates.
 This section presents two methods for making that association: the use of __coordinate variables__, and the use of __auxiliary coordinate variables__.
 
-Any of a variable's dimensions that is an independently varying latitude, longitude, vertical, or time dimension (see <<terminology>>) and that has a size greater than one [red aqua-background]#must# have a corresponding coordinate variable, i.e., a one-dimensional variable with the same name as the dimension (see examples in <<coordinate-types>>).
+Any of a variable's dimensions that is an independently varying latitude, longitude, vertical, or time dimension (see <<terminology>>) and that has a size greater than one [aqua-background]#must# have a corresponding coordinate variable, i.e., a one-dimensional variable with the same name as the dimension (see examples in <<coordinate-types>>).
 This is the only method of associating dimensions with coordinates that is supported by <<COARDS>>.
 
-Any longitude, latitude, vertical or time coordinate which depends on more than one spatiotemporal dimension [red aqua-background]#must# be identified by the **`coordinates`** attribute of the data variable.
+Any longitude, latitude, vertical or time coordinate which depends on more than one spatiotemporal dimension [aqua-background]#must# be identified by the **`coordinates`** attribute of the data variable.
 The value of the **`coordinates`** attribute is __a blank separated list of the names of auxiliary coordinate variables__.
 There is no restriction on the order in which the auxiliary coordinate variables appear in the **`coordinates`** attribute string.
-The dimensions of an auxiliary coordinate variable [red aqua-background]#must# be a subset of the dimensions of the variable with which the coordinate is associated, with three exceptions.
+The dimensions of an auxiliary coordinate variable [aqua-background]#must# be a subset of the dimensions of the variable with which the coordinate is associated, with three exceptions.
 First, string-valued coordinates (<<labels>>) will have a dimension for maximum string length if the coordinate variable has a type of **`char`** rather than a type of **`string`**.
-Second, if an auxiliary coordinate variable of a data variable that has been compressed by gathering (<<compression-by-gathering>>) does not span the compressed dimension, then its dimensions [red aqua-background]#may# be any subset of the data variable's uncompressed dimensions, i.e. any of the dimensions of the data variable except the compressed dimension, and any of the dimensions listed by the **`compress`** attribute of the compressed coordinate variable.
+Second, if an auxiliary coordinate variable of a data variable that has been compressed by gathering (<<compression-by-gathering>>) does not span the compressed dimension, then its dimensions [aqua-background]#may# be any subset of the data variable's uncompressed dimensions, i.e. any of the dimensions of the data variable except the compressed dimension, and any of the dimensions listed by the **`compress`** attribute of the compressed coordinate variable.
 Third, in the ragged array representations of data (<<discrete-sampling-geometries>>), special methods are needed to connect the data and coordinates.
 
-We [black aqua-background]#recommend# that the name of a multidimensional coordinate variable [red aqua-background]#should not# match the name of any of its dimensions because that precludes supplying a coordinate variable for the dimension.
+We [lime-background]#recommend# that the name of a multidimensional coordinate variable [aqua-background]#should not# match the name of any of its dimensions because that precludes supplying a coordinate variable for the dimension.
 This practice also avoids potential bugs in applications that determine coordinate variables by only checking for a name match between a dimension and a variable and not checking that the variable is one dimensional.
 
-If the longitude, latitude, vertical or time coordinate is multi-valued, varies in only one dimension, and varies independently of other spatiotemporal coordinates, it is not permitted to store it as an auxiliary coordinate variable.
+If the longitude, latitude, vertical or time coordinate is multi-valued, varies in only one dimension, and varies independently of other spatiotemporal coordinates, it is [lime-background]#not permitted# to store it as an auxiliary coordinate variable.
 This is both to enhance conformance to COARDS and to facilitate the use of generic applications that recognize the NUG convention for coordinate variables.
-An application that is trying to find the latitude coordinate of a variable [red aqua-background]#should# always look first to see if any of the variable's dimensions correspond to a latitude coordinate variable.
-If the latitude coordinate is not found this way, then the auxiliary coordinate variables listed by the `coordinates` attribute [red aqua-background]#should# be checked.
-Note that it is permissible, but optional, to list coordinate variables as well as auxiliary coordinate variables in the `coordinates` attribute.
-If the longitude, latitude, vertical or time coordinate is single-valued, it [red aqua-background]#may# be stored either as a coordinate variable with a dimension of size one, or as a scalar coordinate variable (<<scalar-coordinate-variables>>).
+An application that is trying to find the latitude coordinate of a variable [aqua-background]#should# always look first to see if any of the variable's dimensions correspond to a latitude coordinate variable.
+If the latitude coordinate is not found this way, then the auxiliary coordinate variables listed by the `coordinates` attribute [aqua-background]#should# be checked.
+Note that it is permissible, but [aqua-background]#optional#, to list coordinate variables as well as auxiliary coordinate variables in the `coordinates` attribute.
+If the longitude, latitude, vertical or time coordinate is single-valued, it [aqua-background]#may# be stored either as a coordinate variable with a dimension of size one, or as a scalar coordinate variable (<<scalar-coordinate-variables>>).
 
-If an `axis` attribute is attached to an auxiliary coordinate variable, it [black aqua-background]#can# be used by applications in the same way the `axis` attribute attached to a coordinate variable is used.
-However, it is not permissible for a data variable to have both a coordinate variable and an auxiliary coordinate variable, or more than one of either type of variable, having an `axis` attribute with any given value e.g. there [red aqua-background]#must# be no more than one `axis` attribute for `X` for any data variable.
-Note that if the `axis` attribute is not specified for an auxiliary coordinate variable, it [red aqua-background]#may# still be possible to determine if it is a spatiotemporal dimension from its own units or `standard_name`, or from the units and `standard_name` of the coordinate variable corresponding to its dimensions (see <<coordinate-types>>).
-For instance, auxiliary coordinate variables which lie on the horizontal surface [black aqua-background]#can# be identified as such by their dimensions being horizontal.
+If an `axis` attribute is attached to an auxiliary coordinate variable, it [lime-background]#can# be used by applications in the same way the `axis` attribute attached to a coordinate variable is used.
+However, it is not permissible for a data variable to have both a coordinate variable and an auxiliary coordinate variable, or more than one of either type of variable, having an `axis` attribute with any given value e.g. there [aqua-background]#must# be no more than one `axis` attribute for `X` for any data variable.
+Note that if the `axis` attribute is not specified for an auxiliary coordinate variable, it [aqua-background]#may# still be possible to determine if it is a spatiotemporal dimension from its own units or `standard_name`, or from the units and `standard_name` of the coordinate variable corresponding to its dimensions (see <<coordinate-types>>).
+For instance, auxiliary coordinate variables which lie on the horizontal surface [lime-background]#can# be identified as such by their dimensions being horizontal.
 Horizontal dimensions are those whose coordinate variables have an `axis` attribute of `X` or `Y`, or a `units` attribute indicating latitude and longitude.
 
-To geo-reference data horizontally with respect to the Earth, a __grid mapping variable__ [red aqua-background]#may# be provided by the data variable, using the `grid_mapping` attribute.
-If the coordinate variables for a horizontal grid are not longitude and latitude, then a grid_mapping variable provides the information [red aqua-background]#required# to derive longitude and latitude values for each grid location.
-If no __grid mapping variable__ is referenced by a data variable, then longitude and latitude coordinate values [red aqua-background]#shall# be supplied __in addition__ to the [red aqua-background]#required# coordinates. 
-For example, the Cartesian coordinates of a map projection [red aqua-background]#may# be supplied as coordinate variables and, in addition, two-dimensional latitude and longitude variables [red aqua-background]#may# be supplied via the `coordinates` attribute on a data variable. 
-The use of the `axis` attribute with values `X` and `Y` is [red aqua-background]#recommended# for the coordinate variables (see <<coordinate-types>>).
+To geo-reference data horizontally with respect to the Earth, a __grid mapping variable__ [aqua-background]#may# be provided by the data variable, using the `grid_mapping` attribute.
+If the coordinate variables for a horizontal grid are not longitude and latitude, then a grid_mapping variable provides the information [aqua-background]#required# to derive longitude and latitude values for each grid location.
+If no __grid mapping variable__ is referenced by a data variable, then longitude and latitude coordinate values [aqua-background]#shall# be supplied __in addition__ to the [aqua-background]#required# coordinates. 
+For example, the Cartesian coordinates of a map projection [aqua-background]#may# be supplied as coordinate variables and, in addition, two-dimensional latitude and longitude variables [aqua-background]#may# be supplied via the `coordinates` attribute on a data variable. 
+The use of the `axis` attribute with values `X` and `Y` is [aqua-background]#recommended# for the coordinate variables (see <<coordinate-types>>).
 
 It is sometimes not practical to specify the latitude-longitude location of data which is representative of geographic regions with complex boundaries.
 For this purpose, provision is made in <<geographic-regions>> for indicating the region by a standardized name.
@@ -80,7 +80,7 @@ variables:
 
 === Two-Dimensional Latitude, Longitude, Coordinate Variables
 
-The latitude and longitude coordinates of a horizontal grid that was not defined as a Cartesian product of latitude and longitude axes, [black aqua-background]#can# sometimes be represented using two-dimensional coordinate variables.
+The latitude and longitude coordinates of a horizontal grid that was not defined as a Cartesian product of latitude and longitude axes, [lime-background]#can# sometimes be represented using two-dimensional coordinate variables.
 These variables are identified as coordinates by use of the `coordinates` attribute.
 
 [[two-dimensional-coordinate-variables-ex]]
@@ -130,7 +130,7 @@ This faciliates processing of this data by generic applications that don't recog
 
 A "reduced" longitude-latitude grid is one in which the points are arranged along constant latitude lines with the number of points on a latitude line decreasing toward the poles.
 Storing this type of gridded data in two-dimensional arrays wastes space, and results in the presence of missing values in the 2D coordinate variables.
-We [black aqua-background]#recommend# that this type of gridded data be stored using the compression scheme described in <<compression-by-gathering>>.
+We [lime-background]#recommend# that this type of gridded data be stored using the compression scheme described in <<compression-by-gathering>>.
 Compression by gathering preserves structure by storing a set of indices that allows an application to easily scatter the compressed data back to two-dimensional arrays.
 The compressed latitude and longitude auxiliary coordinate variables are identified by the `coordinates` attribute.
 
@@ -169,7 +169,7 @@ j = rgrid(n) / 128
 i = rgrid(n) - 128*j
 ----
 
-Notice that even if an application does not recognize the `compress` attribute, the grids stored in this format [black aqua-background]#can# still be handled, by an application that recognizes the `coordinates` attribute.
+Notice that even if an application does not recognize the `compress` attribute, the grids stored in this format [lime-background]#can# still be handled, by an application that recognizes the `coordinates` attribute.
 
 === Timeseries of Station Data
 
@@ -182,25 +182,25 @@ _This section has been superseded by the treatment of time series as a type of d
 [[grid-mappings-and-projections, Section 5.6, "Horizontal Coordinate Reference Systems, Grid Mappings, and Projections"]]
 === Horizontal Coordinate Reference Systems, Grid Mappings, and Projections
 
-A __grid mapping variable__ [red aqua-background]#may# be referenced by a data variable  in order to explicitly declare the coordinate reference system (CRS) used for the horizontal spatial coordinate values.
-For example, if the horizontal spatial coordinates are latitude and longitude, the grid mapping variable [black aqua-background]#can# be used to declare the figure of the earth (WGS84 ellipsoid, sphere, etc.) they are based on.
+A __grid mapping variable__ [aqua-background]#may# be referenced by a data variable  in order to explicitly declare the coordinate reference system (CRS) used for the horizontal spatial coordinate values.
+For example, if the horizontal spatial coordinates are latitude and longitude, the grid mapping variable [lime-background]#can# be used to declare the figure of the earth (WGS84 ellipsoid, sphere, etc.) they are based on.
 If the horizontal spatial coordinates are easting and northing in a map projection, the grid mapping variable declares the map projection CRS used and provides the information needed to calculate latitude and longitude from easting and northing.
 
-When the horizontal spatial coordinate variables are not longitude and latitude, it is [red aqua-background]#required# that further information is provided to geo-locate the horizontal position.
+When the horizontal spatial coordinate variables are not longitude and latitude, it is [aqua-background]#required# that further information is provided to geo-locate the horizontal position.
 A __grid mapping variable__ provides this information.
 
-If no __grid mapping variable__ is provided and the coordinate variables for a horizontal grid are not longitude and latitude, then it is [red aqua-background]#required# that the latitude and longitude coordinates are supplied via the `coordinates` attribute. 
-Such coordinates [red aqua-background]#may# be provided in addition to the provision of a __grid mapping variable__, but that is not required.
+If no __grid mapping variable__ is provided and the coordinate variables for a horizontal grid are not longitude and latitude, then it is [aqua-background]#required# that the latitude and longitude coordinates are supplied via the `coordinates` attribute. 
+Such coordinates [aqua-background]#may# be provided in addition to the provision of a __grid mapping variable__, but that is not [aqua-background]#required#.
 
 A grid mapping variable provides the description of the mapping via a collection of attached attributes.
 It is of arbitrary type since it contains no data.
 Its purpose is to act as a container for the attributes that define the mapping.
-The one attribute that all grid mapping variables [red aqua-background]#must# have is `grid_mapping_name`, which takes a string value that contains the mapping's name.
+The one attribute that all grid mapping variables [aqua-background]#must# have is `grid_mapping_name`, which takes a string value that contains the mapping's name.
 The other attributes that define a specific mapping depend on the value of `grid_mapping_name`.
 The valid values of `grid_mapping_name` along with the attributes that provide specific map parameter values are described in <<appendix-grid-mappings>>.
 
 The grid mapping variables are associated with the data and coordinate variables by the `grid_mapping` attribute.
-This attribute is attached to data variables so that variables with different mappings [red aqua-background]#may# be present in a single file.
+This attribute is attached to data variables so that variables with different mappings [aqua-background]#may# be present in a single file.
 The attribute takes a string value with two possible formats.
 In the first format, it is a single word, which names a grid mapping variable.
 In the second format, it is a blank-separated list of words `<gridMappingVariable>: <coordinatesVariable> [<coordinatesVariable> ...] [<gridMappingVariable>: <coordinatesVariable>...]`, which identifies one or more grid mapping variables, and with each grid mapping associates one or more coordinatesVariables, i.e. coordinate variables or auxiliary coordinate variables.
@@ -212,15 +212,15 @@ Explicit 'axis order' is important when the __grid mapping variable__ contains a
 
 Using the simple form, where the `grid_mapping` attribute is only the name of a grid mapping variable, 2D latitude and longitude coordinates for a projected coordinate reference system use the same geographic coordinate reference system (ellipsoid and prime meridian) as the projection is projected from.
 
-The `grid_mapping` variable [red aqua-background]#may# identify datums (such as the reference ellipsoid, the geoid or the prime meridian) for horizontal or vertical coordinates.
-Therefore a grid mapping variable [red aqua-background]#may# be needed when the coordinate variables for a horizontal grid are longitude and latitude.
-The `grid_mapping_name` of `latitude_longitude` [red aqua-background]#should# be used in this case.
+The `grid_mapping` variable [aqua-background]#may# identify datums (such as the reference ellipsoid, the geoid or the prime meridian) for horizontal or vertical coordinates.
+Therefore a grid mapping variable [aqua-background]#may# be needed when the coordinate variables for a horizontal grid are longitude and latitude.
+The `grid_mapping_name` of `latitude_longitude` [aqua-background]#should# be used in this case.
 
-The expanded form of the `grid_mapping` attribute is [red aqua-background]#required# if one wants to store coordinate information for more than one coordinate reference system.
+The expanded form of the `grid_mapping` attribute is [aqua-background]#required# if one wants to store coordinate information for more than one coordinate reference system.
 In this case each coordinate or auxiliary coordinate is defined explicitly with respect to no more than one `grid_mapping` variable.
-This syntax [red aqua-background]#may# be used to explicitly link coordinates and grid mapping variables where only one coordinate reference system is used.
+This syntax [aqua-background]#may# be used to explicitly link coordinates and grid mapping variables where only one coordinate reference system is used.
 In this case, all coordinates and auxiliary coordinates of the data variable not named in the `grid_mapping` attribute are unrelated to any grid mapping variable.
-All coordinate names listed in the `grid_mapping` attribute [red aqua-background]#must# be coordinate variables or auxiliary coordinates of the data variable.
+All coordinate names listed in the `grid_mapping` attribute [aqua-background]#must# be coordinate variables or auxiliary coordinates of the data variable.
 
 In order to make use of a grid mapping to directly calculate latitude and longitude values it is necessary to associate the coordinate variables with the independent variables of the mapping.
 This is done by assigning a `standard_name` to the coordinate variable.
@@ -267,9 +267,9 @@ variables:
 
 ====
 
-A CF compliant application [black aqua-background]#can# determine that rlon and rlat are longitude and latitude values in the rotated grid by recognizing the standard names `grid_longitude` and `grid_latitude`.
+A CF compliant application [lime-background]#can# determine that rlon and rlat are longitude and latitude values in the rotated grid by recognizing the standard names `grid_longitude` and `grid_latitude`.
 Note that the units of the rotated longitude and latitude axes are given as `degrees`.
-This [red aqua-background]#should# prevent a COARDS compliant application from mistaking the variables `rlon` and `rlat` to be actual longitude and latitude coordinates.
+This [aqua-background]#should# prevent a COARDS compliant application from mistaking the variables `rlon` and `rlat` to be actual longitude and latitude coordinates.
 The entries for these names in the standard name table indicate the appropriate sign conventions for the units of `degrees`.
 
 [[lambert-conformal-projection, "Lambert conformal projection"]]
@@ -317,7 +317,7 @@ variables:
 ----
 ====
 
-An application [black aqua-background]#can# determine that `x` and `y` are the projection coordinates by recognizing the standard names `projection_x_coordinate` and `projection_y_coordinate`.
+An application [lime-background]#can# determine that `x` and `y` are the projection coordinates by recognizing the standard names `projection_x_coordinate` and `projection_y_coordinate`.
 The grid mapping variable `Lambert_Conformal` contains the mapping parameters as attributes, and is associated with the `Temperature` variable via its `grid_mapping` attribute.
 
 
@@ -427,14 +427,14 @@ dimensions:
 [[use-of-the-crs-well-known-text-format, Section 5.6.1, "Use of the CRS Well-known Text Format"]]
 ==== Use of the CRS Well-known Text Format
 
-An [red aqua-background]#optional# grid mapping attribute called `crs_wkt` [red aqua-background]#may# be used to specify multiple coordinate system properties in so-called __well-known text__ format (usually abbreviated to CRS WKT or OGC WKT).
+An [aqua-background]#optional# grid mapping attribute called `crs_wkt` [aqua-background]#may# be used to specify multiple coordinate system properties in so-called __well-known text__ format (usually abbreviated to CRS WKT or OGC WKT).
 The CRS WKT format is widely recognised and used within the geoscience software community.
 As such it represents a versatile mechanism for encoding information about a variety of coordinate reference system parameters in a highly compact notational form.
 The translation of CF coordinate variables to/from OGC Well-Known Text (WKT) format is shown in Examples 5.11 and 5.12 below and described in detail in
 https://github.com/cf-convention/cf-conventions/wiki/Mapping-from-CF-Grid-Mapping-Attributes-to-CRS-WKT-Elements.
 
-The `crs_wkt` attribute [red aqua-background]#should# comprise a text string that conforms to the WKT syntax as specified in reference <<OGC_WKT-CRS>>.
-If desired the text string [red aqua-background]#may# contain embedded newline characters to aid human readability.
+The `crs_wkt` attribute [aqua-background]#should# comprise a text string that conforms to the WKT syntax as specified in reference <<OGC_WKT-CRS>>.
+If desired the text string [aqua-background]#may# contain embedded newline characters to aid human readability.
 However, any such characters are purely cosmetic and do not alter the meaning of the attribute value.
 It is envisaged that the value of the `crs_wkt` attribute typically will be a single line of text, one intended primarily for machine processing.
 Other than the requirement to be a valid WKT string, the CF convention does not prescribe the content of the `crs_wkt` attribute since it will necessarily be context-dependent.
@@ -448,29 +448,29 @@ This enables an application reading the data from a file to construct an array o
 It is the responsibility of the data producer to ensure that the `<coordinatesVariable>` list is consistent with the CRS WKT definition of CS AXIS, with the correct number of entries in the correct order (note: this is not a conformance requirement as CF conformance is not dependent on CRS WKT parsing).
 
 For example, a file has two coordinate variables, lon and lat, and a grid mapping variable `crs` with an associated `crs_wkt` attribute; the WKT definition defines the AXIS order as `["latitude", "longitude"]`.
-The `grid_mapping` attribute is thus given a value `crs:lat lon` to define that where coordinate pairs are required, these [red aqua-background]#shall# be ordered (lat, lon), to be consistent with the provided `crs_wkt` string (and not order inverted). 
-A 2-D array of (lat, lon) tuples [black aqua-background]#can# then be explicitly derived from the combination of the lat and lon variables.
+The `grid_mapping` attribute is thus given a value `crs:lat lon` to define that where coordinate pairs are [aqua-background]#required#, these [aqua-background]#shall# be ordered (lat, lon), to be consistent with the provided `crs_wkt` string (and not order inverted). 
+A 2-D array of (lat, lon) tuples [lime-background]#can# then be explicitly derived from the combination of the lat and lon variables.
 
 The `crs_wkt` attribute is intended to act as a _supplement_ to other single-property CF grid mapping attributes (as described in Appendix F); it is not intended to replace those attributes.
 If data producers omit the single-property grid mapping attributes in favour of the `crs_wkt` attribute, software which cannot interpret `crs_wkt` will be unable to use the `grid_mapping` information.
-Therefore the CRS [red aqua-background]#should# be described as thoroughly as possible with the single-property grid mapping attributes as well as by `crs_wkt`.
+Therefore the CRS [aqua-background]#should# be described as thoroughly as possible with the single-property grid mapping attributes as well as by `crs_wkt`.
 
-In cases where CRS property values [black aqua-background]#can# be represented by both a single-property grid mapping attribute and the `crs_wkt` attribute, the grid mapping [red aqua-background]#should# be provided, and if both are provided, the onus is on data producers to ensure that their property values are consistent.
-Therefore information from either one (or both) [red aqua-background]#may# be read in by the user without needing to check both.
-However, if the two values of a given property are different, the CRS information cannot be interpreted accurately and users [red aqua-background]#should# inform the provider so the issue [black aqua-background]#can# be addressed.
+In cases where CRS property values [lime-background]#can# be represented by both a single-property grid mapping attribute and the `crs_wkt` attribute, the grid mapping [aqua-background]#should# be provided, and if both are provided, the onus is on data producers to ensure that their property values are consistent.
+Therefore information from either one (or both) [aqua-background]#may# be read in by the user without needing to check both.
+However, if the two values of a given property are different, the CRS information cannot be interpreted accurately and users [aqua-background]#should# inform the provider so the issue [lime-background]#can# be addressed.
 For example, if the semi-major axis length of the ellipsoid defined by the grid mapping attribute `semi_major_axis` disagrees with the `crs_wkt` attribute (via the `WKT SPHEROID[…​]` element), the value of this attribute cannot be interpreted accurately.
 Naturally if the two values are equal then no ambiguity arises.
 
-Likewise, in those cases where the value of a CRS WKT element [red aqua-background]#should# be used consistently across the CF-netCDF community (names of projections and projection parameters, for example) then, the values shown in
+Likewise, in those cases where the value of a CRS WKT element [aqua-background]#should# be used consistently across the CF-netCDF community (names of projections and projection parameters, for example) then, the values shown in
 https://github.com/cf-convention/cf-conventions/wiki/Mapping-from-CF-Grid-Mapping-Attributes-to-CRS-WKT-Elements
 should be preferred; these are derived from the OGP/EPSG registry of geodetic parameters, which is considered to represent the definitive authority as regards CRS property names and values.
 
-Examples 5.11 illustrates how the coordinate system properties specified via the `crs` grid mapping variable in Example 5.9 might be expressed using a `crs_wkt` attribute. 
+Examples 5.11 illustrates how the coordinate system properties specified via the `crs` grid mapping variable in Example 5.9 [lime-background]#might# be expressed using a `crs_wkt` attribute. 
 Example 5.12 also illustrates the addition of the `crs_wkt` attribute, but here the attribute is added to the `crs` variable of a simplified variant of Example 5.10. 
 For brevity in Example 5.11, only the grid mapping variable and its `grid_mapping_name` and `crs_wkt` attributes are included; all other elements are as per the Example 5.9. 
 Names of projection. `PARAMETERs` follow the spellings used in the EPSG geodetic parameter registry.
 
-Example 5.12 illustrates how certain WKT elements - all of which are [red aqua-background]#optional# - [black aqua-background]#can# be used to specify CRS properties not covered by existing CF grid mapping attributes, including:
+Example 5.12 illustrates how certain WKT elements - all of which are [aqua-background]#optional# - [lime-background]#can# be used to specify CRS properties not covered by existing CF grid mapping attributes, including:
 
 // * use of the TOWGS84 element to specify horizontal datum transformation parameters (to WGS 1984 datum)
 
@@ -596,7 +596,7 @@ variables:
 Note: There are unescaped double quotes and newlines and the quotation marks which would delimit the entire `crs_wkt` string are missing in this example.
 This is to enhance readability, but it means that this pseudo CDL will not parse directly.
 
-The preceding two example (5.11 and 5.12) [red aqua-background]#may# be combined, if the data provider desires to provide explicit latitude and longitude coordinates as well as projection coordinates and to provide CRS WKT referencing for both sets of coordinates.
+The preceding two example (5.11 and 5.12) [aqua-background]#may# be combined, if the data provider desires to provide explicit latitude and longitude coordinates as well as projection coordinates and to provide CRS WKT referencing for both sets of coordinates.
 This is demonstrated in example 5.13.
 
 [[british-national-grid-newlyn-datum-with-wgs84-in-crs-wkt-format]]
@@ -640,19 +640,19 @@ This is to enhance readability, but it means that this pseudo CDL will not parse
 [[scalar-coordinate-variables, Section 5.7, "Scalar Coordinate Variables"]]
 === Scalar Coordinate Variables
 
-When a variable has an associated coordinate which is single-valued, that coordinate [red aqua-background]#may# be represented as a scalar variable (i.e. a data variable which has no netCDF dimensions).
-Since there is no associated dimension these scalar coordinate variables [red aqua-background]#should# be attached to a data variable via the `coordinates` attribute.
+When a variable has an associated coordinate which is single-valued, that coordinate [aqua-background]#may# be represented as a scalar variable (i.e. a data variable which has no netCDF dimensions).
+Since there is no associated dimension these scalar coordinate variables [aqua-background]#should# be attached to a data variable via the `coordinates` attribute.
 
 The use of scalar coordinate variables is a convenience feature which avoids adding size one dimensions to variables.
-A numeric scalar coordinate variable has the same information content and [black aqua-background]#can# be used in the same contexts as a size one numeric coordinate variable.
+A numeric scalar coordinate variable has the same information content and [lime-background]#can# be used in the same contexts as a size one numeric coordinate variable.
 Similarly, a string-valued scalar coordinate variable has the same meaning and purposes as a size one string-valued auxiliary coordinate variable (<<labels>>).
 Note however that use of this feature with a latitude, longitude, vertical, or time coordinate will inhibit COARDS conforming applications from recognizing them.
 
-Once a name is used for a scalar coordinate variable it [black aqua-background]#can not# be used for a 1D coordinate variable.
-For this reason we strongly [black aqua-background]#recommend# against using a name for a scalar coordinate variable that matches the name of any dimension in the file.
+Once a name is used for a scalar coordinate variable it [lime-background]#can not# be used for a 1D coordinate variable.
+For this reason we strongly [lime-background]#recommend# against using a name for a scalar coordinate variable that matches the name of any dimension in the file.
 
 If a data variable has two or more scalar coordinate variables, they are regarded as though they were all independent coordinate variables with dimensions of size one.
-If two or more single-valued coordinates are not independent, but have related values (this might be the case, for instance, for time and forecast period, or vertical coordinate and model level number, <<alternative-coordinates>>), they [red aqua-background]#should# be stored as coordinate or auxiliary coordinate variables of the same size one dimension, not as scalar coordinate variables.
+If two or more single-valued coordinates are not independent, but have related values (this [lime-background]#might# be the case, for instance, for time and forecast period, or vertical coordinate and model level number, <<alternative-coordinates>>), they [aqua-background]#should# be stored as coordinate or auxiliary coordinate variables of the same size one dimension, not as scalar coordinate variables.
 
 [[multiple-forecasts-from-single-analysis, "Multiple forecasts from a single analysis"]]
 [caption="Example 5.14. "]
@@ -703,7 +703,7 @@ A domain describes data locations and cell properties.
 It defines cells that span a collection of dimensions with cell coordinates, cell measures, and coordinate reference systems.
 
 A data variable defines its domain via its own attributes, but a domain variable provides the description of a domain in the absence of any data values.
-The variable [red aqua-background]#should# be a scalar (i.e. it has no dimensions) of arbitrary type, and the value of its single element is immaterial.
+The variable [aqua-background]#should# be a scalar (i.e. it has no dimensions) of arbitrary type, and the value of its single element is immaterial.
 It acts as a container for the attributes that define the domain.
 The purpose of a domain variable is to provide domain information to applications that have no need of data values at the domain's locations, thus removing any ambiguity when retrieving a domain from a dataset.
 Ancillary variables and cell methods are not part of the domain, because they are only defined in relation to data values.
@@ -711,25 +711,25 @@ Ancillary variables and cell methods are not part of the domain, because they ar
 The domain variable supports the same attributes as are allowed on a data variable for describing a domain, with exactly the same meanings and syntaxes, as described in <<attribute-appendix>>.
 If an attribute is needed by a particular data variable to describe its domain, then that attribute would also be needed by the equivalent domain variable.
 
-The dimensions of the domain [red aqua-background]#must# be stored with the `dimensions` attribute, and the presence of a `dimensions` attribute will identify the variable as a domain variable.
-Therefore the `dimensions` attribute [red aqua-background]#must not# be present on any variables that are to be interpreted as data variables.
-It is necessary to list these dimensions, rather than inferring them from the contents of the other attributes, as it [black aqua-background]#can not# be guaranteed that the referenced variables span all of the [red aqua-background]#required# dimensions (as [black aqua-background]#could# be the case for a discrete axis, for instance).
+The dimensions of the domain [aqua-background]#must# be stored with the `dimensions` attribute, and the presence of a `dimensions` attribute will identify the variable as a domain variable.
+Therefore the `dimensions` attribute [aqua-background]#must not# be present on any variables that are to be interpreted as data variables.
+It is necessary to list these dimensions, rather than inferring them from the contents of the other attributes, as it [lime-background]#can not# be guaranteed that the referenced variables span all of the [aqua-background]#required# dimensions (as [lime-background]#could# be the case for a discrete axis, for instance).
 The value of the `dimensions` attribute is a blank separated list of the dimension names.
 There is no restriction on the order in which the dimensions appear in the `dimensions` attribute string.
-If a domain has no named dimensions then the value of the `dimensions` attribute [red aqua-background]#must# be an empty string, as [black aqua-background]#could# be the case if the dimensions of the domain are all defined implicitly by scalar coordinate variables.
+If a domain has no named dimensions then the value of the `dimensions` attribute [aqua-background]#must# be an empty string, as [lime-background]#could# be the case if the dimensions of the domain are all defined implicitly by scalar coordinate variables.
 
-The dimensions listed by the `dimensions` attribute constrain the dimensions that [red aqua-background]#may# be spanned by variables referenced from any of the other attributes, in the same way that the array dimensions perform that role for a data variable.
-For instance, all variables named by the `cell_measures` attribute (<<cell-measures>>) of a domain variable [red aqua-background]#must# span a subset of zero or more of the dimensions given by the `dimensions` attribute.
+The dimensions listed by the `dimensions` attribute constrain the dimensions that [aqua-background]#may# be spanned by variables referenced from any of the other attributes, in the same way that the array dimensions perform that role for a data variable.
+For instance, all variables named by the `cell_measures` attribute (<<cell-measures>>) of a domain variable [aqua-background]#must# span a subset of zero or more of the dimensions given by the `dimensions` attribute.
 
-It is [red aqua-background]#optional# for coordinate variables to be listed by a domain variable's `coordinates` attribute.
+It is [aqua-background]#optional# for coordinate variables to be listed by a domain variable's `coordinates` attribute.
 Any coordinate variable that shares its name with a dimension given by the `dimensions` attribute will be considered as part of the domain definition.
 
-It is [red aqua-background]#recommended# that a domain variable has a `long_name` attribute to describe its contents.
+It is [aqua-background]#recommended# that a domain variable has a `long_name` attribute to describe its contents.
 
-It is [red aqua-background]#recommended# that a domain variable does not have any of the attributes marked in <<attribute-appendix>> as applicable to data variables except those which are also marked as applicable to domain variables.
+It is [aqua-background]#recommended# that a domain variable does not have any of the attributes marked in <<attribute-appendix>> as applicable to data variables except those which are also marked as applicable to domain variables.
 
-Multiple domain variables [red aqua-background]#may# exist in a file with, or without, data variables.
-Note that the data variable attributes describing its domain [black aqua-background]#can not# be replaced by a reference to a domain variable.
+Multiple domain variables [aqua-background]#may# exist in a file with, or without, data variables.
+Note that the data variable attributes describing its domain [lime-background]#can not# be replaced by a reference to a domain variable.
 
 [[a-domain-with-independent-coordinate-variables]]
 [caption="Example 5.15. "]
@@ -969,15 +969,15 @@ In this example the data variables `humidity` and `temp` from the <<example-h.7>
 
 A __mesh topology variable__ defines the geospatial topology of cells arranged in two or three dimensions in real space but indexed by a single dimension.
 It explicitly describes the topological relationships between cells, i.e. spatial relationships which do not depend on the cell locations, via a mesh of connected nodes. 
-A mesh topology variable [red aqua-background]#may# provide the topology for one or more domains, defined at the nodes, edges, or faces of the mesh.
+A mesh topology variable [aqua-background]#may# provide the topology for one or more domains, defined at the nodes, edges, or faces of the mesh.
 See the <<data-model-domain-topology>> and <<data-model-cell-connectivity>> descriptions in the CF data model for more details, including on how the mesh relates to the cells of the domain.
 
-The canonical definitions of mesh topology variables and location index set variables are given externally by the UGRID conventions <<UGRID>>, but their standardized attributes, many of which are optional, are listed in <<appendix-mesh-topology-attributes>> and <<attribute-appendix>>.
+The canonical definitions of mesh topology variables and location index set variables are given externally by the UGRID conventions <<UGRID>>, but their standardized attributes, many of which are [aqua-background]#optional#, are listed in <<appendix-mesh-topology-attributes>> and <<attribute-appendix>>.
 Some features of the UGRID conventions <<UGRID>> are not currently recognized by the CF conventions: mesh topology volume cells (that are used to describe fully three-dimensional unstructured mesh topologies); and the "boundary node connectivity" variable (that specifies an index variable identifying the nodes that define where boundary condtions have been provided). 
 
-A data or domain variable [red aqua-background]#may# use one of a mesh topology variable's domains by referencing the mesh topology variable with the **`mesh`** attribute; along with the identity of [red aqua-background]#required# domain provided by the **`location`** attribute (see example <<example-mesh-topology-variable>>).
+A data or domain variable [aqua-background]#may# use one of a mesh topology variable's domains by referencing the mesh topology variable with the **`mesh`** attribute; along with the identity of [aqua-background]#required# domain provided by the **`location`** attribute (see example <<example-mesh-topology-variable>>).
 
-The variables containing the coordinate values for cells indexed by the mesh topology are defined by the mesh topology variable but are equivalent to one-dimensional auxiliary coordinate variables, and so [red aqua-background]#may# also be provided by the data or domain variable's **`coordinates`** attribute.
+The variables containing the coordinate values for cells indexed by the mesh topology are defined by the mesh topology variable but are equivalent to one-dimensional auxiliary coordinate variables, and so [aqua-background]#may# also be provided by the data or domain variable's **`coordinates`** attribute.
 Note that the mesh topology variable allows cell bounds to be provided without any cell coordinate values, via its __**`node_coordinates`**__ attribute.
 
 A __location index set variable__ defines a subset of locations of a mesh topology variable, e.g. only special locations like weirs and gates.
@@ -1047,6 +1047,6 @@ variables:
 
 ----
 
-A two-dimensional UGRID mesh topology variable for the mesh depicted in <<figure-mesh-example>>, with data variables defined at face, edge and node elements of the mesh. All [red aqua-background]#optional# attributes have been omitted.
+A two-dimensional UGRID mesh topology variable for the mesh depicted in <<figure-mesh-example>>, with data variables defined at face, edge and node elements of the mesh. All [aqua-background]#optional# attributes have been omitted.
 
 ====

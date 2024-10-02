@@ -1,12 +1,22 @@
 :issues: https://github.com/cf-convention/cf-conventions/issues/
 :pull-requests: https://github.com/cf-convention/cf-conventions/pull/
-:tickets: https://cfconventions.org/Data/trac.html
+:tickets: https://cfconventions.org/Data/Trac-tickets/
 
 [[revhistory, Revision History]]
 == Revision History
 
 === Working version (most recent first)
 
+* {issues}403[Issue #403]: Metadata to encode quantization properties
+* {issues}530{Issue #530]: Define "the most rapidly varying dimension", and use this phrase consistently with the clarification "(the last dimension in CDL order)".
+* {issues}163[Issue #163]: Provide a convention for boundary variables for grids whose cells do not all have the same number of sides.
+* {issues}174[Issue #174]: A one-dimensional string-valued variable [aqua-background]#must not# have the same name as its dimension, in order to avoid its being mistaken for a coordinate variable.
+* {issues}237[Issue #237]: Clarify that the character set given in section 2.3 for variable, dimension, attribute and group names is a recommendation, not a requirement.
+* {issues}515[Issue #515]: Clarify the recommendation to use the convention of 4.3.3 for parametric vertical coordinates, because the previous wording caused confusion.
+* {issues}511[Issue #511]: Appendix B: New element in XML file header to record the "first published date"
+* {issues}509[Issue #509]: In exceptional cases allow a standard name to be aliased into two alternatives
+* {issues}501[Issue #501]: Clarify that data variables and variables containing coordinate data are highly [aqua-background]#recommended# to have **`long_name`** or **`standard_name`** attributes, that **`cf_role`** is used only for discrete sampling geometries and UGRID mesh topologies, and that CF does not prohibit CF attributes from being used in ways that are not defined by CF but that in such cases their meaning is not defined by CF.
+* {issues}477[Issue #477]: Period and hyphen allowed in attribute names
 * {issues}500[Issue #500]: Appendix B: Added a **`conventions`** string to the standard name xml file format definition
 
 === Version 1.11 (05 December 2023)
@@ -17,7 +27,7 @@
 * {issues}490[Issue #490]: Simple correction to Example 6.1.2
 * {issues}457[Issue #457]: Creation date of the draft Conventions document 
 * {issues}445[Issue #445]: Updates concerning the Polar Stereographic Grid Mapping
-* {issues}468[Issue #468]: Update section 2.3 to clarify [red aqua-background]#recommended# character set
+* {issues}468[Issue #468]: Update section 2.3 to clarify [aqua-background]#recommended# character set
 * {issues}147[Issue #147]: Clarify the use of compressed dimensions in related variables
 * {issues}483[Issue #483]: Add a missing author
 * {issues}463[Issue #463]: Convert URLs with HTTP protocol to HTTPS if available, fixed a few dead links
@@ -92,20 +102,20 @@
 * {issues}213[Issue #213]: Missing `s`s in grid mapping description texts.
 * {pull-requests}202[Pull request #202]: Fix Section 7 examples numbering in the list of examples
 * {issues}198[Issue #198]: Clarification of use of standard region names in "region" variables.
-* {issues}179[Issue #179]: Don't require longitude and Latitude for projected coordinates.
+* {issues}179[Issue #179]: Don't [lime-background]#require# longitude and Latitude for projected coordinates.
 * {issues}139[Issue #139]: Added support for variables of type string.
 * {issues}186[Issue #186]: Minor corrections to Example 5.10, Section 9.5 & Appendix F
 * {issues}136[Issue #136]: Missing trajectory dimension in H.22
 * {issues}144[Issue #144]: Add <<groups, support for using groups>>.
 * {issues}128[Issue #128]: Add definition of 'name_strlen' dimension where missing in Appendix H CDL examples.
 * {pull-requests}142[Pull request #142]: Fix bad reference to an example in section 6.1 "Labels".
-* {issues}155[Issue #155], {issues}156[Issue #156]: Allow alternate grid mappings for geometry containers. When node_count attribute is missing, require the dimension of the node coordinate variables to be one of the dimensions of the data variable.
+* {issues}155[Issue #155], {issues}156[Issue #156]: Allow alternate grid mappings for geometry containers. When node_count attribute is missing, [lime-background]#require# the dimension of the node coordinate variables to be one of the dimensions of the data variable.
 * {pull-requests}146[Pull request #146]: Typos (plural dimensions) in section H
 * {tickets}164.html[Ticket #164]: Add bounds attribute to first geometry CDL example.
 * {tickets}164.html[Ticket #164]: Replace axis with bounds for coordinate variables related to geometry node variables.
 * {tickets}164.html[Ticket #164]: Add Tim Whiteaker and Dave Blodgett as authors.
 * {tickets}164.html[Ticket #164]: Remove geometry attribute from lat/lon variables in examples.
-* {tickets}164.html[Ticket #164]: If coordinates attribute is carried by geometry container, require coordinate variables which correspond to node coordinate variables to have the corresponding axis attribute.
+* {tickets}164.html[Ticket #164]: If coordinates attribute is carried by geometry container, [lime-background]#require# coordinate variables which correspond to node coordinate variables to have the corresponding axis attribute.
 * {tickets}164.html[Ticket #164]: Implement suggestions from trac ticket comments.
 * {tickets}164.html[Ticket #164]: New Geometries section 7.5.
 
