@@ -131,7 +131,7 @@ This faciliates processing of this data by generic applications that don't recog
 A "reduced" longitude-latitude grid is one in which the points are arranged along constant latitude lines with the number of points on a latitude line decreasing toward the poles.
 Storing this type of gridded data in two-dimensional arrays wastes space, and results in the presence of missing values in the 2D coordinate variables.
 We [lime-background]#recommend# that this type of gridded data be stored using the compression scheme described in <<compression-by-gathering>>.
-Compression by gathering preserves structure by storing a set of indices that allows an application to easily scatter the compressed data back to two-dimensional arrays.
+Compression by gathering preserves structure by storing a set of indices that [lime-background]#allows# an application to easily scatter the compressed data back to two-dimensional arrays.
 The compressed latitude and longitude auxiliary coordinate variables are identified by the `coordinates` attribute.
 
 [[reduced-horizontal-grid-ex]]
@@ -708,7 +708,7 @@ It acts as a container for the attributes that define the domain.
 The purpose of a domain variable is to provide domain information to applications that have no need of data values at the domain's locations, thus removing any ambiguity when retrieving a domain from a dataset.
 Ancillary variables and cell methods are not part of the domain, because they are only defined in relation to data values.
 
-The domain variable supports the same attributes as are allowed on a data variable for describing a domain, with exactly the same meanings and syntaxes, as described in <<attribute-appendix>>.
+The domain variable supports the same attributes as are [lime-background]#allowed# on a data variable for describing a domain, with exactly the same meanings and syntaxes, as described in <<attribute-appendix>>.
 If an attribute is needed by a particular data variable to describe its domain, then that attribute would also be needed by the equivalent domain variable.
 
 The dimensions of the domain [aqua-background]#must# be stored with the `dimensions` attribute, and the presence of a `dimensions` attribute will identify the variable as a domain variable.
@@ -978,7 +978,7 @@ Some features of the UGRID conventions <<UGRID>> are not currently recognized by
 A data or domain variable [aqua-background]#may# use one of a mesh topology variable's domains by referencing the mesh topology variable with the **`mesh`** attribute; along with the identity of [aqua-background]#required# domain provided by the **`location`** attribute (see example <<example-mesh-topology-variable>>).
 
 The variables containing the coordinate values for cells indexed by the mesh topology are defined by the mesh topology variable but are equivalent to one-dimensional auxiliary coordinate variables, and so [aqua-background]#may# also be provided by the data or domain variable's **`coordinates`** attribute.
-Note that the mesh topology variable allows cell bounds to be provided without any cell coordinate values, via its __**`node_coordinates`**__ attribute.
+Note that the mesh topology variable [lime-background]#allows# cell bounds to be provided without any cell coordinate values, via its __**`node_coordinates`**__ attribute.
 
 A __location index set variable__ defines a subset of locations of a mesh topology variable, e.g. only special locations like weirs and gates.
 It is provided as a space saving device to prevent the need to redefine parts of an existing mesh topology variable, and as such is logically equivalent to a mesh topology variable.

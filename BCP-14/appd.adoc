@@ -3,7 +3,7 @@
 [appendix]
 == Parametric Vertical Coordinates
 
-The definitions given here allow an application to compute dimensional coordinate values from the parametric vertical coordinate values (usually dimensionless) and associated variables.
+The definitions given here [lime-background]#allow# an application to compute dimensional coordinate values from the parametric vertical coordinate values (usually dimensionless) and associated variables.
 The formulas are expressed for a gridpoint `(n,k,j,i)` where `i` and `j` are the horizontal indices, `k` is the vertical index and `n` is the time index.
 A coordinate variable is associated with its definition by the value of the `standard_name` attribute.
 The terms in the definition are associated with file variables by the `formula_terms` attribute.
@@ -280,7 +280,7 @@ No `standard_name` has been defined for `C` or `depth_c`.
 ===  Ocean sigma over z coordinate
 
 **The description of this type of parametric vertical coordinate is defective in version 1.8 and earlier versions of the standard, in that it does not state what values the vertical coordinate variable [aqua-background]#should# contain.
-Therefore, in accordance with the rules, all versions of the standard before 1.9 are [lime-background]#deprecated# for datasets that use the "ocean sigma over z" coordinate.**
+Therefore, in accordance with the rules, all versions of the standard before 1.9 are deprecated for datasets that use the "ocean sigma over z" coordinate.**
 
 ----
 standard_name = "ocean_sigma_z_coordinate"
@@ -317,7 +317,7 @@ formula_terms = "sigma: var1 eta: var2 depth: var3 depth_c: var4 nsigma: var5
 The pass:q[`standard_name`]s for `eta`, `depth`, `zlev` and the `computed_standard_name` [aqua-background]#must# be one of the consistent sets shown in <<table-computed-standard-names, Table D.1>>.
 The `standard_name` for `sigma` is `ocean_sigma_coordinate`.
 No `standard_name` has been defined for `depth_c` or `nsigma`.
-The `nsigma` parameter is [lime-background]#deprecated# and [aqua-background]#optional# in `formula_terms`; if supplied, it [aqua-background]#must# equal the number of elements of `zlev` which contain missing data.
+The `nsigma` parameter is deprecated and [aqua-background]#optional# in `formula_terms`; if supplied, it [aqua-background]#must# equal the number of elements of `zlev` which contain missing data.
 
 The `standard_name` for the vertical coordinate variable is `ocean_sigma_z_coordinate`.
 This variable [aqua-background]#should# contain `sigma(k)*depth_c` for the layers where `sigma` is defined and `zlev(k)` for the other layers, with units of length.

@@ -14,9 +14,9 @@
 * {issues}237[Issue #237]: Clarify that the character set given in section 2.3 for variable, dimension, attribute and group names is a recommendation, not a requirement.
 * {issues}515[Issue #515]: Clarify the recommendation to use the convention of 4.3.3 for parametric vertical coordinates, because the previous wording caused confusion.
 * {issues}511[Issue #511]: Appendix B: New element in XML file header to record the "first published date"
-* {issues}509[Issue #509]: In exceptional cases allow a standard name to be aliased into two alternatives
+* {issues}509[Issue #509]: In exceptional cases [lime-background]#allow# a standard name to be aliased into two alternatives
 * {issues}501[Issue #501]: Clarify that data variables and variables containing coordinate data are highly [aqua-background]#recommended# to have **`long_name`** or **`standard_name`** attributes, that **`cf_role`** is used only for discrete sampling geometries and UGRID mesh topologies, and that CF does not prohibit CF attributes from being used in ways that are not defined by CF but that in such cases their meaning is not defined by CF.
-* {issues}477[Issue #477]: Period and hyphen allowed in attribute names
+* {issues}477[Issue #477]: Period and hyphen [lime-background]#allowed# in attribute names
 * {issues}500[Issue #500]: Appendix B: Added a **`conventions`** string to the standard name xml file format definition
 
 === Version 1.11 (05 December 2023)

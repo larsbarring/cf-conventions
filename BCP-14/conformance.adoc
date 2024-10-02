@@ -107,7 +107,7 @@ If they are used as per variable attributes a CF compliant application [aqua-bac
 *Requirements:*
 
 * The **`external_variables`** attribute is of string type and contains a blank-separated list of variable names.
-* No variable named by **`external_variables`** is allowed in the file.
+* No variable named by **`external_variables`** is [lime-background]#allowed# in the file.
 
 [[section-groups]]
 [[groups]]
@@ -143,7 +143,7 @@ References [lime-background]#can# be absolute, relative or with no path, in whic
 * The **`units`** attribute is [aqua-background]#required# for all variables that represent dimensional quantities (except for boundary variables defined in https://cfconventions.org/cf-conventions/cf-conventions.html#cell-boundaries[section 7.1] and climatology variables defined in https://cfconventions.org/cf-conventions/cf-conventions.html#climatological-statistics[section 7.4]).
 * The type of the **`units`** attribute is a string that [aqua-background]#must# be recognizable by the UDUNITS package.
 Exceptions are the units **`level`**, **`layer`**, and **`sigma_level`**.
-* Dimensionless units for volume fractions defined by UDUNITS (**`ppv`**, **`ppmv`**, **`ppbv`**, **`pptv`**, **`ppqv`**) are not allowed in the **`units`** attribute of any variable which also has a **`standard_name`** attribute.
+* Dimensionless units for volume fractions defined by UDUNITS (**`ppv`**, **`ppmv`**, **`ppbv`**, **`pptv`**, **`ppqv`**) are [lime-background]#not allowed# in the **`units`** attribute of any variable which also has a **`standard_name`** attribute.
 * If present, the **`units_metadata`** attribute [aqua-background]#must# have one of these values: `temperature: on_scale`, `temperature: difference`, `temperature: unknown`.
 * The **`units`** of a variable that specifies a **`standard_name`** [aqua-background]#must# be physically equivalent to the canonical units given in the standard name table, as modified by the **`standard_name`** modifier, if there is one, according to Appendix C, and then modified by all the methods listed in order by the **`cell_methods`** attribute, if one is present, according to Appendix E.
 * If the **`standard_name`** attribute includes the `standard_error` modifier, the **`units_metadata`** attribute, if present, [aqua-background]#must# have the value `temperature: difference`.
@@ -152,7 +152,7 @@ Exceptions are the units **`level`**, **`layer`**, and **`sigma_level`**.
 
 *Recommendations:*
 
-* The units **`level`**, **`layer`**, and **`sigma_level`** are [lime-background]#deprecated#.
+* The units **`level`**, **`layer`**, and **`sigma_level`** are deprecated.
 * Any variable whose **`units`** involve a temperature unit [aqua-background]#should# also have a **`units_metadata`** attribute.
 
 [[long-name]]
@@ -175,7 +175,7 @@ Exceptions are the units **`level`**, **`layer`**, and **`sigma_level`**.
 
 *Recommendataions:*
 
-* Use of the **`standard_name`** modifiers **`status_flag`** and **`number_of_observations`** is [lime-background]#deprecated#, and the corresponding **`standard_names`** are [aqua-background]#recommended# instead.
+* Use of the **`standard_name`** modifiers **`status_flag`** and **`number_of_observations`** is deprecated, and the corresponding **`standard_names`** are [aqua-background]#recommended# instead.
 
 [[section-9]]
 [[flags]]
@@ -205,7 +205,7 @@ Exceptions are the units **`level`**, **`layer`**, and **`sigma_level`**.
 * The **`axis`** attribute [aqua-background]#may# only be attached to coordinate variables and geometry node coordinate variables (Chapter 7).
 * The only legal values of axis are **`X`**, **`Y`**, **`Z`**, and **`T`** (case insensitive).
 * The **`axis`** attribute [aqua-background]#must# be consistent with the coordinate type deduced from **`units`** and **`positive`**.
-* The **`axis`** attribute is not allowed for auxiliary coordinate variables.
+* The **`axis`** attribute is [lime-background]#not allowed# for auxiliary coordinate variables.
 * A data variable [aqua-background]#must not# have more than one coordinate variable with a particular value of the **`axis`** attribute.
 
 [[section-11]]
@@ -226,12 +226,12 @@ Exceptions are the units **`level`**, **`layer`**, and **`sigma_level`**.
 
 *Requirements:*
 
-* The **`formula_terms`** attribute is only allowed on a coordinate variable which has a **`standard_name`** listed in Appendix C.
+* The **`formula_terms`** attribute is only [lime-background]#allowed# on a coordinate variable which has a **`standard_name`** listed in Appendix C.
 * The type of the **`formula_terms`** attribute is a string whose value is list of blank separated word pairs in the form **`term: var`**.
 The legal values **`term`** are contained in Appendix C for each valid **`standard_name`**.
 The values of **`var`** [aqua-background]#must# be variables that exist in the file.
 * Where indicated by the appropriate definition in Appendix D, the **`standard_name`** attributes of variables named by the **`formula_terms`** attribute [aqua-background]#must# be consistent with the **`standard_name`** of the coordinate variable it is attached to, according to the appropriate definition in Appendix D.
-* The **`computed_standard_name`** attribute is only allowed on a coordinate variable which has a **`formula_terms`** attribute.
+* The **`computed_standard_name`** attribute is only [lime-background]#allowed# on a coordinate variable which has a **`formula_terms`** attribute.
 * The **`computed_standard_name`** attribute is a string whose value [aqua-background]#must# be consistent with the **`standard_name`** of the coordinate variable it is attached to, and in some cases also with the **`standard_name`** attributes of variables named by the **`formula_terms`** attribute, according to the appropriate definition in Appendix D.
 * The units of a variable named by the **`formula_terms`** attribute [aqua-background]#must# be consistent with the units defined in Appendix D.
 
@@ -243,11 +243,11 @@ The values of **`var`** [aqua-background]#must# be variables that exist in the f
 
 * The time **`units`** of a time coordinate variable [aqua-background]#must# contain a reference date/time.
 * The reference date/time of a time coordinate variable [aqua-background]#must# be a legal date/time in the specified calendar.
-* The reference date/time in time **`units`** is not allowed to contain seconds equal to or greater than 60.
+* The reference date/time in time **`units`** is [lime-background]#not allowed# to contain seconds equal to or greater than 60.
 
 *Recommendations:*
 
-* The use of time coordinates in year 0 and reference date/times in year 0 to indicate climatological time is [lime-background]#deprecated#.
+* The use of time coordinates in year 0 and reference date/times in year 0 to indicate climatological time is deprecated.
 * Units of **`year`** and **`month`** and any equivalent units [aqua-background]#should# be used with caution.
 * UDUNITS [lime-background]#permits# a number of alternatives to the word **`since`** in the units of time coordinates. All the alternatives have exactly the same meaning in UDUNITS. For compatibility with other software, CF strongly [lime-background]#recommends# that **`since`** [aqua-background]#should# be used.
 
@@ -405,7 +405,7 @@ dim1: [dim2: [dim3: ...]] method [where type1 [over type2]] [within|over days|ye
 where brackets indicate [aqua-background]#optional# words.
 The valid values for **`dim1`** [**`dim2`** [**`dim3`** ...] ] are the names of dimensions of the data variable, names of scalar coordinate variables of the data variable, valid standard names, or the word **`area`**.
 The valid values of **`method`** are contained in Appendix E.
-The valid values for **`type1`** are the name of a string-valued auxiliary  or scalar coordinate variable with a **`standard_name`** of **`area_type`**, or any string value allowed for a variable of **`standard_name`** of **`area_type`**.
+The valid values for **`type1`** are the name of a string-valued auxiliary  or scalar coordinate variable with a **`standard_name`** of **`area_type`**, or any string value [lime-background]#allowed# for a variable of **`standard_name`** of **`area_type`**.
 If **`type2`** is a string-valued auxiliary coordinate variable, it [aqua-background]#must# be sized to contain a single string.
 If it is a variable of type **`string`**, it [aqua-background]#must# be scalar or one-dimensional with a length of one.
 If it is a variable of type **`char`**, it [aqua-background]#must# be one-dimensional or two-dimensional with a leading dimension (the number of strings) of length one.
