@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
-<meta name="author" content="Brian&#160;Eaton, Jonathan&#160;Gregory, Bob&#160;Drach, Karl&#160;Taylor, Steve&#160;Hankin, John&#160;Caron, Rich&#160;Signell, Phil&#160;Bentley, Greg&#160;Rappa, Heinke&#160;Höck, Alison&#160;Pamment, Martin&#160;Juckes, Martin&#160;Raspaud, Randy&#160;Horne, Jon&#160;Blower, Timothy&#160;Whiteaker, David&#160;Blodgett, Charlie&#160;Zender, Daniel&#160;Lee, David&#160;Hassell, Alan&#160;D.&#160;Snow, Tobias&#160;Kölling, Dave&#160;Allured, Aleksandar&#160;Jelenak, Anders&#160;Meier&#160;Soerensen, Lucile&#160;Gaultier, Sylvain&#160;Herlédan, Fernando&#160;Manzano, Lars&#160;Bärring, Christopher&#160;Barker, Sadie&#160;Bartholomew">
+<meta name="author" content="Brian&#160;Eaton, Jonathan&#160;Gregory, Bob&#160;Drach, Karl&#160;Taylor, Steve&#160;Hankin, John&#160;Caron, Rich&#160;Signell, Phil&#160;Bentley, Greg&#160;Rappa, Heinke&#160;Höck, Alison&#160;Pamment, Martin&#160;Juckes, Martin&#160;Raspaud, Randy&#160;Horne, Jon&#160;Blower, Timothy&#160;Whiteaker, David&#160;Blodgett, Charlie&#160;Zender, Daniel&#160;Lee, David&#160;Hassell, Alan&#160;D.&#160;Snow, Tobias&#160;Kölling, Dave&#160;Allured, Aleksandar&#160;Jelenak, Anders&#160;Meier&#160;Soerensen, Lucile&#160;Gaultier, Sylvain&#160;Herlédan, Fernando&#160;Manzano, Lars&#160;Bärring, Christopher&#160;Barker, Sadie&#160;Bartholomew, Thomas Lavergne">
 <title>NetCDF Climate and Forecast (CF) Metadata Conventions</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -470,8 +470,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span id="author29" class="author">Lars&#160;Bärring</span><br>
 <span id="author30" class="author">Christopher&#160;Barker</span><br>
 <span id="author31" class="author">Sadie&#160;Bartholomew</span><br>
+<span id="author32" class="author">Thomas Lavergne</span><br>
 <span id="revnumber">version v1.12.0-rc7-24-gb724218,</span>
-<span id="revdate">09&#160;December,&#160;2024&#160;21:06:34Z</span>
+<span id="revdate">24&#160;July,&#160;2025&#160;10:09:13Z</span>
 <br><span id="revremark"></span>
 </div>
 </div>
@@ -480,7 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div style="page-break-after: always;"></div>
 <div class="paragraph">
-<p>Climate and Forecast Conventions version 1.12-draft has no DOI yet: <a href="https://doi.org/10.5281/zenodo.FFFFFF">10.5281/zenodo.FFFFFF</a></p>
+<p>Climate and Forecast Conventions version 1.13-draft has no DOI yet: <a href="https://doi.org/10.5281/zenodo.FFFFFF">10.5281/zenodo.FFFFFF</a></p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxMy4wLjIsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDE0OTQ4KSAgLS0+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9Ijg4cHgiIGhlaWdodD0iMzFweCIgdmlld0JveD0iLTAuNSAtMC4xMDEgODggMzEiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTAuNSAtMC4xMDEgODggMzEiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTEuODAzLDAuNDgyTDg0LjkzLDAuNjMxYzEuMTYxLDAsMi4xOTgtMC4xNzMsMi4xOTgsMi4zMzNMODcuMDI1LDMwLjUyaC04Ny4zMlYyLjg2Mg0KCQlDLTAuMjk1LDEuNjI2LTAuMTc3LDAuNDgyLDEuODAzLDAuNDgyeiIvPg0KCTxnPg0KCQk8ZWxsaXBzZSBmaWxsPSIjRkZGRkZGIiBjeD0iMTMuODg3IiBjeT0iMTUuNTAyIiByeD0iMTEuMTAxIiByeT0iMTEuMTc0Ii8+DQoJPC9nPg0KCTxwYXRoIGQ9Ik0yMy4yNzEsNC4wNjFjMy40ODQsMi41OTIsNS43NTQsNi43NDQsNS43NTUsMTEuNDRjLTAuMDAxLDQuMjcyLTEuODgsOC4wOTUtNC44NDIsMTAuNzA1aDYyLjg1M1Y0LjA2MUgyMy4yNzF6Ii8+DQoJPGc+DQoJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0zNS43MzksNy41NTljMC4zOTIsMCwwLjcyOCwwLjA1OSwxLjAwMiwwLjE3M2MwLjI3NiwwLjExNiwwLjUsMC4yNjgsMC42NzQsMC40NTYNCgkJCWMwLjE3MywwLjE4OSwwLjI5OSwwLjQwNSwwLjM3OSwwLjY0N2MwLjA3OSwwLjI0MiwwLjExOCwwLjQ5NCwwLjExOCwwLjc1M2MwLDAuMjUzLTAuMDM5LDAuNTAzLTAuMTE4LDAuNzQ5DQoJCQljLTAuMDgsMC4yNDQtMC4yMDYsMC40NjItMC4zNzksMC42NWMtMC4xNzQsMC4xODktMC4zOTcsMC4zNDEtMC42NzQsMC40NTZjLTAuMjc0LDAuMTE0LTAuNjEsMC4xNzMtMS4wMDIsMC4xNzNoLTEuNDUydjIuMjY3DQoJCQloLTEuMzgyVjcuNTU5SDM1LjczOXogTTM1LjM2LDEwLjUzNWMwLjE1OCwwLDAuMzEyLTAuMDEyLDAuNDU3LTAuMDM1YzAuMTQ3LTAuMDIzLDAuMjc2LTAuMDY5LDAuMzg4LTAuMTM3DQoJCQljMC4xMTItMC4wNjgsMC4yMDEtMC4xNjQsMC4yNjktMC4yODhzMC4xMDEtMC4yODcsMC4xMDEtMC40ODdjMC0wLjItMC4wMzMtMC4zNjItMC4xMDEtMC40ODcNCgkJCWMtMC4wNjctMC4xMjQtMC4xNTctMC4yMjEtMC4yNjktMC4yODdjLTAuMTExLTAuMDY4LTAuMjQtMC4xMTQtMC4zODgtMC4xMzhDMzUuNjcxLDguNjUyLDM1LjUxOCw4LjY0LDM1LjM2LDguNjRoLTEuMDczdjEuODk2DQoJCQlMMzUuMzYsMTAuNTM1TDM1LjM2LDEwLjUzNXoiLz4NCgkJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTQzLjc1MSwxMy40Yy0wLjQ3NiwwLjQxNy0xLjEzMywwLjYyNS0xLjk3MiwwLjYyNWMtMC44NTEsMC0xLjUwOS0wLjIwNy0xLjk3Ni0wLjYyDQoJCQljLTAuNDY2LTAuNDEyLTAuNjk5LTEuMDUyLTAuNjk5LTEuOTEzVjcuNTU5aDEuMzgxdjMuOTM0YzAsMC4xNzEsMC4wMTYsMC4zMzgsMC4wNDUsMC41MDVjMC4wMjksMC4xNjUsMC4wOTEsMC4zMTEsMC4xODUsMC40MzkNCgkJCWMwLjA5NCwwLjEyNiwwLjIyNSwwLjIyOSwwLjM5MiwwLjMwOWMwLjE2NywwLjA4MSwwLjM5MiwwLjEyLDAuNjczLDAuMTJjMC40OTMsMCwwLjgzMy0wLjExLDEuMDIxLTAuMzMyDQoJCQljMC4xODgtMC4yMjIsMC4yODItMC41NjgsMC4yODItMS4wNFY3LjU1OWgxLjM4MnYzLjkzNEM0NC40NjQsMTIuMzQ4LDQ0LjIyNywxMi45ODMsNDMuNzUxLDEzLjR6Ii8+DQoJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik00OS4wNyw3LjU1OWMwLjMsMCwwLjU3MiwwLjAyNywwLjgxOCwwLjA4MWMwLjI0NCwwLjA1NCwwLjQ1NywwLjE0LDAuNjMzLDAuMjYxDQoJCQljMC4xNzcsMC4xMjEsMC4zMTIsMC4yODIsMC40MSwwLjQ4MmMwLjA5NiwwLjIwMSwwLjE0NiwwLjQ1LDAuMTQ2LDAuNzQ1YzAsMC4zMTgtMC4wNzIsMC41ODQtMC4yMTYsMC43OTYNCgkJCWMtMC4xNDYsMC4yMTItMC4zNTcsMC4zODgtMC42MzksMC41MjNjMC4zODcsMC4xMTIsMC42NzYsMC4zMSwwLjg2NSwwLjU4OWMwLjE4OSwwLjI4MSwwLjI4NiwwLjYyLDAuMjg2LDEuMDE1DQoJCQljMCwwLjMxOS0wLjA2MiwwLjU5NS0wLjE4NywwLjgyOGMtMC4xMjMsMC4yMzItMC4yODksMC40MjMtMC40OTYsMC41NzFjLTAuMjA5LDAuMTQ4LTAuNDQ1LDAuMjU3LTAuNzEzLDAuMzI3DQoJCQljLTAuMjY5LDAuMDctMC41NDEsMC4xMDUtMC44MjIsMC4xMDVoLTMuMDQ3VjcuNTU5SDQ5LjA3eiBNNDguODk1LDEwLjExOWMwLjI0NiwwLDAuNDQ4LTAuMDU5LDAuNjA3LTAuMTc4DQoJCQljMC4xNTgtMC4xMTgsMC4yMzYtMC4zMDksMC4yMzYtMC41NzZjMC0wLjE0Ny0wLjAyNS0wLjI2OS0wLjA3OC0wLjM2M2MtMC4wNTMtMC4wOTMtMC4xMjMtMC4xNjgtMC4yMTEtMC4yMjENCgkJCWMtMC4wOS0wLjA1My0wLjE4OS0wLjA5MS0wLjMwNS0wLjEwOUM0OS4wMjksOC42NSw0OC45MTIsOC42NCw0OC43ODksOC42NGgtMS4yOTR2MS40OEw0OC44OTUsMTAuMTE5TDQ4Ljg5NSwxMC4xMTkNCgkJCUw0OC44OTUsMTAuMTE5eiBNNDguOTc1LDEyLjgwNGMwLjEzNSwwLDAuMjY0LTAuMDE0LDAuMzg3LTAuMDRjMC4xMjMtMC4wMjYsMC4yMy0wLjA3MiwwLjMyNi0wLjEzMw0KCQkJYzAuMDkyLTAuMDYyLDAuMTY4LTAuMTQ3LDAuMjI2LTAuMjU0YzAuMDU2LTAuMTA0LDAuMDgzLTAuMjQxLDAuMDgzLTAuNDA2YzAtMC4zMjQtMC4wOTItMC41NTctMC4yNzEtMC42OTUNCgkJCWMtMC4xODItMC4xMzgtMC40MjQtMC4yMDgtMC43MjMtMC4yMDhoLTEuNTA1djEuNzM4aDEuNDc5di0wLjAwMkg0OC45NzV6Ii8+DQoJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik01NC4xNDMsNy41NTl2NS4xNTZoMy4wNjJ2MS4xNjhINTIuNzZWNy41NTlINTQuMTQzeiIvPg0KCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNTkuNzQ4LDcuNTU5djYuMzI0aC0xLjM4MlY3LjU1OUg1OS43NDh6Ii8+DQoJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik02NS40NTEsOS4yNDdjLTAuMDgyLTAuMTMyLTAuMTg2LTAuMjQ5LTAuMzA5LTAuMzQ5Yy0wLjEyMy0wLjEwMi0wLjI2My0wLjE4LTAuNDE4LTAuMjM2DQoJCQljLTAuMTU2LTAuMDU3LTAuMzE2LTAuMDg0LTAuNDg4LTAuMDg0Yy0wLjMxMiwwLTAuNTc0LDAuMDYyLTAuNzkzLDAuMTgzYy0wLjIxNywwLjEyLTAuMzk0LDAuMjgzLTAuNTI1LDAuNDg2DQoJCQljLTAuMTM2LDAuMjA0LTAuMjMyLDAuNDM2LTAuMjk2LDAuNjk1Yy0wLjA2MiwwLjI1OS0wLjA5MywwLjUyOC0wLjA5MywwLjgwNmMwLDAuMjY3LDAuMDMxLDAuNTI0LDAuMDkzLDAuNzc2DQoJCQljMC4wNjIsMC4yNTEsMC4xNiwwLjQ3NywwLjI5NiwwLjY3OGMwLjEzNCwwLjIwMSwwLjMxMiwwLjM2MSwwLjUyNSwwLjQ4M2MwLjIxOSwwLjEyLDAuNDgxLDAuMTgxLDAuNzkzLDAuMTgxDQoJCQljMC40MjQsMCwwLjc1Mi0wLjEzLDAuOTktMC4zODljMC4yMzYtMC4yNiwwLjM4My0wLjYwMiwwLjQzNy0xLjAyOEg2N2MtMC4wMzQsMC4zOTYtMC4xMjYsMC43NTMtMC4yNzEsMS4wNzINCgkJCWMtMC4xNDYsMC4zMTgtMC4zNDIsMC41OTEtMC41ODIsMC44MTVjLTAuMjM4LDAuMjI1LTAuNTIxLDAuMzk2LTAuODQ1LDAuNTEzYy0wLjMyMywwLjExOS0wLjY3OCwwLjE3OC0xLjA2NSwwLjE3OA0KCQkJYy0wLjQ3OSwwLTAuOTE0LTAuMDg0LTEuMjk3LTAuMjUyYy0wLjM4NS0wLjE2OS0wLjcwOS0wLjM5OC0wLjk3My0wLjY5NWMtMC4yNjUtMC4yOTUtMC40NjgtMC42NDItMC42MDctMS4wNA0KCQkJYy0wLjE0Mi0wLjM5OS0wLjIxMS0wLjgyOS0wLjIxMS0xLjI4OWMwLTAuNDczLDAuMDY5LTAuOTExLDAuMjExLTEuMzE2YzAuMTQxLTAuNDA0LDAuMzQ0LTAuNzU4LDAuNjA3LTEuMDU5DQoJCQljMC4yNjQtMC4zMDIsMC41ODgtMC41MzYsMC45NzMtMC43MDhjMC4zODQtMC4xNzIsMC44MTUtMC4yNTgsMS4yOTctMC4yNThjMC4zNDgsMCwwLjY3NiwwLjA1MSwwLjk4MSwwLjE1DQoJCQljMC4zMDgsMC4xMDIsMC41ODMsMC4yNDgsMC44MjcsMC40NGMwLjI0MywwLjE5MSwwLjQ0MywwLjQzLDAuNjA0LDAuNzEyYzAuMTU4LDAuMjgzLDAuMjU5LDAuNjA4LDAuMzAxLDAuOTc1aC0xLjM0DQoJCQlDNjUuNTg2LDkuNTI0LDY1LjUzMyw5LjM3Nyw2NS40NTEsOS4yNDd6Ii8+DQoJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0zNS42MTUsMTYuNDE4YzAuNDA1LDAsMC43ODIsMC4wNjIsMS4xMzEsMC4xOTJjMC4zNSwwLjEzLDAuNjUxLDAuMzI0LDAuOTA2LDAuNTg1DQoJCQljMC4yNTUsMC4yNiwwLjQ1NSwwLjU4NiwwLjU5OSwwLjk3NWMwLjE0NCwwLjM5MSwwLjIxNiwwLjg0OSwwLjIxNiwxLjM3MWMwLDAuNDYzLTAuMDU5LDAuODg4LTAuMTc2LDEuMjc3DQoJCQljLTAuMTE4LDAuMzkxLTAuMjk1LDAuNzI3LTAuNTMyLDEuMDEyYy0wLjIzOCwwLjI4MS0wLjUzNCwwLjUwNC0wLjg5LDAuNjY4Yy0wLjM1NCwwLjE2LTAuNzcyLDAuMjQyLTEuMjU0LDAuMjQyaC0yLjcxdi02LjMyMg0KCQkJSDM1LjYxNXogTTM1LjUxOSwyMS41NzJjMC4xOTksMCwwLjM5My0wLjAzMSwwLjU4MS0wLjA5OGMwLjE4OC0wLjA2MiwwLjM1NC0wLjE3MywwLjUwMi0wLjMyMw0KCQkJYzAuMTQ2LTAuMTUxLDAuMjY0LTAuMzQ3LDAuMzUyLTAuNTljMC4wODgtMC4yNDEsMC4xMzItMC41MzYsMC4xMzItMC44ODZjMC0wLjMxNy0wLjAzMS0wLjYwNi0wLjA5My0wLjg2Mw0KCQkJYy0wLjA2Mi0wLjI1Ni0wLjE2Mi0wLjQ3OS0wLjMwNC0wLjY1OWMtMC4xNDEtMC4xODMtMC4zMjYtMC4zMjMtMC41NTktMC40MjFjLTAuMjMxLTAuMDk4LTAuNTE3LTAuMTQ2LTAuODU4LTAuMTQ2aC0wLjk4NHYzLjk4Ng0KCQkJSDM1LjUxOXoiLz4NCgkJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTM5LjgsMTguMjg5YzAuMTQxLTAuNDAzLDAuMzQ0LTAuNzU2LDAuNjA2LTEuMDU5YzAuMjY1LTAuMzAzLDAuNTg5LTAuNTM4LDAuOTczLTAuNzA5DQoJCQljMC4zODUtMC4xNzEsMC44MTYtMC4yNTcsMS4yOTgtMC4yNTdjMC40ODcsMCwwLjkyMSwwLjA4NiwxLjMwMywwLjI1N2MwLjM4MSwwLjE3MSwwLjcwNCwwLjQwNiwwLjk2OSwwLjcwOQ0KCQkJYzAuMjY0LDAuMzAzLDAuNDY2LDAuNjUyLDAuNjA1LDEuMDU5YzAuMTQzLDAuNDA0LDAuMjEzLDAuODQ1LDAuMjEzLDEuMzE2YzAsMC40Ni0wLjA3LDAuODkxLTAuMjEzLDEuMjg4DQoJCQljLTAuMTQyLDAuMzk3LTAuMzQ0LDAuNzQ0LTAuNjA1LDEuMDRjLTAuMjY2LDAuMjk1LTAuNTg4LDAuNTI1LTAuOTY5LDAuNjk1Yy0wLjM4MiwwLjE2Ni0wLjgxNSwwLjI1Mi0xLjMwMywwLjI1Mg0KCQkJYy0wLjQ4MSwwLTAuOTEzLTAuMDg2LTEuMjk4LTAuMjUyYy0wLjM4NC0wLjE3LTAuNzA4LTAuNC0wLjk3My0wLjY5NWMtMC4yNjMtMC4yOTYtMC40NjYtMC42NDUtMC42MDYtMS4wNA0KCQkJYy0wLjE0LTAuMzk3LTAuMjExLTAuODI4LTAuMjExLTEuMjg4QzM5LjU4OSwxOS4xMzQsMzkuNjU5LDE4LjY5NCwzOS44LDE4LjI4OXogTTQxLjA2MiwyMC4zNzkNCgkJCWMwLjA2MiwwLjI1MiwwLjE2LDAuNDc5LDAuMjk1LDAuNjhjMC4xMzUsMC4yLDAuMzEyLDAuMzU5LDAuNTI3LDAuNDgyYzAuMjE4LDAuMTIxLDAuNDgxLDAuMTgzLDAuNzkyLDAuMTgzDQoJCQljMC4zMTIsMCwwLjU3Ni0wLjA2MiwwLjc5Mi0wLjE4M2MwLjIxOC0wLjEyMSwwLjM5NC0wLjI4MSwwLjUyOS0wLjQ4MmMwLjEzNC0wLjIsMC4yMzEtMC40MjgsMC4yOTUtMC42OA0KCQkJYzAuMDYyLTAuMjUsMC4wOTItMC41MDgsMC4wOTItMC43NzRjMC0wLjI3Ni0wLjAzLTAuNTQ3LTAuMDkyLTAuODA2Yy0wLjA2Mi0wLjI2Mi0wLjE2MS0wLjQ5Mi0wLjI5NS0wLjY5Ng0KCQkJYy0wLjEzNi0wLjIwMS0wLjMxMi0wLjM2NS0wLjUyOS0wLjQ4NWMtMC4yMTYtMC4xMjEtMC40OC0wLjE4NC0wLjc5Mi0wLjE4NGMtMC4zMTEsMC0wLjU3NCwwLjA2Mi0wLjc5MiwwLjE4NA0KCQkJYy0wLjIxNiwwLjEyLTAuMzkzLDAuMjg0LTAuNTI3LDAuNDg1Yy0wLjEzNSwwLjIwNC0wLjIzMywwLjQzNy0wLjI5NSwwLjY5NmMtMC4wNjIsMC4yNTktMC4wOTMsMC41MjctMC4wOTMsMC44MDYNCgkJCUM0MC45NywxOS44NzEsNDEuMDAxLDIwLjEyOSw0MS4wNjIsMjAuMzc5eiIvPg0KCQk8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNDkuMDkyLDE2LjQxOGwxLjQ3MSw0LjM0OGgwLjAybDEuMzkzLTQuMzQ4aDEuOTQydjYuMzIyaC0xLjI5NHYtNC40OGgtMC4wMmwtMS41MzksNC40OEg1MGwtMS41NC00LjQzNw0KCQkJaC0wLjAxOXY0LjQzN2gtMS4yOTN2LTYuMzIySDQ5LjA5MnoiLz4NCgkJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTU4Ljc2NCwxNi40MThsMi4zNSw2LjMyMkg1OS42OGwtMC40NzYtMS40MDhoLTIuMzUxbC0wLjQ5MiwxLjQwOGgtMS4zOTFsMi4zNzctNi4zMjJINTguNzY0eg0KCQkJIE01OC44NDQsMjAuMjk3bC0wLjc5My0yLjMyMmgtMC4wMThsLTAuODE3LDIuMzIySDU4Ljg0NHoiLz4NCgkJPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTYzLjU0NywxNi40MTh2Ni4zMjJoLTEuMzgydi02LjMyMkg2My41NDd6Ii8+DQoJCTxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik02Ni42MDQsMTYuNDE4bDIuNjIzLDQuMjQyaDAuMDE4di00LjI0MmgxLjI5NHY2LjMyMmgtMS4zODRsLTIuNjExLTQuMjM0aC0wLjAydjQuMjM0SDY1LjIzdi02LjMyMg0KCQkJSDY2LjYwNHoiLz4NCgk8L2c+DQoJPHBhdGggZD0iTTg1Ljg1MiwwSDEuMTQ3QzAuMjM5LDAtMC41LDAuNzQ0LTAuNSwxLjY1OHYyOC45NjlDLTAuNSwzMC44MzQtMC4zMzMsMzEtMC4xMjgsMzFoODcuMjU2DQoJCWMwLjIwNSwwLDAuMzcyLTAuMTY2LDAuMzcyLTAuMzczVjEuNjU4Qzg3LjUsMC43NDQsODYuNzYyLDAsODUuODUyLDB6IE0xLjE0NywwLjc1aDg0LjcwNWMwLjQ5OCwwLDAuOTAyLDAuNDA2LDAuOTAyLDAuOTA4DQoJCWMwLDAsMCwyMC4xMjEsMCwyOC41NTdIMC4yNDV2LTguNDI2YzAtOC40MzUsMC0yMC4xMzEsMC0yMC4xMzFDMC4yNDUsMS4xNTcsMC42NSwwLjc1LDEuMTQ3LDAuNzV6Ii8+DQoJPGc+DQoJCTxlbGxpcHNlIGZpbGw9IiNGRkZGRkYiIGN4PSIxNC4xNTYiIGN5PSIxNS42NjEiIHJ4PSIxMS4wMDQiIHJ5PSIxMS4wNzYiLz4NCgkJPHBhdGggaWQ9InRleHQyODA5XzRfIiBkPSJNMTQuMjIsOC43NDZjLTMuODYyLDAtNC44MzQsMy42NjktNC44MzQsNi43NzljMCwzLjExMSwwLjk3MSw2Ljc3OSw0LjgzNCw2Ljc3OQ0KCQkJYzMuODYzLDAsNC44MzQtMy42Nyw0LjgzNC02Ljc3OUMxOS4wNTQsMTIuNDE0LDE4LjA4Myw4Ljc0NiwxNC4yMiw4Ljc0NnogTTE0LjIyLDExLjMwMWMwLjE1NywwLDAuMywwLjAyNCwwLjQzNSwwLjA2DQoJCQljMC4yNzgsMC4yNCwwLjQxNCwwLjU3MywwLjE0NywxLjAzOGwtMi41NzIsNC43NmMtMC4wNzktMC42MDMtMC4wOTEtMS4xOTUtMC4wOTEtMS42MzRDMTIuMTM5LDE0LjE1NSwxMi4yMzMsMTEuMzAxLDE0LjIyLDExLjMwMQ0KCQkJeiBNMTYuMTQ2LDEzLjQ5NGMwLjEzNywwLjczMSwwLjE1NSwxLjQ5MywwLjE1NSwyLjAzYzAsMS4zNy0wLjA5NCw0LjIyMy0yLjA4LDQuMjIzYy0wLjE1NiwwLTAuMzAxLTAuMDE3LTAuNDM1LTAuMDQ5DQoJCQljLTAuMDI1LTAuMDEtMC4wNDktMC4wMTktMC4wNzQtMC4wMjVjLTAuMDQtMC4wMTItMC4wODQtMC4wMjQtMC4xMjItMC4wNDFjLTAuNDQyLTAuMTg4LTAuNzIxLTAuNTMxLTAuMzE5LTEuMTM5TDE2LjE0NiwxMy40OTR6Ig0KCQkJLz4NCgkJPHBhdGggaWQ9InBhdGgyODE1XzRfIiBkPSJNMTQuMTk1LDMuNzQ4Yy0zLjI0NSwwLTUuOTgsMS4xMzctOC4yMSwzLjQyMmMtMS4xMjgsMS4xMzUtMS45OSwyLjQzMS0yLjU4OSwzLjg3Ng0KCQkJYy0wLjU4NSwxLjQzLTAuODc2LDIuOTIxLTAuODc2LDQuNDc4YzAsMS41NywwLjI5MSwzLjA2MiwwLjg3Niw0LjQ3OXMxLjQzNCwyLjY5LDIuNTQ4LDMuODI2DQoJCQljMS4xMjgsMS4xMjEsMi4zOTUsMS45ODUsMy44MDIsMi41ODhjMS40MjEsMC41OSwyLjkwMywwLjg4NCw0LjQ0OSwwLjg4NGMxLjU0NywwLDMuMDUtMC4zMDQsNC40OTktMC45MDcNCgkJCWMxLjQ0OC0wLjYwNCwyLjc0LTEuNDcxLDMuODgzLTIuNjA1YzEuMTAxLTEuMDc4LDEuOTM0LTIuMzE3LDIuNDktMy43MTljMC41NzEtMS40MTUsMC44NTMtMi45MzIsMC44NTMtNC41NDQNCgkJCWMwLTEuNTk4LTAuMjgxLTMuMTEyLTAuODUyLTQuNTI4Yy0wLjU3MS0xLjQyOS0xLjQwNy0yLjY5My0yLjUwNy0zLjgwMUMyMC4yNjMsNC44OTUsMTcuNDY5LDMuNzQ4LDE0LjE5NSwzLjc0OHogTTE0LjI0NCw1Ljg2Nw0KCQkJYzIuNjQ2LDAsNC45MDQsMC45NDQsNi43ODQsMi44MzZjMC45MDYsMC45MTIsMS42LDEuOTU0LDIuMDczLDMuMTE5YzAuNDczLDEuMTY0LDAuNzEzLDIuMzk4LDAuNzEzLDMuNzAzDQoJCQljMCwyLjcwNy0wLjkyLDQuOTUyLTIuNzQ0LDYuNzQ2Yy0wLjk0OCwwLjkyNy0yLjAxMiwxLjYzOC0zLjE5NiwyLjEyOGMtMS4xNywwLjQ4OS0yLjM3NSwwLjczMi0zLjYzLDAuNzMyDQoJCQljLTEuMjY4LDAtMi40ODEtMC4yMzktMy42MzgtMC43MTdjLTEuMTU2LTAuNDg5LTIuMTkzLTEuMTkxLTMuMTEzLTIuMTA0Yy0wLjkyLTAuOTI1LTEuNjI5LTEuOTctMi4xMy0zLjEzNQ0KCQkJYy0wLjQ4Ny0xLjE3OC0wLjczOC0yLjM5MS0wLjczOC0zLjY1M2MwLTEuMjc2LDAuMjUxLTIuNDk3LDAuNzM4LTMuNjYyYzAuNTAxLTEuMTc4LDEuMjExLTIuMjM1LDIuMTMtMy4xNzUNCgkJCUM5LjMxNyw2LjgwOSwxMS41Nyw1Ljg2NywxNC4yNDQsNS44Njd6Ii8+DQoJPC9nPg0KPC9nPg0KPC9zdmc+DQo=" alt="cc zero" width="9%"></span>
@@ -491,7 +492,7 @@ This document is dedicated to the public domain following the <a href="https://c
 <br>
 <br>
  <em>DON’T use the following reference to cite this version of the document, as it is only shown as a draft:</em><br>
-Eaton, B., Gregory, J., Drach, B., Taylor, K., Hankin, S. et al. (2024). NetCDF Climate and Forecast (CF) Metadata Conventions (1.12-draft). CF Community. <a href="https://doi.org/10.5281/zenodo.FFFFFF" class="bare">https://doi.org/10.5281/zenodo.FFFFFF</a></p>
+Eaton, B., Gregory, J., Drach, B., Taylor, K., Hankin, S. et al. (2024). NetCDF Climate and Forecast (CF) Metadata Conventions (1.13-draft). CF Community. <a href="https://doi.org/10.5281/zenodo.FFFFFF" class="bare">https://doi.org/10.5281/zenodo.FFFFFF</a></p>
 </div>
 <hr>
 <div id="toc" class="toc">
@@ -798,6 +799,7 @@ Eaton, B., Gregory, J., Drach, B., Taylor, K., Hankin, S. et al. (2024). NetCDF 
 <li><a href="#appendix-mesh-topology-attributes">Appendix K: Mesh Topologies</a></li>
 <li><a href="#revhistory">Revision History</a>
 <ul class="sectlevel2">
+<li><a href="#_version_1_13_draft">Version 1.13-draft</a></li>
 <li><a href="#_version_1_12_04_december_2024">Version 1.12 (04 December 2024)</a></li>
 <li><a href="#_version_1_11_05_december_2023">Version 1.11 (05 December 2023)</a></li>
 <li><a href="#_version_1_10_31_august_2022">Version 1.10 (31 August 2022)</a></li>
@@ -1063,6 +1065,9 @@ I.1. <a href="#cdl-domain-anc-coordinate">A single CF-netCDF variable correspond
 <li>
 <p>Sadie Bartholomew, NCAS and University of Reading</p>
 </li>
+<li>
+<p>Thomas Lavergne, MET Norway</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
@@ -1239,7 +1244,9 @@ The word "apex" refers to position of this group at the vertex of the tree of gr
 </dd>
 <dt class="hdlist1">most rapidly varying dimension</dt>
 <dd>
-<p>The dimension of a multidimensional variable for which elements are adjacent in storage. When netCDF is represented in CDL, the most rapidly varying dimension is the last one e.g. <strong><code>x</code></strong> in <strong><code>float data(z,y,x)</code></strong>. C and Python NumPy use the same order as C, also called "column-major order", but Fortran uses the opposite convention, also called "row-major order", so that when netCDF variables are accessed in Fortran the most rapidly varying dimension is the first one.</p>
+<p>The dimension of a multidimensional variable for which elements are adjacent in storage.
+When a netCDF dataset is represented in CDL, the most rapidly varying dimension is the last one e.g. <strong><code>x</code></strong> in <strong><code>float data(z,y,x)</code></strong>.
+C and Python NumPy use the same order as CDL, also called "row-major order", while Fortran and R use the alternative order, also called "column-major order", so that when netCDF variables are accessed in Fortran or R the most rapidly varying dimension is the first one.</p>
 </dd>
 <dt class="hdlist1">multidimensional coordinate variable</dt>
 <dd>
@@ -1314,7 +1321,7 @@ The overview provided in this section will be followed with more complete descri
 <a href="#attribute-appendix">Appendix A, Attributes</a> contains a summary of all the attributes used in this convention.</p>
 </div>
 <div class="paragraph">
-<p>Files using this version of the CF Conventions must set the <a href="#NUG">[NUG]</a> defined attribute <strong><code>Conventions</code></strong> to contain the string value "<strong><code>CF-1.12-draft</code></strong>" to identify datasets that conform to these conventions.</p>
+<p>Files using this version of the CF Conventions must set the <a href="#NUG">[NUG]</a> defined attribute <strong><code>Conventions</code></strong> to contain the string value "<strong><code>CF-1.13-draft</code></strong>" to identify datasets that conform to these conventions.</p>
 </div>
 <div class="paragraph">
 <p>The general description of a file&#8217;s contents should be contained in the following attributes: <strong><code>title</code></strong>, <strong><code>history</code></strong>, <strong><code>institution</code></strong>, <strong><code>source</code></strong>, <strong><code>comment</code></strong> and <strong><code>references</code></strong> (<a href="#description-of-file-contents">Section 2.6.2, "Description of file contents"</a>).
@@ -1627,7 +1634,7 @@ See <a href="#attribute-appendix">Appendix A, Attributes</a> for a list of attri
 <div class="sect3">
 <h4 id="identification-of-conventions"><a class="anchor" href="#identification-of-conventions"></a>2.6.1. Identification of Conventions</h4>
 <div class="paragraph">
-<p>Files that follow this version of the CF Conventions must indicate this by setting the <a href="#NUG">[NUG]</a> defined global attribute <strong><code>Conventions</code></strong> to a string value that contains "<strong><code>CF-1.12-draft</code></strong>".
+<p>Files that follow this version of the CF Conventions must indicate this by setting the <a href="#NUG">[NUG]</a> defined global attribute <strong><code>Conventions</code></strong> to a string value that contains "<strong><code>CF-1.13-draft</code></strong>".
 The Conventions version number contained in that string can be used to find the web based versions of this document are from the <a href="https://cfconventions.org/">netCDF Conventions web page</a>.
 Subsequent versions of the CF Conventions will not make invalid a compliant usage of this or earlier versions of the CF terms and forms.</p>
 </div>
@@ -1855,7 +1862,7 @@ But since it is an optional attribute, applications that implement these standar
 <div class="sect2">
 <h3 id="units"><a class="anchor" href="#units"></a>3.1. Units</h3>
 <div class="paragraph">
-<p>The <strong><code>units</code></strong> attribute is required for all variables that represent dimensional quantities (except for boundary variables defined in <a href="#cell-boundaries">Section 7.1, "Cell Boundaries"</a> and climatology variables defined in <a href="#climatological-statistics">Section 7.4, "Climatological Statistics"</a>).
+<p>The <strong><code>units</code></strong> attribute is required for all variables that represent dimensional quantities (except for boundary variables defined in <a href="#cell-boundaries">Section 7.1, "Cell Boundaries"</a> and climatology boundary variables defined in <a href="#climatological-statistics">Section 7.4, "Climatological Statistics"</a>).
 The <strong><code>units</code></strong> attribute is permitted but not required for dimensionless quantities (see <a href="#dimensionless-units">Section 3.1.1, "Dimensionless units"</a>).</p>
 </div>
 <div class="paragraph">
@@ -2729,8 +2736,7 @@ For compatibility with other software, CF strongly recommends that <code>since</
 </div>
 <div class="paragraph">
 <p>The reference datetime string (appearing after the identifier <strong><code>since</code></strong>) is required.
-It may include date alone, or date and time, or date, time and time zone offset.
-Its format is <em>y</em>-<em>m</em>-<em>d</em> [<em>H</em>:<em>M</em>:<em>S</em> [<em>Z</em>]], where [&#8230;&#8203;] indicates an optional element,</p>
+It must include the date, which may optionally be followed by time or time zone offset or both. Its format is <em>y</em>-<em>m</em>-<em>d</em> [<em>H</em>:<em>M</em>:<em>S</em>] [<em>Z</em>], where [&#8230;&#8203;] indicates an optional element:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2741,9 +2747,9 @@ Its format is <em>y</em>-<em>m</em>-<em>d</em> [<em>H</em>:<em>M</em>:<em>S</em>
 <p><em>S</em> is second, which may be integer or floating point (see <a href="#leap-seconds">Section 4.4.3, "Leap Seconds"</a> regarding <em>S</em>&gt;59),</p>
 </li>
 <li>
-<p><em>Z</em> is the time zone offset with respect to UTC.
+<p><em>Z</em> is the time zone offset.
 This is an interval of time, specified in one of the formats described below.
-Only numbers (digits, <code>+</code>, <code>-</code> and <code>:</code>) are allowed in <em>Z</em>, not time zone names or acronyms.</p>
+Only numbers (digits, <code>+</code>, <code>-</code> and <code>:</code>) or the letter "Z" are allowed in <em>Z</em>, not time zone names or acronyms.</p>
 </li>
 </ul>
 </div>
@@ -2752,13 +2758,16 @@ Only numbers (digits, <code>+</code>, <code>-</code> and <code>:</code>) are all
 In a time zone with zero offset, time (approximately) equals mean solar time for 0 <code>degrees_east</code> of longitude.
 (Although this may be exact in a model, in reality the time with zero time zone offset differs by some seconds from mean solar time; see the discussion of UTC and leap seconds in <a href="#calendar">Section 4.4.2, "Calendar"</a>.)
 If both time and time zone offset are omitted the time is 00:00:00 (the beginning of the day i.e. midnight at 0 <code>degrees_east</code>).
-Thus, <strong><code>units = "days since 1990-1-1"</code></strong> means the same as <strong><code>units = "days since 1990-1-1 0:0:0"</code></strong>.</p>
+Thus, <strong><code>units = "days since 1990-1-1"</code></strong> means the same as <strong><code>units = "days since 1990-1-1 00:00:00"</code></strong>.</p>
 </div>
 <div class="paragraph">
-<p>The time zone offset <em>Z</em> must be in one of the following four formats, any of which may be prefixed with a sign:</p>
+<p>The time zone offset <em>Z</em> must be in one of the following five formats, where numeric hours may optionally be prefixed with a <code>+</code> or <code>-</code> sign:</p>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p>The letter <code>Z</code> indicating zero offset, sometimes referred to as "Zulu Time".</p>
+</li>
 <li>
 <p><em>H</em>, the hour alone, of one or two digits e.g. <strong><code>-6</code></strong>, <strong><code>2</code></strong>, <strong><code>+11</code></strong>, which is sufficient for many time zones.</p>
 </li>
@@ -2772,6 +2781,12 @@ Thus, <strong><code>units = "days since 1990-1-1"</code></strong> means the same
 <p>three digits, of which the first is the hour (0&#8212;&#8203;9) e.g. <strong><code>530</code></strong>.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>If the time zone offset is the letter <code>Z</code> or begins with a sign, the space before it may be omitted.</p>
+</div>
+<div class="paragraph">
+<p>While the default (of omitting the <em>Z</em> component) is an offset of zero, we suggest that a zero offset be specified to avoid any confusion where omitting it might be misunderstood as indicating local time.</p>
 </div>
 <div class="paragraph">
 <p>For example, <strong><code>seconds since 1992-10-8 15:15:42.5 -6:00</code></strong> indicates seconds since October 8th, 1992 at 3 hours, 15 minutes and 42.5 seconds in the afternoon, in a time zone where the datetime is six hours behind the default.
@@ -2955,7 +2970,7 @@ When these calendars are being be used for timelines <em>with</em> leap seconds 
 </li>
 <li>
 <p>The coordinate value does not count any leap seconds which occurred between the reference datetime and the datetime represented by the coordinate.
-For instance, 60 <strong><code>seconds after 23:59:00</code></strong> always means 00:00:00 on the next day, even if there is a leap second at 23:59:60, which makes the actual interval 61 seconds between 23:59:00 and 00:00:00 on the next day.</p>
+For instance, 60 <strong><code>seconds after 23:59:00</code></strong> always means 0:0:0 on the next day, even if there is a leap second at 23:59:60, which makes the actual interval 61 seconds between 23:59:00 and 0:0:0 on the next day.</p>
 </li>
 </ul>
 </div>
@@ -3370,6 +3385,11 @@ A <em>grid mapping variable</em> provides this information.</p>
 <div class="paragraph">
 <p>If no <em>grid mapping variable</em> is provided and the coordinate variables for a horizontal grid are not longitude and latitude, then it is required that the latitude and longitude coordinates are supplied via the <code>coordinates</code> attribute.
 Such coordinates may be provided in addition to the provision of a <em>grid mapping variable</em>, but that is not required.</p>
+</div>
+<div class="paragraph">
+<p>When a data variable is representative of cells of non-zero size, and the coordinate variables are not longitude and latitude, <em>bounds</em> variables should be provided for vertices of the cell boundaries in the horizontal coordinates of the grid (see  <a href="#cell-boundaries">Section 7.1, "Cell Boundaries"</a>).
+The <em>grid mapping variable</em> provides then the information to convert bounds in latitude and longitude coordinates, and it is optional for the dataset to provide these.
+If no <em>grid mapping variable</em> is provided, then the cell extents in latitude and longitude coordinate system should be provided (see <a href="#cell-boundaries">Section 7.1, "Cell Boundaries"</a> and especially Example 7.2 for the common case of four-sided cells).</p>
 </div>
 <div class="paragraph">
 <p>A grid mapping variable provides the description of the mapping via a collection of attached attributes.
@@ -4516,7 +4536,7 @@ This representation has the advantage that it is general enough to handle, witho
 variables:
   float time(time);
     time:standard_name = "time";
-    time:units = "days since 2024-11-8 09:00:00";
+    time:units = "days since 2024-11-8 09:00:00Z";
     time:bounds = "time_bnds";
   float time_bnds(time,nv);</pre>
 </div>
@@ -4803,7 +4823,7 @@ variables:
     ppn:cell_methods = "time: sum";
   double time(time);
     time:long_name = "time";
-    time:units = "h since 1998-4-19 6:0:0";
+    time:units = "h since 1998-4-19 6:0:0 Z";
     time:bounds = "time_bnds";
   double time_bnds(time,nv);
 data:
@@ -4884,7 +4904,7 @@ variables:
     TS_var:units="K2";
     TS_var:cell_methods="time: variance (interval: 1 hr comment: sampled instantaneously)";
   float time(time);
-    time:units="days since 1990-01-01 00:00:00";
+    time:units="days since 1990-01-01 00:00:00 Z";
     time:bounds="time_bnds";
   float time_bnds(time,nv);
 data:
@@ -5024,9 +5044,10 @@ In addition the two concepts may be used at once, for instance to indicate not A
 <p>Climatological variables have a climatological time axis.
 Like an ordinary time axis, a climatological time axis may have a dimension of unity (for example, a variable containing the January average temperatures for 1961-1990), but often it will have several elements (for example, a climatological time axis with a dimension of 12 for the climatological average temperatures in each month for 1961-1990, a dimension of 3 for the January mean temperatures for the three decades 1961-1970, 1971-1980, 1981-1990, or a dimension of 24 for the hours of an average day).
 Intervals of climatological time are conceptually different from ordinary time intervals; a given interval of climatological time represents a set of subintervals which are not necessarily contiguous.
-To indicate this difference, a climatological time coordinate variable does not have a <strong><code>bounds</code></strong> attribute.
-Instead, it has a <strong><code>climatology</code></strong> attribute, which names a variable with dimensions (n,2), n being the dimension of the climatological time axis.
-Using the units and calendar of the time coordinate variable, element (i,0) of the climatology variable specifies the beginning of the first subinterval and element (i,1) the end of the last subinterval used to evaluate the climatological statistics with index i in the time dimension.
+To indicate this difference, a climatological time coordinate variable does not have a <strong><code>bounds</code></strong> attribute, instead it has a <strong><code>climatology</code></strong> attribute which names the climatological boundary variable.
+The climatological boundary variable must have dimensions (n,2), n being the dimension of the climatological time axis.
+The rules and recommendations for attributes of the climatological boundary variable are the same as those for boundary variables in general, as described in <a href="#cell-boundaries">Section 7.1, "Cell Boundaries"</a>.
+Using the units and calendar of the time coordinate variable, element (i,0) of the climatology boundary variable specifies the beginning of the first subinterval and element (i,1) the end of the last subinterval used to evaluate the climatological statistics with index i in the time dimension.
 The time coordinates should be values that are representative of the climatological time intervals, such that an application which does not recognise climatological time will nonetheless be able to make a reasonable interpretation.</p>
 </div>
 <div class="paragraph">
@@ -5215,8 +5236,7 @@ It now applies to April from a 1961-1990 climatology.</p>
 <pre>variables:
   float temperature(time,lat,lon);
     temperature:long_name="surface air temperature";
-    temperature:cell_methods="time: mean within days ",
-      "time: mean over days time: mean over years";
+    temperature:cell_methods="time: mean within days time: mean over days time: mean over years";
     temperature:units="K";
   double time(time);
     time:climatology="climatology_bounds";
@@ -7059,7 +7079,7 @@ See <a href="#appendix-grid-mappings">Appendix F, Grid Mappings</a> for the grid
 <p>The "Type" values are <strong>S</strong> for string, <strong>N</strong> for numeric, and <strong>D</strong> for the type of the data variable.
 Each attribute may be used in any of the ways shown in its "Use" entry.
 <strong>G</strong> indicates it can appear as a global attribute, and <strong>Gr</strong> as a group attribute.
-For variable attributes, the possible values of "Use" are: <strong>C</strong> for variables containing coordinate data, <strong>D</strong> for data variables, <strong>M</strong> for geometry container variables, <strong>Q</strong> for quantization container variables, <strong>Do</strong> for domain variables, <strong>BI</strong> and <strong>BO</strong> for boundary variables (see <a href="#cell-boundaries">Section 7.1, "Cell Boundaries"</a> for the distinction between <strong>BI</strong> and <strong>BO</strong>), and <strong>-</strong> for variables with some other purpose.
+For variable attributes, the possible values of "Use" are: <strong>C</strong> for variables containing coordinate data, <strong>D</strong> for data variables, <strong>M</strong> for geometry container variables, <strong>Q</strong> for quantization container variables, <strong>Do</strong> for domain variables, <strong>BI</strong> and <strong>BO</strong> for boundary and climatology boundary variables (see <a href="#cell-boundaries">Section 7.1, "Cell Boundaries"</a> for the distinction between <strong>BI</strong> and <strong>BO</strong>), and <strong>-</strong> for variables with some other purpose.
 CF does not prohibit any of these attributes from being attached to variables of different kinds from those listed as their "Use" in this table, but their meanings are not defined by CF if they are used in these other ways.
 "Links" indicates the location of the attribute"s original definition (first link) and sections where the attribute is discussed in this document (additional links as necessary).</p>
 </div>
@@ -7160,7 +7180,7 @@ Identifies the roles of mesh topology and location index set variables (see <a h
 <td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">C</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#climatological-statistics">Section 7.4, "Climatological Statistics"</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Identifies a climatology variable.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identifies a climatology boundary variable.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong><code>comment</code></strong></p></td>
@@ -12763,6 +12783,25 @@ The "Use" values are <strong>MT</strong> for mesh topology variables, <strong>LI
 <h2 id="revhistory"><a class="anchor" href="#revhistory"></a>Revision History</h2>
 <div class="sectionbody">
 <div class="sect2">
+<h3 id="_version_1_13_draft"><a class="anchor" href="#_version_1_13_draft"></a>Version 1.13-draft</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/cf-convention/cf-conventions/issues/590">Issue #590</a>: Clarify that grid_mapping can also be used for converting spatial bounds</p>
+</li>
+<li>
+<p><a href="https://github.com/cf-convention/cf-conventions/issues/593">Issue #593</a>: Clarify that rules for attributes of boundary variables (including BI and BO) also apply for attributes of climatological boundary variables</p>
+</li>
+<li>
+<p><a href="https://github.com/cf-convention/cf-conventions/issues/583">Issue #583</a>: Correct "most rapidly varying dimension" in terminology section.</p>
+</li>
+<li>
+<p><a href="https://github.com/cf-convention/cf-conventions/issues/584">Issue #584</a>: Allow <code>Z</code> as time-zone offset, with a couple of examples, and allow time-zone offset with date alone, both being consistent with UDUNITS syntax.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_version_1_12_04_december_2024"><a class="anchor" href="#_version_1_12_04_december_2024"></a>Version 1.12 (04 December 2024)</h3>
 <div class="ulist">
 <ul>
@@ -13464,7 +13503,7 @@ OGC document 12-063. 1st May 2015.</p>
 <div id="footer">
 <div id="footer-text">
 Version v1.12.0-rc7-24-gb724218<br>
-Last updated 2024-12-09 21:06:34 UTC
+Last updated 2025-07-24 10:09:12 UTC
 </div>
 </div>
 </body>
