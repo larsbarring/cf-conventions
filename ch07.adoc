@@ -653,7 +653,7 @@ data:  // time coordinates translated to datetime format
 [caption="Example 7.12. "]
 .Extreme statistics and spell-lengths
 ====
-Number of frost days during NH winter 2007-2008, and maximum length of spells of consecutive frost days.
+Number of frost days during NH winter 2007-2018, and maximum length of spells of consecutive frost days.
 A "frost day" is defined as one during which the minimum temperature falls below freezing point (0 degC).
 This is described as a climatological statistic, in which the minimum temperature is first calculated within each day, and then the number of days or spell lengths meeting the specified condition are evaluated.
 In this operation, the standard name is also changed; the original data are `air_temperature`.
@@ -676,8 +676,8 @@ variables:
     time:calendar = "standard" ;
   double climatology_bounds(time, nv) ;
 data: // time coordinates translated to datetime format
-  time = "2008-01-16 06:00:00" ;
-  climatology_bounds = "2007-12-01 06:00:00", "2008-03-01 06:00:00" ;
+  time = "2013-01-16 06:00:00" ;
+  climatology_bounds = "2007-12-01 06:00:00", "2018-03-01 06:00:00" ;
   threshold = 0. ;
 ----
 ====
