@@ -106,6 +106,12 @@ def get_going():
         file_pattern += ".adoc"
     indir = "../"
     file_list = glob(indir + file_pattern)
+
+    chap = sorted([f for f in file_list if f.startswith('../ch') ])
+    appx = sorted([f for f in file_list if f.startswith('../app')])
+    other = sorted([f for f in file_list if f not in chap and f not in appx])
+    file_list = chap + appx + other
+
     vocab = args.vocabulary
     print("\nKeywords:")
     if vocab.lower() == "both":
