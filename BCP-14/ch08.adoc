@@ -1,15 +1,16 @@
-==  Reduction of Dataset Size 
+[[reduction-of-dataset-size, Chapter 8, Reduction of Dataset Size]]
+==  Reduction of Dataset Size
 :doc-part: 8
 :figure: 0
 
 There are three methods for reducing dataset size: packing, lossless compression, and lossy compression.
-By packing we mean altering the data in a way that reduces its precision (but has no other effect on accuracy).
-By lossless compression we mean techniques that store the data more efficiently and result in no loss of precision or accuracy.
-By lossy compression we mean techniques that either store the data more efficiently and retain its precision but result in some loss in accuracy, or techniques that intentionally reduce data precision to improve the efficiency of subsequent lossless compression.
+Packing means altering the data in a way that reduces its precision (but has no other effect on accuracy).
+Lossless compression means techniques that store the data more efficiently and result in no loss of precision or accuracy.
+Lossy compression means techniques that either store the data more efficiently and retain its precision but result in some loss in accuracy, or techniques that intentionally reduce data precision to improve the efficiency of subsequent lossless compression.
 
 Lossless compression only works in certain circumstances, e.g., when a variable contains a significant amount of missing or repeated data values.
 In this case it is possible to make use of standard utilities, e.g., UNIX **`compress`** or GNU **`gzip`**, to compress the entire file after it has been written.
-In this section we offer an alternative compression method that is applied on a variable by variable basis.
+In this section an alternative compression method is presented that is applied on a variable by variable basis.
 This has the advantage that only one variable need be uncompressed at a given time.
 The disadvantage is that generic utilities that don't recognize the CF conventions will not be able to operate on compressed variables.
 
@@ -17,17 +18,17 @@ The disadvantage is that generic utilities that don't recognize the CF conventio
 === Packed Data
 
 At the current time the netCDF interface does not provide for packing data.
-However a simple packing [aqua-background]#may# be achieved through the use of the [aqua-background]#optional# NUG defined attributes **`scale_factor`** and **`add_offset`**.
+However a simple packing [aqua-background]#may# be achieved through the use of the [aqua-background]#optional# <<NUG>> defined attributes **`scale_factor`** and **`add_offset`**.
 After the data values of a variable have been read, they are to be multiplied by the **`scale_factor`**, and have **`add_offset`** added to them.
 If both attributes are present, the data are scaled before the offset is added.
 When scaled data are written, the application [aqua-background]#should# first subtract the offset and then divide by the scale factor.
 The units of a variable [aqua-background]#should# be representative of the unpacked data.
 
-This standard is more restrictive than the NUG with respect to the use of the **`scale_factor`** and **`add_offset`** attributes; ambiguities and precision problems related to data type conversions are resolved by these restrictions.
+These conventions are more restrictive than the <<NUG>> with respect to the use of the **`scale_factor`** and **`add_offset`** attributes; ambiguities and precision problems related to data type conversions are resolved by these restrictions.
 
 When packed data is written, the **`scale_factor`** and **`add_offset`** attributes [aqua-background]#must# be of the same type as the unpacked data, which [aqua-background]#must# be either **`float`** or **`double`**. Data of type **`float`** [aqua-background]#must# be packed into one of these types: **`byte`**, **`unsigned byte`**, **`short`**, **`unsigned short`**. Data of type **`double`** [aqua-background]#must# be packed into one of these types: **`byte`**, **`unsigned byte`**, **`short`**, **`unsigned short`**, **`int`**, **`unsigned int`**.
 
-When packed data is read, it [aqua-background]#should# be unpacked to the type of the **`scale_factor`** and **`add_offset`** attributes, which [aqua-background]#must# have the same type if both are present. For guidance only, we [lime-background]#suggest# that packed data which does not conform to the rules of this section regarding the types of the data variable and attributes [aqua-background]#should# be unpacked to **`double`** type, in order to minimise the risk of loss of precision.
+When packed data is read, it [aqua-background]#should# be unpacked to the type of the **`scale_factor`** and **`add_offset`** attributes, which [aqua-background]#must# have the same type if both are present. For guidance only, it is [lime-background]#suggested# that packed data which does not conform to the rules of this section regarding the types of the data variable and attributes [aqua-background]#should# be unpacked to **`double`** type, in order to minimise the risk of loss of precision.
 
 When data to be packed contains missing values the attributes that indicate missing values (**`_FillValue`**, **`valid_min`**, **`valid_max`**, **`valid_range`**) [aqua-background]#must# be of the same data type as the packed data.
 See <<missing-data>> for a discussion of how applications [aqua-background]#should# treat variables that have attributes indicating both missing values and transformations defined by a scale and/or offset.
@@ -56,9 +57,9 @@ The list variable [aqua-background]#must not# have an associated boundary variab
 [caption="Example 8.1. "]
 .Horizontal compression of a three-dimensional array
 ====
-We eliminate sea points at all depths in a longitude-latitude-depth array of soil temperatures.
+In a longitude-latitude-depth array of soil temperatures all sea points at all depths [lime-background]#can# be eliminated.
 In this case, only the longitude and latitude axes would be affected by the compression.
-We construct a list `landpoint(landpoint)` containing the indices of land points. 
+A list `landpoint(landpoint)` is constructed containing the indices of land points.
 
 ----
 dimensions:
@@ -78,7 +79,7 @@ variables:
 data:
   landpoint=363, 364, 365, ...;
 ----
-Since `landpoint(0)=363`, for instance, we know that `landsoilt(*,0)` maps on to point 363 of the original data with dimensions `(lat,lon)`.
+Since `landpoint(0)=363`, for instance, it [lime-background]#can# be inferred that `landsoilt(*,0)` maps on to point 363 of the original data with dimensions `(lat,lon)`.
 This corresponds to indices `(3,75)`, i.e., `363 = 3*96 + 75`.
 ====
 
@@ -86,8 +87,8 @@ This corresponds to indices `(3,75)`, i.e., `363 = 3*96 + 75`.
 [caption="Example 8.2. "]
 .Compression of a three-dimensional field
 ====
-We compress a longitude-latitude-depth field of ocean salinity by eliminating points below the sea-floor.
-In this case, all three dimensions are affected by the compression, since there are successively fewer active ocean points at increasing depths. 
+Points below the sea floor [lime-background]#can# be eliminated to compress a longitude-latitude-depth field of ocean salinity.
+In this case, all three dimensions are affected by the compression, since there are successively fewer active ocean points at increasing depths.
 
 ----
 variables:
@@ -437,7 +438,8 @@ variables:
   // Time tie points
   double t(tp_track, tp_time_scan) ;
     t:standard_name = "time" ;
-    t:units = "days since 1990-1-1 0:0:0" ;
+    t:units = "days since 1990-01-01" ;
+    t:calendar = "standard" ;
 ----
 
 This example demonstrates the use of multiple interpolation variables, the reusability of the interpolation variable between data variables of different dimensions and the use of the interpolation parameter attribute.
@@ -450,13 +452,13 @@ This example demonstrates the use of multiple interpolation variables, the reusa
 ====
 ----
 dimensions:
-  y = 228;
-  x = 306;
-  time = 41;
+  y = 228 ;
+  x = 306 ;
+  time = 41 ;
 
   // Tie point dimensions
-  tp_y = 58;
-  tp_x = 52;
+  tp_y = 58 ;
+  tp_x = 52 ;
 
 variables:
   // Data variable
@@ -492,6 +494,7 @@ variables:
   double time(time) ;
     time:standard_name = "time" ;
     time:units = "days since 2021-03-01" ;
+    time:calendar = "standard" ;
   double y(time, tp_y) ;
     y:units = "km" ;
     y:standard_name = "projection_y_coordinate" ;
@@ -536,7 +539,7 @@ For the example of 2D bounds, the resulting set of bounds tie points are marked 
 
 Note that within a continuous area, there is one more reconstituted bounds point than there are reconstituted coordinate points in each dimension.
 For this reason, a  virtual __interpolated bounds dimension__ is introduced for each dimension, having a size equal to the size of the interpolated dimension plus one.
-This dimension is used for solely descriptive purposes, and is not [aqua-background]#required# in a compressed dataset. 
+This dimension is used for solely descriptive purposes, and is not [aqua-background]#required# in a compressed dataset.
 
 [[figure_interpolation_of_cell_boundaries]]
 [caption="Figure {doc-part}.{counter:figure}. ", reftext=Figure {doc-part}.{figure}]
@@ -588,8 +591,8 @@ The full set of bounds tie points is formed by appending, for each continuous ar
 
 **Bounds Tie Point Attribute and Bounds Tie Point Variable** +
 A **`bounds_tie_points`** attribute [aqua-background]#must# be defined for each tie point coordinate variable corresponding to reconstituted coordinates with cell boundaries.
-It is a single word of the form __“bounds_tie_point_variable”__ that identifies a bounds tie point variable, containing a bounds tie point coordinate value for each tie point stored in its tie point coordinate variable, and therefore the bounds tie point variable has the same set of dimensions as its tie point coordinate variable.
-An example of the usage of the **`bounds_tie_points`** is shown in <<example-interpolation-of-cell-boundaries>>.
+Its string value identifies a __bounds tie point variable__ which contains a bounds tie point coordinate value for each tie point stored in its tie point coordinate variable, and therefore the bounds tie point variable has the same set of dimensions as its tie point coordinate variable.
+An example of the usage of the **`bounds_tie_points`** is shown in <<example-interpolation-of-cell-boundaries, Example 8.7>>.
 Since a bounds tie point variable is considered to be part of a tie point coordinate variable’s metadata, it is not necessary to provide it with attributes such as long_name and units, following the same rules as for the bounds of an uncompressed coordinate variable, see <<cell-boundaries>>.
 
 **Uncompressing coordinate bounds** +
@@ -604,9 +607,9 @@ For one-dimensional coordinate bounds, in the second step of the process, for ea
 **Uncompression of two-dimensional coordinate bounds** +
 For two-dimensional coordinate bounds, in the second step of the process, for each index pair `(j, i)` of the interpolated dimension, the four bounds of the boundary variable is set to the value of the interpolated bounds point grid at index pairs `B0`, `B1`, `B2` and `B3`, respectively, where the index pairs are defined above under <<compressing_two_dimensional>>.
 
-[[example-interpolation-of-cell-boundaries, Interpolation of 2D Cell Boundaries corresponding to Figure 8.4]]
+[[example-interpolation-of-cell-boundaries]]
 [caption="Example 8.7. "]
-.Interpolation of 2D Cell Boundaries corresponding to <<figure_interpolation_of_cell_boundaries>>
+.Interpolation of the 2D cell boundaries corresponding to Figure 8.4
 ====
 ----
 dimensions:
@@ -668,8 +671,8 @@ The data creator [aqua-background]#shall# specify the floating-point arithmetic 
 [cols="3,10"]
 |===============
 | ** Value ** | ** Description**
-| "32" | 32-bit floating-point arithmetic, comparable to the binary32 standard in [<<IEEE_754>>]
-| "64" | 64-bit floating-point arithmetic, comparable to the binary64 standard in [<<IEEE_754>>]
+| "32" | 32-bit floating-point arithmetic, comparable to the IEEE binary32 standard <<IEEE_754>>
+| "64" | 64-bit floating-point arithmetic, comparable to the IEEE binary64 standard <<IEEE_754>>
 |===============
 
 Using the given computational precision in the interpolation computations is a necessary, but not sufficient, condition for the data user to be able to reconstitute the coordinates to an accuracy comparable to that intended by the data creator.
@@ -681,7 +684,7 @@ For instance, a **`computational_precision**` value of **`"64"**` would specify 
 Geoscientific models and measurements generate false floating-point precision (scientifically meaningless data bits) that wastes storage space.
 False precision [lime-background]#can# mislead (by implying noise is signal) and is scientifically pointless.
 Quantization algorithms [lime-background]#can# eliminate false precision, usually by rounding the least significant bits of <<IEEE_754>> floating-point mantissas to zeros.
-(Quantization of integer types, although theoretically [lime-background]#allowed#, is not covered by this convention.)
+(Quantization of integer types, although theoretically [lime-background]#allowed#, is not covered by these conventions.)
 The quantized results are valid <<IEEE_754>> values---no special software or decoder is necessary to read them.
 Importantly, the quantized bits compress more efficiently than random bits.
 Thus quantization is sometimes referred to as a form of lossy compression although, strictly speaking, quantization only pre-conditions data for more efficient compression by a subsequent compressor.
@@ -760,7 +763,7 @@ The netCDF library wrote the system-defined **`_QuantizeBitRoundNumberOfSignific
 [caption="Example 8.9. "]
 .Quantization performed by Granular BitRound algorithm in NCO
 ====
-Quantization of different variables to different levels often makes good scientific sense. Here the pressure variable **`ps`** has four significant digits of precision while the temperature variable **`ts`** retains only three significant digits. 
+Quantization of different variables to different levels often makes good scientific sense. Here the pressure variable **`ps`** has four significant digits of precision while the temperature variable **`ts`** retains only three significant digits.
 ----
   variables:
     char quantization_info ;
@@ -800,7 +803,7 @@ Granular BitRound combines the DigitRound approach for compressibility with the 
 Granular BitRound and DigitRound are both good choices when the NSD to retain is known.
 
 The netCDF C and Fortran libraries [lime-background]#can# directly invoke BitRound, BitGroom, and Granular BitRound [<<NetCDF>>].
-The netCDF library attaches a long, system-defined attribute to every data variable that it quantizes, such as 
+The netCDF library attaches a long, system-defined attribute to every data variable that it quantizes, such as
 **`_QuantizeBitRoundNumberOfSignificantBits = 9`** in <<example-quantization-nsb-libnetcdf>>.
 The leading underscore indicates that the netCDF library wrote this attribute <<NUG>>.
 Any variable that has the library-defined attribute [aqua-background]#must#, in addition, contain the corresponding CF metadata.

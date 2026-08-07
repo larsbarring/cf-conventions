@@ -72,9 +72,9 @@ For the reconstitution of the uncompressed coordinate and auxiliary coordinate v
 
 The following notation is used:
 
-A variable staring with `v` denotes a vector and `v.x`, `v.y` and `v.z` refer to the three coordinates of that vector.
+A variable starting with `v` denotes a vector and `v.x`, `v.y` and `v.z` refer to the three coordinates of that vector.
 
-A variable staring with `ll` denotes a latitude-longitude coordinate pair and `ll.lat` and `ll.lon` refer to the latitude and longitude coordinates.
+A variable starting with `ll` denotes a latitude-longitude coordinate pair and `ll.lat` and `ll.lon` refer to the latitude and longitude coordinates.
 
 For one-dimensional interpolation, `i` is an index in the interpolated dimension, `tpi` is an index in the subsampled dimension and `is` is an index in the interpolation subarea dimensions.
 
@@ -87,7 +87,11 @@ In the two-dimensional case, `a = tp(tpi2, tpi1)`, `b = tp(tpi2, tpi1+1)`, `c = 
 [[common-conversions-and-formulas, Section J.2, "Common Conversions and Formulas"]]
 ==== Common Conversions and Formulas
 
-[cols="2, 8, 8"]
+<<table-subsampling-formulas, Table J.1>> describes conversions and formulas that are used in the descriptions of the interpolation techniques.
+
+[[table-subsampling-formulas]]
+.Conversions and formulas used in the definitions of subsampling interpolation methods
+[cols="2, 8, 8", options="header",caption="Table J.1. "]
 |===============
 | |Description | Formula
 

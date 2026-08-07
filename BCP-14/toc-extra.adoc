@@ -4,6 +4,13 @@
 3.1. <<table-supported-units>>
 3.2. <<table-flag-variable-bits>>
 3.3. <<table-flag-variable-bit-2-and-3>>
+4.1. <<table-calendars>>
+7.1. <<table-geometry-types>>
+9.1. <<table-feature-types>>
+9.2. <<table-orthogonal-array>>
+9.3. <<table-incomplete-array>>
+9.4. <<table-contiguous-array>>
+9.5. <<table-indexed-array>>
 A.1. <<table-attributes>>
 C.1. <<table-standard-name-modifiers>>
 D.1. <<table-computed-standard-names>>
@@ -11,13 +18,14 @@ E.1. <<table-cell-methods>>
 F.1. <<table-grid-mapping-attributes>>
 I.1. <<table-cf-concepts>>
 I.2. <<table-cf-constructs>>
+J.1. <<table-subsampling-formulas>>
 K.2. <<table-mesh-topology-attributes>>
 
 **List of Figures**
 
 [%hardbreaks]
-7.1. <<img-bnd_1d_coords, figure 1>>
-7.2. <<img-bnd_2d_coords, figure 2>>
+7.1. <<img-bnd_1d_coords>>
+7.2. <<img-bnd_2d_coords>>
 8.1. <<interpolation_subarea_generation>>
 8.2. <<ci_dimensions_overview>>
 8.3. <<ci_interpolation_parameters>>
@@ -37,6 +45,8 @@ J.5. <<quadratic3>>
 
 [%hardbreaks]
 2.1. <<char-and-string-variables-ex>>
+2.2. <<example-array-of-fragments>>
+2.3. <<example-aggregation-variable>>
 3.1. <<use-of-units-metadata-ex>>
 3.2. <<use-of-standard-name-ex>>
 3.3. <<instrument-data-ex>>
@@ -73,9 +83,9 @@ J.5. <<quadratic3>>
 6.1. <<northward-heat-transport-in-atlantic-ocean-ex>>
 6.1.2. <<taxa-ex>>
 6.2. <<model-level-numbers-ex>>
-7.1. <<specifying-formula_terms-ex>>
-7.2. <<cells-on-a-latitude-axis-ex>>
-7.3. <<cells-in-a-non-rectangular-grid-ex>>
+7.1. <<cells-on-a-time-axis-ex>>
+7.2. <<cells-in-a-non-rectangular-grid-ex>>
+7.3. <<specifying-formula_terms-ex>>
 7.4. <<cell-areas-for-a-spherical-geodesic-grid>>
 7.5. <<methods-applied-to-a-timeseries-ex>>
 7.6. <<surface-air-temperature-variance-ex>>
@@ -87,8 +97,15 @@ J.5. <<quadratic3>>
 7.12. <<extreme-statistics-and-spell-lengths-ex>>
 7.13. <<temperature-each-hour-of-climatological-day-ex>>
 7.14. <<monthly-max-daily-precip-totals-ex>>
-7.15. <<timeseries-with-geometry>>
-7.16. <<complete-multipolygon-example>>
+7.15. <<reference-epoch-distinguishing-ex>>
+7.16. <<anomalies-wrt-climatology-ex>>
+7.17. <<anomalies-wrt-zonal-mean-ex>>
+7.18. <<anomalies-wrt-area-min-ex>>
+7.19. <<anomaly-with-multivalued-climatology-ex>>
+7.20. <<anomaly-with-reference-epoch-ex>>
+7.21. <<reference-epoch-ambiguity-ex>>
+7.22. <<timeseries-with-geometry>>
+7.23. <<complete-multipolygon-example>>
 8.1. <<horiz-compression-of-three-d-array-ex>>
 8.2. <<compression-of-three-d-field-ex>>
 8.3. <<example-Two-dimensional-tie-point-interpolation>>
@@ -122,3 +139,9 @@ H.20. <<example-h.20>>
 H.21. <<example-h.21>>
 H.22. <<example-h.22>>
 I.1. <<cdl-domain-anc-coordinate>>
+L.1. <<example-L.1>>
+L.2. <<example-L.2>>
+L.3. <<example-L.3>>
+L.4. <<example-L.4>>
+L.5. <<example-L.5>>
+L.6. <<example-L.6>>
