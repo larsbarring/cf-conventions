@@ -16,11 +16,11 @@ First, string-valued coordinates (<<labels>>) will have a dimension for maximum 
 Second, if an auxiliary coordinate variable of a data variable that has been compressed by gathering (<<compression-by-gathering>>) does not span the compressed dimension, then its dimensions [aqua-background]#may# be any subset of the data variable's uncompressed dimensions, i.e. any of the dimensions of the data variable except the compressed dimension, and any of the dimensions listed by the **`compress`** attribute of the compressed coordinate variable.
 Third, in the ragged array representations of data (<<discrete-sampling-geometries>>), special methods are needed to connect the data and coordinates.
 
-We [lime-background]#recommend# that the name of a multidimensional coordinate variable [aqua-background]#should not# match the name of any of its dimensions because that precludes supplying a coordinate variable for the dimension.
+It is [aqua-background]#recommended# that the name of a multidimensional coordinate variable [aqua-background]#should not# match the name of any of its dimensions because that precludes supplying a coordinate variable for the dimension.
 This practice also avoids potential bugs in applications that determine coordinate variables by only checking for a name match between a dimension and a variable and not checking that the variable is one dimensional.
 
 If the longitude, latitude, vertical or time coordinate is multi-valued, varies in only one dimension, and varies independently of other spatiotemporal coordinates, it is [lime-background]#not permitted# to store it as an auxiliary coordinate variable.
-This is both to enhance conformance to COARDS and to facilitate the use of generic applications that recognize the NUG convention for coordinate variables.
+This is both to enhance conformance to COARDS and to facilitate the use of generic applications that recognize the <<NUG>> convention for coordinate variables.
 An application that is trying to find the latitude coordinate of a variable [aqua-background]#should# always look first to see if any of the variable's dimensions correspond to a latitude coordinate variable.
 If the latitude coordinate is not found this way, then the auxiliary coordinate variables listed by the `coordinates` attribute [aqua-background]#should# be checked.
 Note that it is permissible, but [aqua-background]#optional#, to list coordinate variables as well as auxiliary coordinate variables in the `coordinates` attribute.
@@ -34,8 +34,8 @@ Horizontal dimensions are those whose coordinate variables have an `axis` attrib
 
 To geo-reference data horizontally with respect to the Earth, a __grid mapping variable__ [aqua-background]#may# be provided by the data variable, using the `grid_mapping` attribute.
 If the coordinate variables for a horizontal grid are not longitude and latitude, then a grid_mapping variable provides the information [aqua-background]#required# to derive longitude and latitude values for each grid location.
-If no __grid mapping variable__ is referenced by a data variable, then longitude and latitude coordinate values [aqua-background]#shall# be supplied __in addition__ to the [aqua-background]#required# coordinates. 
-For example, the Cartesian coordinates of a map projection [aqua-background]#may# be supplied as coordinate variables and, in addition, two-dimensional latitude and longitude variables [aqua-background]#may# be supplied via the `coordinates` attribute on a data variable. 
+If no __grid mapping variable__ is referenced by a data variable, then longitude and latitude coordinate values [aqua-background]#shall# be supplied __in addition__ to the [aqua-background]#required# coordinates.
+For example, the Cartesian coordinates of a map projection [aqua-background]#may# be supplied as coordinate variables and, in addition, two-dimensional latitude and longitude variables [aqua-background]#may# be supplied via the `coordinates` attribute on a data variable.
 The use of the `axis` attribute with values `X` and `Y` is [aqua-background]#recommended# for the coordinate variables (see <<coordinate-types>>).
 
 It is sometimes not practical to specify the latitude-longitude location of data which is representative of geographic regions with complex boundaries.
@@ -71,7 +71,8 @@ variables:
     pres:units = "hPa" ;
   double time(time) ;
     time:long_name = "time" ;
-    time:units = "days since 1990-1-1 0:0:0" ;
+    time:units = "days since 1990-01-01" ;
+    time:calendar = "standard" ;
 ----
 
 ====
@@ -130,7 +131,7 @@ This faciliates processing of this data by generic applications that don't recog
 
 A "reduced" longitude-latitude grid is one in which the points are arranged along constant latitude lines with the number of points on a latitude line decreasing toward the poles.
 Storing this type of gridded data in two-dimensional arrays wastes space, and results in the presence of missing values in the 2D coordinate variables.
-We [lime-background]#recommend# that this type of gridded data be stored using the compression scheme described in <<compression-by-gathering>>.
+It is [aqua-background]#recommended# that this type of gridded data be stored using the compression scheme described in <<compression-by-gathering>>.
 Compression by gathering preserves structure by storing a set of indices that [lime-background]#allows# an application to easily scatter the compressed data back to two-dimensional arrays.
 The compressed latitude and longitude auxiliary coordinate variables are identified by the `coordinates` attribute.
 
@@ -162,7 +163,7 @@ variables:
 ====
 
 `PS(n)` is associated with the coordinate values `lon(n)`, `lat(n)`.
-Compressed grid index `(n)` would be assigned to 2D index `(j,i)` (C index conventions) where 
+Compressed grid index `(n)` would be assigned to 2D index `(j,i)` (C index conventions) where
 
 ----
 j = rgrid(n) / 128
@@ -189,8 +190,12 @@ If the horizontal spatial coordinates are easting and northing in a map projecti
 When the horizontal spatial coordinate variables are not longitude and latitude, it is [aqua-background]#required# that further information is provided to geo-locate the horizontal position.
 A __grid mapping variable__ provides this information.
 
-If no __grid mapping variable__ is provided and the coordinate variables for a horizontal grid are not longitude and latitude, then it is [aqua-background]#required# that the latitude and longitude coordinates are supplied via the `coordinates` attribute. 
+If no __grid mapping variable__ is provided and the coordinate variables for a horizontal grid are not longitude and latitude, then it is [aqua-background]#required# that the latitude and longitude coordinates are supplied via the `coordinates` attribute.
 Such coordinates [aqua-background]#may# be provided in addition to the provision of a __grid mapping variable__, but that is not [aqua-background]#required#.
+
+When a data variable is representative of cells of non-zero size, and the coordinate variables are not longitude and latitude, __bounds__ variables [aqua-background]#should# be provided for vertices of the cell boundaries in the horizontal coordinates of the grid (see  <<cell-boundaries>>).
+The __grid mapping variable__ provides then the information to convert bounds in latitude and longitude coordinates, and it is [aqua-background]#optional# for the dataset to provide these.
+If no __grid mapping variable__ is provided, then the cell extents in latitude and longitude coordinate system [aqua-background]#should# be provided (see <<cell-boundaries>> and especially Example 7.2 for the common case of four-sided cells).
 
 A grid mapping variable provides the description of the mapping via a collection of attached attributes.
 It is of arbitrary type since it contains no data.
@@ -279,41 +284,42 @@ The entries for these names in the standard name table indicate the appropriate 
 
 ----
 dimensions:
-  y = 228;
-  x = 306;
-  time = 41;
+  y = 228 ;
+  x = 306 ;
+  time = 41 ;
 
 variables:
-  int Lambert_Conformal;
-    Lambert_Conformal:grid_mapping_name = "lambert_conformal_conic";
-    Lambert_Conformal:standard_parallel = 25.0;
-    Lambert_Conformal:longitude_of_central_meridian = 265.0;
-    Lambert_Conformal:latitude_of_projection_origin = 25.0;
-  double y(y);
-    y:units = "km";
-    y:long_name = "y coordinate of projection";
-    y:standard_name = "projection_y_coordinate";
-  double x(x);
-    x:units = "km";
-    x:long_name = "x coordinate of projection";
-    x:standard_name = "projection_x_coordinate";
-  double lat(y, x);
-    lat:units = "degrees_north";
-    lat:long_name = "latitude coordinate";
-    lat:standard_name = "latitude";
-  double lon(y, x);
-    lon:units = "degrees_east";
-    lon:long_name = "longitude coordinate";
-    lon:standard_name = "longitude";
-  int time(time);
-    time:long_name = "forecast time";
-    time:units = "hours since 2004-06-23T22:00:00Z";
-  float Temperature(time, y, x);
-    Temperature:units = "K";
-    Temperature:long_name = "Temperature @ surface";
-    Temperature:missing_value = 9999.0;
-    Temperature:coordinates = "lat lon";
-    Temperature:grid_mapping = "Lambert_Conformal";
+  int Lambert_Conformal ;
+    Lambert_Conformal:grid_mapping_name = "lambert_conformal_conic" ;
+    Lambert_Conformal:standard_parallel = 25.0 ;
+    Lambert_Conformal:longitude_of_central_meridian = 265.0 ;
+    Lambert_Conformal:latitude_of_projection_origin = 25.0 ;
+  double y(y) ;
+    y:units = "km" ;
+    y:long_name = "y coordinate of projection" ;
+    y:standard_name = "projection_y_coordinate" ;
+  double x(x) ;
+    x:units = "km" ;
+    x:long_name = "x coordinate of projection" ;
+    x:standard_name = "projection_x_coordinate" ;
+  double lat(y, x) ;
+    lat:units = "degrees_north" ;
+    lat:long_name = "latitude coordinate" ;
+    lat:standard_name = "latitude" ;
+  double lon(y, x) ;
+    lon:units = "degrees_east" ;
+    lon:long_name = "longitude coordinate" ;
+    lon:standard_name = "longitude" ;
+  int time(time) ;
+    time:long_name = "forecast time" ;
+    time:units = "hours since 2004-06-23 22:00:00" ;
+    time:calendar = "standard" ;
+  float Temperature(time, y, x) ;
+    Temperature:units = "K" ;
+    Temperature:long_name = "Temperature @ surface" ;
+    Temperature:missing_value = 9999.0 ;
+    Temperature:coordinates = "lat lon" ;
+    Temperature:grid_mapping = "Lambert_Conformal" ;
 ----
 ====
 
@@ -437,18 +443,18 @@ The `crs_wkt` attribute [aqua-background]#should# comprise a text string that co
 If desired the text string [aqua-background]#may# contain embedded newline characters to aid human readability.
 However, any such characters are purely cosmetic and do not alter the meaning of the attribute value.
 It is envisaged that the value of the `crs_wkt` attribute typically will be a single line of text, one intended primarily for machine processing.
-Other than the requirement to be a valid WKT string, the CF convention does not prescribe the content of the `crs_wkt` attribute since it will necessarily be context-dependent.
+Other than the requirement to be a valid WKT string, the CF conventions do not prescribe the content of the `crs_wkt` attribute since it will necessarily be context-dependent.
 
 Where a `crs_wkt` attribute is added to a `grid_mapping`, the extended syntax for the `grid_mapping` attribute enables the list of variables containing coordinate values being referenced to be explicitly stated and the CRS WKT Axis order to be explicitly defined.
-The explicit definition of WKT CRS Axis order is expected by the OGC standards for referencing by coordinates. 
+The explicit definition of WKT CRS Axis order is expected by the OGC standards for referencing by coordinates.
 Software implementing these standards are likely to expect to receive coordinate value tuples, with the correct coordinate value order, along with the coordinate reference system definition that those coordinate values are defined with respect to.
 
 The order of the `<coordinatesVariable>` references within the `grid_mapping` attribute definition defines the order of elements within a derived coordinate value tuple.
-This enables an application reading the data from a file to construct an array of coordinate value tuples, where each tuple is ordered to match the specification of the coordinate reference system being used whilst the array of tuples is structured according to the netCDF definition. 
+This enables an application reading the data from a file to construct an array of coordinate value tuples, where each tuple is ordered to match the specification of the coordinate reference system being used whilst the array of tuples is structured according to the netCDF definition.
 It is the responsibility of the data producer to ensure that the `<coordinatesVariable>` list is consistent with the CRS WKT definition of CS AXIS, with the correct number of entries in the correct order (note: this is not a conformance requirement as CF conformance is not dependent on CRS WKT parsing).
 
 For example, a file has two coordinate variables, lon and lat, and a grid mapping variable `crs` with an associated `crs_wkt` attribute; the WKT definition defines the AXIS order as `["latitude", "longitude"]`.
-The `grid_mapping` attribute is thus given a value `crs:lat lon` to define that where coordinate pairs are [aqua-background]#required#, these [aqua-background]#shall# be ordered (lat, lon), to be consistent with the provided `crs_wkt` string (and not order inverted). 
+The `grid_mapping` attribute is thus given a value `crs:lat lon` to define that where coordinate pairs are [aqua-background]#required#, these [aqua-background]#shall# be ordered (lat, lon), to be consistent with the provided `crs_wkt` string (and not order inverted).
 A 2-D array of (lat, lon) tuples [lime-background]#can# then be explicitly derived from the combination of the lat and lon variables.
 
 The `crs_wkt` attribute is intended to act as a _supplement_ to other single-property CF grid mapping attributes (as described in Appendix F); it is not intended to replace those attributes.
@@ -465,9 +471,9 @@ Likewise, in those cases where the value of a CRS WKT element [aqua-background]#
 https://github.com/cf-convention/cf-conventions/wiki/Mapping-from-CF-Grid-Mapping-Attributes-to-CRS-WKT-Elements
 should be preferred; these are derived from the OGP/EPSG registry of geodetic parameters, which is considered to represent the definitive authority as regards CRS property names and values.
 
-Examples 5.11 illustrates how the coordinate system properties specified via the `crs` grid mapping variable in Example 5.9 [lime-background]#might# be expressed using a `crs_wkt` attribute. 
-Example 5.12 also illustrates the addition of the `crs_wkt` attribute, but here the attribute is added to the `crs` variable of a simplified variant of Example 5.10. 
-For brevity in Example 5.11, only the grid mapping variable and its `grid_mapping_name` and `crs_wkt` attributes are included; all other elements are as per the Example 5.9. 
+Examples 5.11 illustrates how the coordinate system properties specified via the `crs` grid mapping variable in Example 5.9 [lime-background]#might# be expressed using a `crs_wkt` attribute.
+Example 5.12 also illustrates the addition of the `crs_wkt` attribute, but here the attribute is added to the `crs` variable of a simplified variant of Example 5.10.
+For brevity in Example 5.11, only the grid mapping variable and its `grid_mapping_name` and `crs_wkt` attributes are included; all other elements are as per the Example 5.9.
 Names of projection. `PARAMETERs` follow the spellings used in the EPSG geodetic parameter registry.
 
 Example 5.12 illustrates how certain WKT elements - all of which are [aqua-background]#optional# - [lime-background]#can# be used to specify CRS properties not covered by existing CF grid mapping attributes, including:
@@ -508,7 +514,7 @@ Example 5.12 illustrates how certain WKT elements - all of which are [aqua-backg
 
 Note: To enhance readability of these examples, the WKT value has been split across multiple lines and embedded quotation marks (") left unescaped - in real netCDF files such characters would need to be escaped.
 In CDL, within the CRS WKT definition string, newlines would need to be encoded within the string as `\n` and double quotes as `\"`.
-Also for readability, we have dropped the quotation marks which would delimit the entire `crs_wkt` string.
+Also for readability, the quotation marks which would delimit the entire `crs_wkt` string have been dropped.
 This pseudo CDL will not parse directly.
 
 [[british-national-grid-newlyn-datum-in-crs-wkt-format]]
@@ -550,42 +556,42 @@ variables:
     crs:reference_ellipsoid_name = "Airy 1830" ;
     crs:prime_meridian_name = "Greenwich" ;
     crs:towgs84 = 375., -111., 431., 0., 0., 0., 0. ;
-    crs:crs_wkt = "COMPOUNDCRS ["OSGB 1936 / British National Grid + ODN",
-      PROJCRS ["OSGB 1936 / British National Grid",
-        GEODCRS ["OSGB 1936",
-          DATUM ["OSGB 1936",
-            ELLIPSOID ["Airy 1830", 6377563.396, 299.3249646,
-              LENGTHUNIT[“metre”,1.0]],
-            TOWGS84[375, -111, 431, 0, 0, 0, 0]
+    crs:crs_wkt = "COMPOUNDCRS["OSGB 1936 / British National Grid + ODN",
+      PROJCRS["OSGB 1936 / British National Grid",
+        BASEGEODCRS["OSGB 1936",
+          DATUM["OSGB 1936",
+            ELLIPSOID["Airy 1830", 6377563.396, 299.3249646,
+              LENGTHUNIT["metre",1.0]]
           ],
           PRIMEM ["Greenwich", 0],
           UNIT ["degree", 0.0174532925199433]
         ],
         CONVERSION["OSGB",
-        METHOD["Transverse Mercator",
-          PARAMETER["False easting", 400000, LENGTHUNIT[“metre”,1.0]],
-          PARAMETER["False northing", -100000, LENGTHUNIT[“metre”,1.0]],
+          METHOD["Transverse Mercator"],
+          PARAMETER["False easting", 400000, LENGTHUNIT["metre",1.0]],
+          PARAMETER["False northing", -100000, LENGTHUNIT["metre",1.0]],
           PARAMETER["Longitude of natural origin", -2.0,
-            ANGLEUNIT[“degree”,0.0174532925199433]],
+            ANGLEUNIT["degree",0.0174532925199433]],
           PARAMETER["Latitude of natural origin", 49.0,
-            ANGLEUNIT[“degree”,0.0174532925199433]],
+            ANGLEUNIT["degree",0.0174532925199433]],
           PARAMETER["Longitude of false origin", -7.556,
-            ANGLEUNIT[“degree”,0.0174532925199433]],
+            ANGLEUNIT["degree",0.0174532925199433]],
           PARAMETER["Latitude of false origin", 49.766,
-            ANGLEUNIT[“degree”,0.0174532925199433]],
-          PARAMETER["Scale factor at natural origin", 0.9996012717, SCALEUNIT[“Unity”,1.0]],
-          AUTHORITY["EPSG", "27700"]]
-       CS[Cartesian,2],
-         AXIS["easting (X)",east],
-         AXIS["northing (Y)",north],
-         LENGTHUNIT[“metre”, 1.0],
+            ANGLEUNIT["degree",0.0174532925199433]],
+          PARAMETER["Scale factor at natural origin", 0.9996012717, SCALEUNIT["Unity",1.0]]
+        ],
+        CS[Cartesian, 2],
+        AXIS["easting (X)",east],
+        AXIS["northing (Y)",north],
+        LENGTHUNIT["metre",1.0],
+        ID["EPSG",27700]
       ],
-      VERTCRS ["Newlyn",
-        VDATUM ["Ordnance Datum Newlyn", 2005],
-        AUTHORITY ["EPSG", "5701"]
+      VERTCRS["Newlyn",
+        VDATUM["Ordnance Datum Newlyn"],
         CS[vertical,1],
-          AXIS["gravity-related height (H)",up],
-          LENGTHUNIT[“metre”,1.0]
+        AXIS["gravity-related height (H)",up],
+        LENGTHUNIT["metre",1.0],
+        ID["EPSG",5701]
       ]
       ]" ;
   ...
@@ -649,7 +655,7 @@ Similarly, a string-valued scalar coordinate variable has the same meaning and p
 Note however that use of this feature with a latitude, longitude, vertical, or time coordinate will inhibit COARDS conforming applications from recognizing them.
 
 Once a name is used for a scalar coordinate variable it [lime-background]#can not# be used for a 1D coordinate variable.
-For this reason we strongly [lime-background]#recommend# against using a name for a scalar coordinate variable that matches the name of any dimension in the file.
+For this reason it is strongly [aqua-background]#recommended# against using a name for a scalar coordinate variable that matches the name of any dimension in the file.
 
 If a data variable has two or more scalar coordinate variables, they are regarded as though they were all independent coordinate variables with dimensions of size one.
 If two or more single-valued coordinates are not independent, but have related values (this [lime-background]#might# be the case, for instance, for time and forecast period, or vertical coordinate and model level number, <<alternative-coordinates>>), they [aqua-background]#should# be stored as coordinate or auxiliary coordinate variables of the same size one dimension, not as scalar coordinate variables.
@@ -665,23 +671,25 @@ dimensions:
   lon = 360 ;
   time = UNLIMITED ;
 variables:
-  double atime
+  double atime ;
     atime:standard_name = "forecast_reference_time" ;
-    atime:units = "hours since 1999-01-01 00:00" ;
-  double time(time);
+    atime:units = "hours since 1999-01-01 00:00:00" ;
+    atime:calendar = "standard" ;
+  double time(time) ;
     time:standard_name = "time" ;
-    time:units = "hours since 1999-01-01 00:00" ;
+    time:units = "hours since 1999-01-01 00:00:00" ;
+    time:calendar = "standard" ;
   double lon(lon) ;
-    lon:long_name = "station longitude";
-    lon:units = "degrees_east";
+    lon:long_name = "station longitude" ;
+    lon:units = "degrees_east" ;
   double lat(lat) ;
     lat:long_name = "station latitude" ;
     lat:units = "degrees_north" ;
-  double p500
+  double p500 ;
     p500:long_name = "pressure" ;
     p500:units = "hPa" ;
     p500:positive = "down" ;
-  float height(time,lat,lon);
+  float height(time, lat, lon) ;
     height:long_name = "geopotential height" ;
     height:standard_name = "geopotential_height" ;
     height:units = "m" ;
@@ -757,7 +765,8 @@ variables:
     pres:units = "hPa" ;
   double time(time) ;
     time:long_name = "time" ;
-    time:units = "days since 1990-1-1 0:0:0" ;
+    time:units = "days since 1990-01-01" ;
+    time:calendar = "standard" ;
 ----
 
 In this example the data variable `xwind` from the <<independent-coordinate-variables-ex>> example has been replaced by the domain variable `domain`.
@@ -784,9 +793,10 @@ variables:
     rotated_pole:grid_mapping_name = "rotated_latitude_longitude" ;
     rotated_pole:grid_north_pole_latitude = 32.5 ;
     rotated_pole:grid_north_pole_longitude = 170. ;
-  double time
+  double time ;
     time:standard_name = "time" ;
-    time:units = "days since 2000-12-01 00:00" ;
+    time:units = "days since 2000-12-01" ;
+    time:calendar = "standard" ;
   float rlon(rlon) ;
     rlon:long_name = "longitude in rotated pole grid" ;
     rlon:units = "degrees" ;
@@ -834,10 +844,11 @@ variables:
   float time(time) ;
     time:long_name = "time" ;
     time:units = "days since 1979-01-01" ;
+    time:calendar = "standard" ;
   float cell_area(cell) ;
     cell_area:long_name = "area of grid cell" ;
     cell_area:standard_name = "cell_area" ;
-    cell_area:units = "m2"
+    cell_area:units = "m2" ;
   float lon_vertices(cell, nv) ;
   float lat_vertices(cell, nv) ;
 ----
@@ -861,6 +872,7 @@ variables:
   double t ;
     t:standard_name = "time" ;
     t:units = "days since 2021-01-01" ;
+    t:calendar = "standard" ;
 ----
 ====
 
@@ -954,7 +966,8 @@ variables:
   double time(obs) ;
     time:standard_name = "time" ;
     time:long_name = "time of measurement" ;
-    time:units = "days since 1970-01-01 00:00:00" ;
+    time:units = "days since 1970-01-01" ;
+    time:calendar = "proleptic_gregorian" ;
 
 attributes:
     :featureType = "timeSeries" ;
@@ -968,12 +981,12 @@ In this example the data variables `humidity` and `temp` from the <<example-h.7>
 === Mesh Topology Variables
 
 A __mesh topology variable__ defines the geospatial topology of cells arranged in two or three dimensions in real space but indexed by a single dimension.
-It explicitly describes the topological relationships between cells, i.e. spatial relationships which do not depend on the cell locations, via a mesh of connected nodes. 
+It explicitly describes the topological relationships between cells, i.e. spatial relationships which do not depend on the cell locations, via a mesh of connected nodes.
 A mesh topology variable [aqua-background]#may# provide the topology for one or more domains, defined at the nodes, edges, or faces of the mesh.
 See the <<data-model-domain-topology>> and <<data-model-cell-connectivity>> descriptions in the CF data model for more details, including on how the mesh relates to the cells of the domain.
 
 The canonical definitions of mesh topology variables and location index set variables are given externally by the UGRID conventions <<UGRID>>, but their standardized attributes, many of which are [aqua-background]#optional#, are listed in <<appendix-mesh-topology-attributes>> and <<attribute-appendix>>.
-Some features of the UGRID conventions <<UGRID>> are not currently recognized by the CF conventions: mesh topology volume cells (that are used to describe fully three-dimensional unstructured mesh topologies); and the "boundary node connectivity" variable (that specifies an index variable identifying the nodes that define where boundary condtions have been provided). 
+Some features of the UGRID conventions <<UGRID>> are not currently recognized by the CF conventions: mesh topology volume cells (that are used to describe fully three-dimensional unstructured mesh topologies); and the "boundary node connectivity" variable (that specifies an index variable identifying the nodes that define where boundary condtions have been provided).
 
 A data or domain variable [aqua-background]#may# use one of a mesh topology variable's domains by referencing the mesh topology variable with the **`mesh`** attribute; along with the identity of [aqua-background]#required# domain provided by the **`location`** attribute (see example <<example-mesh-topology-variable>>).
 
@@ -1025,6 +1038,7 @@ variables:
   float time(time) ;
     time:standard_name = "time" ;
     time:units = "days since 2004-06-01" ;
+    time:calendar = "standard" ;
 
   // Data at mesh faces
   double volume_at_faces(time, face) ;

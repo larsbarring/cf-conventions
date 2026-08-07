@@ -1,4 +1,4 @@
-﻿include::version.adoc[]
+include::version.adoc[]
 [[cf-conformance-requirements-and-recommendations]]
 == CF Conformance Requirements and Recommendations {current-version}
 
@@ -27,7 +27,9 @@ See https://github.com/ugrid-conventions/ugrid-conventions for the UGRID conform
 
 *Requirements:*
 
-* CF attributes that take string values [aqua-background]#must# be 1D character arrays or single atomic strings.
+* Any text stored in a CF attribute or variable [aqua-background]#must# be represented in Unicode Normalization Form C and encoded in UTF-8.
+
+* Any attribute of variable-length string type [aqua-background]#must# be a scalar (not an array).
 
 [[section-1]]
 
@@ -36,8 +38,7 @@ See https://github.com/ugrid-conventions/ugrid-conventions for the UGRID conform
 
 *Recommendations:*
 
-* Variable, dimension and attribute names [aqua-background]#should# begin with a letter and be composed of letters (A-Z, a-z), digits (0-9), and underscores(_). This corresponds to ASCII characters in the decimal ranges (65-90), (97-122), (48-57), and (95). The corresponding Unicode codepoints are (U+0041-U+005A), (U+0061-U+007A), (U+0030-U+0039), and (U+005F).  
-* ASCII period (.) and ASCII hyphen (-) [aqua-background]#may# also be included in attribute names only.
+* Variable, dimension and attribute names [aqua-background]#should# begin with a letter and be composed of letters (A-Z, a-z), digits (0-9), and underscores(_). This corresponds to ASCII characters in the decimal ranges (65-90), (97-122), (48-57), and (95). The corresponding Unicode codepoints are (U+0041-U+005A), (U+0061-U+007A), (U+0030-U+0039), and (U+005F).
 * No two variable names [aqua-background]#should# be identical when case is ignored.
 
 [[section-2]]
@@ -130,6 +131,45 @@ References [lime-background]#can# be absolute, relative or with no path, in whic
 
 * NUG-coordinate variables that are not in the referring group or one of its direct ancestors [aqua-background]#should# be referenced by absolute or relative paths rather than relying on the lateral search algorithm.
 
+[[aggregation-variables]]
+=== 2.8 Aggregation Variables
+
+*Requirements:*
+
+* An aggregation variable has an **`aggregated_dimensions`** attribute whose string value is a blank-separated list of zero or more aggregated dimension names.
+
+* Each aggregated dimension [aqua-background]#must# name a dimension in the file.
+
+* An aggregation variable [aqua-background]#must# be a scalar.
+
+* An aggregation variable [aqua-background]#must# have an **`aggregated_data`** attribute whose string value comprises blank-separated elements of the form __feature: variable__.
+  Each __variable__ [aqua-background]#must# be the name of a variable in the file.
+  The feature keywords [aqua-background]#must# comprise either all three of `map`, `uris`, and `identifiers`; or else both of `map` and `unique_values`.
+
+* A `uris` variable [aqua-background]#must# have a string data type.
+
+  ** The `uris` variable [aqua-background]#must# have the same number of dimensions as there are aggregated dimensions.
+  ** The size of each dimension [aqua-background]#must# be the equal to number of valid values in the corresponding row of the `map` variable.
+  ** The variable [aqua-background]#must# have no missing values.
+  ** A data value of a `uris` variable [aqua-background]#must# be either an absolute URI or else a relative-path URI reference.
+
+* An `identifiers` variable [aqua-background]#must# be either a scalar, or else have the same dimensions in the same order as the `uris` variable.
+  ** The variable [aqua-background]#must# have no missing values.
+
+* The `unique_values` variable [aqua-background]#must# have the same number of dimensions as there are aggregated dimensions.
+  ** The size of each dimension [aqua-background]#must# be equal to the number of valid values in the corresponding row of the `map` variable.
+
+* The `map` variable [aqua-background]#must# have an integer data type.
+  ** If there are zero aggregated dimensions then the `map` variable [aqua-background]#must# a be scalar and contain the value `1`.
+  ** If there are one or more aggregated dimensions then the `map` variable [aqua-background]#must# be two-dimensional.
+  *** The size of the slower-varying dimension (i.e. the first dimension in CDL order, representing rows) [aqua-background]#must# be the number of aggregated dimensions.
+  *** The sum of the valid values in a row [aqua-background]#must# equal the size of the corresponding aggregated dimension.
+
+*Recommendations:*
+
+* The following kinds of variable [aqua-background]#should not# be aggregation variables: grid mapping variables, domain variables, mesh topology variables, geometry container variables, interpolation variables, and quantization variables.
+
+
 [[section-6]]
 [[description-of-the-data]]
 === 3 Description of the Data
@@ -140,15 +180,17 @@ References [lime-background]#can# be absolute, relative or with no path, in whic
 
 *Requirements:*
 
-* The **`units`** attribute is [aqua-background]#required# for all variables that represent dimensional quantities (except for boundary variables defined in https://cfconventions.org/cf-conventions/cf-conventions.html#cell-boundaries[section 7.1] and climatology variables defined in https://cfconventions.org/cf-conventions/cf-conventions.html#climatological-statistics[section 7.4]).
+* The **`units`** attribute is [aqua-background]#required# for all variables that represent dimensional quantities (except for boundary variables defined in https://cfconventions.org/cf-conventions/cf-conventions.html#cell-boundaries[section 7.1] and climatology boundary variables defined in https://cfconventions.org/cf-conventions/cf-conventions.html#climatological-statistics[section 7.4]).
 * The type of the **`units`** attribute is a string that [aqua-background]#must# be recognizable by the UDUNITS package.
 Exceptions are the units **`level`**, **`layer`**, and **`sigma_level`**.
+* The **`units`** string [aqua-background]#must not# contain literal numbers (integer or real) as factors or offsets to a named unit of measure.
+An equivalent statement, using the syntax and terms of the link:$$https://docs.unidata.ucar.edu/udunits/current/udunits2lib.html#Grammar$$[UDUNITS Unit Grammar], is that **`INT`** or **`REAL`** are [lime-background]#not allowed# in a **`units`** string that contains **`ID`**, except for the specification of a reference time in the units of time coordinates.
 * Dimensionless units for volume fractions defined by UDUNITS (**`ppv`**, **`ppmv`**, **`ppbv`**, **`pptv`**, **`ppqv`**) are [lime-background]#not allowed# in the **`units`** attribute of any variable which also has a **`standard_name`** attribute.
-* If present, the **`units_metadata`** attribute [aqua-background]#must# have one of these values: `temperature: on_scale`, `temperature: difference`, `temperature: unknown`.
+* If present, the **`units_metadata`** attribute [aqua-background]#must# have one of these values: `temperature: on_scale`, `temperature: difference`, `temperature: unknown`, `leap_seconds: none`, `leap_seconds: utc`, or `leap_seconds: unknown`.
 * The **`units`** of a variable that specifies a **`standard_name`** [aqua-background]#must# be physically equivalent to the canonical units given in the standard name table, as modified by the **`standard_name`** modifier, if there is one, according to Appendix C, and then modified by all the methods listed in order by the **`cell_methods`** attribute, if one is present, according to Appendix E.
 * If the **`standard_name`** attribute includes the `standard_error` modifier, the **`units_metadata`** attribute, if present, [aqua-background]#must# have the value `temperature: difference`.
-* If the **`cell_methods`** attribute includes any entry with any of the methods `range`, `standard_deviation` or `variance`, the **`units_metadata`** attribute, if present, [aqua-background]#must# have the value `temperature: difference`.
-* A variable [aqua-background]#must not# have a **`units_metadata`** attribute if it has no **`units`** attribute or if its **`units`** do not involve a temperature unit.
+* If a variable has a **`units`** attribute that involves a temperature unit, and has a **`cell_methods`** attribute includes any entry with any of the methods `range`, `standard_deviation` or `variance`, then the **`units_metadata`** attribute, if present, [aqua-background]#must# have the value `temperature: difference`.
+* A variable [aqua-background]#must not# have a **`units_metadata`** attribute if it has no **`units`** attribute, or if its **`units`** do not involve a temperature unit or a reference time unit.
 
 *Recommendations:*
 
@@ -237,39 +279,59 @@ The values of **`var`** [aqua-background]#must# be variables that exist in the f
 
 [[section-13]]
 [[time-coordinate]]
-=== 4.4 Time Coordinate
+=== 4.4.2 Time Coordinate Units
 
 *Requirements:*
 
-* The time **`units`** of a time coordinate variable [aqua-background]#must# contain a reference date/time.
-* The reference date/time of a time coordinate variable [aqua-background]#must# be a legal date/time in the specified calendar.
-* The reference date/time in time **`units`** is [lime-background]#not allowed# to contain seconds equal to or greater than 60.
+* The time **`units`** of a time coordinate variable [aqua-background]#must# contain a reference datetime.
+* A non-zero time zone offset [aqua-background]#must not# appear in the reference datetime in the **`utc`** and **`tai`** calendars.
+* The reference datetime [aqua-background]#must# be written in the correct format.
+In particular, it [aqua-background]#must# include the date, and the time zone offset [aqua-background]#must not# be included unless the time is included.
 
 *Recommendations:*
 
-* The use of time coordinates in year 0 and reference date/times in year 0 to indicate climatological time is deprecated.
-* Units of **`year`** and **`month`** and any equivalent units [aqua-background]#should# be used with caution.
+In the first three recommendations, when we refer to a UDUNITS unit of time e.g. **`year`**, we mean the string given or any which is equivalent to it in UDUNITS e.g. **`yr`**.
+
+* Units of **`year`** and **`month`** [aqua-background]#should not# be used in any calendar.
+* Units of **`day`**, **`hour`** and **`minute`** [aqua-background]#should not# be used in the **`utc`** calendar. In that calendar, the only [aqua-background]#recommended# unit is **`second`**.
+* The decimal prefixes of Table 3.1 [aqua-background]#should not# be used with any unit of time apart from **`second`**.
 * UDUNITS [lime-background]#permits# a number of alternatives to the word **`since`** in the units of time coordinates. All the alternatives have exactly the same meaning in UDUNITS. For compatibility with other software, CF strongly [lime-background]#recommends# that **`since`** [aqua-background]#should# be used.
+* A non-zero time zone offset [aqua-background]#should not# be specified in the reference datetime.
+* In datetime strings, leading zeroes [aqua-background]#should# be inserted where needed such that the year has at least four digits, and that any other components included have two digits (the month, day, hour, minute, the integer part of second, and the hour and minute in the time zone offset).
 
 [[section-14]]
 [[calendar]]
-=== 4.4.1 Calendar
+=== 4.4.3 Calendar
 
 *Requirements:*
 
-* The attributes **`calendar`**, **`month_lengths`**, **`leap_year`**, and **`leap_month`** [aqua-background]#may# only be attached to time coordinate variables.
-* The standardized values (case insensitive) of the **`calendar`** attribute are **`standard`**, **`gregorian`** (deprecated), **`proleptic_gregorian`**, **`noleap`**, **`365_day`**, **`all_leap`**, **`366_day`**, **`360_day`**, **`julian`**, and **`none`**.
-If the **`calendar`** attribute is given a non-standard value, then the attribute **`month_lengths`** is [aqua-background]#required#, along with **`leap_year`** and **`leap_month`** as appropriate.
+* The **`calendar`** attribute [aqua-background]#may# only be attached to time coordinate variables.
+* If present, the value of the **`calendar`** attribute [aqua-background]#must# be one of the standardized values (case insensitive) detailed in this section, unless the **`month_length`** attribute is present, in which case the **`calendar`** attribute [aqua-background]#must# _not_ take one of the standardized values.
+* Datetimes before 1972-01-01 00:00:00 and after the current instant (i.e. any time in the future when the data is written) are invalid in the **`utc`** calendar, datetimes before 1958-01-01 00:00:00 are invalid in the **`tai`** calendar, datetimes in negative years are invalid in the **`standard`** and **`julian`** calendars, and datetimes in the range from (and including) 1582-10-05 00:00:00 until (but excluding) 1582-10-15 00:00:00 are invalid in the **`standard`** calendar.
+Datetimes which are invalid in the specified calendar [aqua-background]#must not# be encoded as time coordinates.
+* The reference datetime of a time coordinate variable [aqua-background]#must# be a valid datetime in the specified calendar.
+
+*Recommendations:*
+
+* A time coordinate variable [aqua-background]#should# have a **`calendar`** attribute.
+* If the **`calendar`** attribute is **`standard`**, **`gregorian**` (deprecated) or **`julian`** or absent, the use of time coordinates in year 0 and reference datetimes in year 0 is deprecated.
+* The value **`standard`** [aqua-background]#should# be used instead of **`gregorian`** in the **`calendar`** attribute.
+* In the **`standard`** calendar, a reference datetime before 1582-10-05 00:00:00 [aqua-background]#should not# be used for a time coordinate representing 1582-10-15 00:00:00 or a later datetime, and a reference datetime of 1582-10-15 00:00:00 or later [aqua-background]#should not# be used for a time coordinate representing a datetime earlier than 1582-10-05 00:00:00.
+* A datetime during a leap second (i.e. with a value for seconds that equals or exceeds 60) [aqua-background]#should not# be used as the reference datetime of a time coordinate variable if the **`calendar`** is **`utc`**.
+(In other calendars, leap seconds [aqua-background]#must not# be used because they are not valid datetimes.)
+
+[[explicitly-defined-calendar]]
+=== 4.4.4 Explicitly Defined Calendar
+
+* The **`month_lengths`**, **`leap_year`**, and **`leap_month`** attributes [aqua-background]#may# only be attached to time coordinate variables.
+* If the **`calendar`** attribute of a time coordinate variable is given a non-standard value, then the attribute **`month_lengths`** is [aqua-background]#required#, along with **`leap_year`** and **`leap_month`** as appropriate.
 * The type of the **`month_lengths`** attribute [aqua-background]#must# be an integer array of size 12.
 * The values of the **`leap_month`** attribute [aqua-background]#must# be in the range 1-12.
 * The values of the **`leap_year`** and **`leap_month`** attributes are integer scalars.
 
 *Recommendations:*
 
-* A time coordinate variable [aqua-background]#should# have a **`calendar`** attribute.
-* The value **`standard`** [aqua-background]#should# be used instead of **`gregorian`** in the **`calendar`** attribute.
 * The attribute **`leap_month`** [aqua-background]#should not# appear unless the attribute **`leap_year`** is present.
-* The time coordinate [aqua-background]#should not# cross the date 1582-10-15 when the default mixed Gregorian/Julian calendar is in use.
 
 [[section-15]]
 [[coordinate-systems]]
@@ -310,17 +372,28 @@ grid_mapping_name[: coord_var [coord_var ...]] [grid_mapping_name: [coord_var ..
 * Each coord_var is the name of a coordinate variable or auxiliary coordinate variable, which [aqua-background]#must# exist in the file.
 If it is an auxiliary coordinate variable, it [aqua-background]#must# be listed in the coordinates attribute.
 
-* The grid mapping variables [aqua-background]#must# have the **`grid_mapping_name`** attribute. 
+* The grid mapping variables [aqua-background]#must# have the **`grid_mapping_name`** attribute.
 The legal values for the **`grid_mapping_name`** attribute are contained in Appendix F.
-* The data types of the attributes of the grid mapping variable [aqua-background]#must# be specified in Table 1 of Appendix F. +
+* The data types of the attributes of the grid mapping variable [aqua-background]#must# be as specified in Table F.1 of Appendix F. +
 * If present, the **`crs_wkt`** attribute [aqua-background]#must# be a text string conforming to the CRS WKT specification described in reference [OGC_CTS].
 * **`reference_ellipsoid_name`**, **`prime_meridian_name`**, **`horizontal_datum_name`** and **`geographic_crs_name`** [aqua-background]#must# be all defined if any one is defined.
 * If **`projected_crs_name`** is defined then **`geographic_crs_name`** [aqua-background]#must# be also.
+* If the value of the **`indexing_scheme`** attribute is **`nested`** or **`ring`**, then the **`refinement_level`** attribute [aqua-background]#must# also be present.
+* If the value of the **`indexing_scheme`** attribute is **`nuniq`** or **`zuniq`**, then the **`refinement_level`** attribute [aqua-background]#must not# be present.
+* The value of the **`refinement_level`** attribute [aqua-background]#must# be an integer in the range 0-29.
+* A variable with standard name **`healpix_index`** [aqua-background]#must# have an integer data type and all values [aqua-background]#must# be non-negative.
+* A variable with standard name **`reduced_gaussian_index`** [aqua-background]#must# have an integer data type.
+Its values [aqua-background]#must# be positive, strictly monotonic, and less than the total number of points in the global reduced Gaussian grid.
+* The attribute **`grid_subtype`** of the **`reduced_gaussian`** grid mapping [aqua-background]#must# be **`normal`** or **`octahedral`**.
+* The value of the attribute **`latitude_dimension`** of the **`reduced_gaussian`** grid mapping [aqua-background]#must# be an even number.
+* A one-dimensional variable [aqua-background]#must# exist whose name, and the name of its single dimension, [aqua-background]#must# both equal the **`latitude_dimension`** attribute of the **`reduced_gaussian`** grid mapping.
+* A one-dimensional variable [aqua-background]#must# exist whose name, and the name of its single dimension, [aqua-background]#must# both equal the **`latitude_dimension`** attribute of the **`reduced_gaussian`** grid mapping.
 
 *Recommendations:*
 
 * The grid mapping variables [aqua-background]#should# have 0 dimensions.
 * Deprecated attributes for the **`grid_mapping_name`** are: **`scale_factor_at_projection_origin`** for **`grid_mapping_name = lambert_cylindrical_equal_area`** only, where **`standard_parallel`** [aqua-background]#should# instead be used; and **`straight_vertical_longitude_from_pole`** for **`grid_mapping_name = polar_stereographic`** only, where **`longitude_of_projection_origin`** [aqua-background]#should# instead be used.
+* An auxiliary coordinate variable with standard name **`healpix_index`**, of size greater than one, all of whose values are distinct, [aqua-background]#should# be a coordinate variable instead (with values ordered monotonically).
 
 [[section-17]]
 [[domain-variables]]
@@ -361,10 +434,11 @@ If there are two dimensions, the leading dimension (CDL order) [aqua-background]
 
 * The type of the **`bounds`** attribute is a string whose value is a single variable name.
 The specified variable [aqua-background]#must# exist in the file.
+* A boundary variable [aqua-background]#must# be a numeric data type.
 * A boundary variable [aqua-background]#must# have the same dimensions as its associated variable, plus have a trailing dimension (CDL order) for the maximum number of vertices in a cell.
 The trailing dimension [aqua-background]#must# be of size two if the associated variable is one-dimensional, and of size greater than two if the associated variable has more than one dimension.
 * Any elements of the boundary variable which contain the **`FillValue`** [aqua-background]#must# form a consecutive block at the end of the trailing dimension.
-* A boundary variable [aqua-background]#must# be a numeric data type.
+* If the associated coordinate variable is one-dimensional and of size greater than one, the bounds of each cell [aqua-background]#must# be ordered in the same sense as the coordinates (increasing or decreasing).
 * A boundary variable [lime-background]#can# only have inheritable attributes, i.e. any of those marked "BI" in the "Use" column of http://cfconventions.org/cf-conventions/cf-conventions.html#attribute-appendix[Appendix A], if they are also present on its parent coordinate variable.
 * If a boundary variable has an inheritable attribute then its data type and its value [aqua-background]#must# be exactly the same as the parent variable's attribute.
 * Starting with version 1.7, a boundary variable [aqua-background]#must# have a **`formula_terms`** attribute when it contains bounds for a parametric vertical coordinate variable that has a **`formula_terms`** attribute.
@@ -439,13 +513,31 @@ The _value_ [aqua-background]#must# be a valid number and the _unit_ a string th
 * The **`climatology`** attribute [aqua-background]#may# only be attached to a time coordinate variable.
 * The type of the **`climatology`** attribute is a string whose value is a single variable name.
 The specified variable [aqua-background]#must# exist in the file.
-* A climatology variable [aqua-background]#must# have the same dimension as its associated time coordinate variable, and have a trailing dimension (CDL order) of size 2.
-* A climatology variable [aqua-background]#must# be a numeric data type.
-* If a climatology variable has **`units`**, **`standard_name`**, or **`calendar`** attributes, they [aqua-background]#must# agree with those of its associated variable.
-* A climatology variable [aqua-background]#must not# have **`_FillValue`** or **`missing_value`** attributes.
+* A climatology boundary variable [aqua-background]#must# have the same dimension as its associated time coordinate variable, and have a trailing dimension (CDL order) of size 2.
+* A climatology boundary variable [aqua-background]#must# be a numeric data type.
+* If a climatology boundary variable has **`units`**, **`standard_name`**, or **`calendar`** attributes, they [aqua-background]#must# agree with those of its associated variable.
+* A climatology boundary variable [aqua-background]#must not# have **`_FillValue`** or **`missing_value`** attributes.
+
+=== 7.5 Anomaly data
+
+*Requirements:*
+
+* In a **`cell_methods`** entry of the form __name__**`:`** [__name__**`:`** ...] **`anomaly_wrt`** __norm__, the word __norm__ [aqua-background]#must# be the name of a variable that is present in the file, and is named by the **`ancillary_variables`** attribute of the data variable (hence we hereafter refer to it as the "norm ancillary variable").
+* Each of the coordinate variables and scalar coordinate variables identified by the __name__s in the **`anomaly_wrt`** entry of **`cell_methods`** (we refer to these variables hereafter as "anomaly coordinate variables") [aqua-background]#must# have a **`standard_name`** attribute.
+* If either the data variable or the norm ancillary variable has a **`standard_name`** attribute, its value [aqua-background]#must not# end in **`_anomaly`**, and if they both have **`standard_name`** attributes, they [aqua-background]#must# have the same value.
+* The anomaly coordinate variables [aqua-background]#must not# be coordinate variables or scalar coordinate variables of the norm ancillary variable.
+* The coordinate variables and scalar coordinate variables of the norm ancillary variable [aqua-background]#must# satisfy one of the following conditions:
+1. The norm ancillary variable has all the coordinate variables (and their dimensions) and the scalar coordinate variables of the data variable, except for the anomaly coordinate variables.
+2. The norm ancillary variable has none of the coordinate variables or scalar coordinate variables of the data variable.
+3. The norm ancillary variable has no scalar coordinate variables, and its sole dimension is the dimension of an anomaly coordinate variable of time.
+* In cases (1) and (2), for each of the anomaly coordinate variables, the norm ancillary variable [aqua-background]#must# have either a coordinate variable with a size-one dimension, or a scalar coordinate variable, with the same **`standard_name`** attribute as the anomaly coordinate variable, and each of these variables [aqua-background]#must# have either a **`bounds`** or a **`climatology`** attribute. (We hereafter refer to these variables as "norm coordinate variables.)
+* In cases (1) and (2), the norm ancillary variable [aqua-background]#must# have a **`cell_methods`** attribute with an entry that refers to all the norm coordinate variables, or more than one entry if they contain **`within`** and **`over`** keywords.
+* In case (3), the norm ancillary variable [aqua-background]#must# have a **`cell_methods`** attribute comprising entries containing **`within`** and **`over`** keywords and referring to its sole dimension.
+* In cases (2) and (3), **`cell_methods**` [aqua-background]#must# have no entries other that the ones described in the previous two points.
+* In case (3), the norm ancillary variable [aqua-background]#must# have an auxiliary coordinate variable of integer type with a **`select`** attribute naming a time coordinate variable that has a **`climatology`** attribute. The auxiliary coordinate values [aqua-background]#must# be non-negative and less than the dimension named by the **`select`** attribute.
 
 [[geometries]]
-=== 7.5 Geometries
+=== 7.6 Geometries
 
 *Requirements:*
 

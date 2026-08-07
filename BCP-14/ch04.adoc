@@ -1,27 +1,28 @@
 [[coordinate-types, Chapter 4, Coordinate Types]]
-==  Coordinate Types 
+==  Coordinate Types
+:doc-part: 4
+:figure: 0
 
 The commonest use of coordinate variables is to locate the data in space and time, but coordinates [aqua-background]#may# be provided for any other continuous geophysical quantity (e.g. density, temperature, radiation wavelength, zenith angle of radiance, sea surface wave frequency) or discrete category (see <<discrete-axis>>, e.g. area type, model level number, ensemble member number) on which the data variable depends.
 
 Four types of coordinates receive special treatment by these conventions: latitude, longitude, vertical, and time.
-We continue to support the special role that the **`units`** and **`positive`** attributes play in the COARDS convention to identify coordinate type.
-As an extension to COARDS, we strongly [lime-background]#recommend# that a parametric (usually dimensionless) vertical coordinate variable [aqua-background]#should# be associated, via **`standard_name`** and **`formula_terms`** attributes, with its explicit definition, which provides a mapping between its values and dimensional vertical coordinate values that [lime-background]#can# be uniquely located with respect to a point on the earth's surface.
+The special role that the **`units`** and **`positive`** attributes play in the COARDS conventions to identify coordinate type continues to be supported.
+As an extension to COARDS, it is strongly [aqua-background]#recommended# that a parametric (usually dimensionless) vertical coordinate variable [aqua-background]#should# be associated, via **`standard_name`** and **`formula_terms`** attributes, with its explicit definition, which provides a mapping between its values and dimensional vertical coordinate values that [lime-background]#can# be uniquely located with respect to a point on the earth's surface.
 
-Because identification of a coordinate type by its units is complicated by requiring the use of an external package <<UDUNITS>>, we provide two [aqua-background]#optional# methods that yield a direct identification.
+Because identification of a coordinate type by its units is complicated by requiring the use of an external package <<UDUNITS>>, two [aqua-background]#optional# methods are provided that yield a direct identification.
 The attribute **`axis`** [aqua-background]#may# be attached to a coordinate variable and given one of the values **`X`**, **`Y`**, **`Z`** or **`T`** which stand for a longitude, latitude, vertical, or time axis respectively.
 Alternatively the **`standard_name`** attribute [aqua-background]#may# be used for direct identification.
 But note that these [aqua-background]#optional# attributes are in addition to the [aqua-background]#required# COARDS metadata.
 
-To identify generic spatial coordinates we [lime-background]#recommend# that the **`axis`** attribute be attached to these coordinates and given one of the values **`X`**, **`Y`** or **`Z`**.
+To identify generic spatial coordinates, it is [aqua-background]#recommended# that the **`axis`** attribute be attached to these coordinates and given one of the values **`X`**, **`Y`** or **`Z`**.
 The values **`X`** and **`Y`** for the axis attribute [aqua-background]#should# be used to identify horizontal coordinate variables.
 If both X- and Y-axis are identified, **`X-Y-up`** [aqua-background]#should# define a right-handed coordinate system, i.e. rotation from the positive X direction to the positive Y direction is anticlockwise if viewed from above.
-We strongly [lime-background]#recommend# that coordinate variables be used for all coordinate types whenever they are applicable.
+It is strongly [aqua-background]#recommended# that coordinate variables be used for all coordinate types whenever they are applicable.
 
 The methods of identifying coordinate types described in this section apply both to coordinate variables and to auxiliary coordinate variables named by the **`coordinates`** attribute (see <<coordinate-system>>).
 
 The values of a coordinate variable or auxiliary coordinate variable indicate the locations of the gridpoints.
 The locations of the boundaries between cells are indicated by bounds variables (see <<cell-boundaries>>).
-If bounds are not provided, an application [lime-background]#might# reasonably assume the gridpoints to be at the centers of the cells, but we do [lime-background]#not require# that in this standard.
 
 [[latitude-coordinate, Section 4.1, "Latitude Coordinate"]]
 === Latitude Coordinate
@@ -80,7 +81,7 @@ float lon(lon) ;
 
 Application writers [aqua-background]#should# note that the UDUNITS package has limited recognition of the directionality implied by the "east" part of the unit specification.
 It defines **`degrees_east`** to be pi/180 radians, and hence equivalent to **`degrees_north`**.
-We [lime-background]#recommend# the determination that a coordinate is a longitude type [aqua-background]#should# be done via a string match between the given unit and one of the acceptable forms of **`degrees_east`**.
+Hence, determination that a coordinate is a longitude type [aqua-background]#should# be done via a string match between the given unit and one of the acceptable forms of **`degrees_east`**.
 
 Optionally, the longitude type [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with the value **`longitude`**, and/or the **`axis`** attribute with the value **`X`**.
 
@@ -89,56 +90,44 @@ Coordinates of longitude with respect to a rotated pole [aqua-background]#should
 [[vertical-coordinate, Section 4.3, "Vertical Coordinate"]]
 === Vertical (Height or Depth) Coordinate
 
-Variables representing dimensional height or depth axes [aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
+Variables representing vertical coordinates [aqua-background]#must# have either
 
-The direction of positive (i.e., the direction in which the coordinate values are increasing), whether up or down, cannot in all cases be inferred from the units.
-The direction of positive is useful for applications displaying the data.
-For this reason the attribute **`positive`** as defined in the COARDS standard is [aqua-background]#required# if the vertical axis units are not a valid unit of pressure (as determined by the UDUNITS package <<UDUNITS>>) -- otherwise its inclusion is [aqua-background]#optional#.
-The **`positive`** attribute [aqua-background]#may# have the value **`up`** or **`down`** (case insensitive).
-This attribute [aqua-background]#may# be applied to either coordinate variables or auxiliary coordinate variables that contain vertical coordinate data.
+* the **`positive`** attribute, which [aqua-background]#must# take one of the values **`up`** or **`down`** (case insensitive), meaning respectively that increasingly positive coordinate values indicate higher locations (i.e. further from the centre of the Earth, **`positive="up"`**), or lower locations (**`positive="down"`**); or
 
-For example, if an oceanographic netCDF file encodes the depth of the surface as 0 and the depth of 1000 meters as 1000 then the axis would use attributes as follows: 
+* a **`units`** attribute containing units of pressure (as determined by UDUNITS). If the **`units`** attribute value is a valid pressure unit the default value of the **`positive`** attribute is **`down`**.
+
+The **`positive`** attribute [aqua-background]#may# be applied both to coordinate variables and to auxiliary coordinate variables that contain vertical coordinate data.
+
+For example, if an oceanographic netCDF file encodes the depth of the surface as 0 and the depth of 1000 meters as 1000 then the axis would use attributes as follows:
 
 ----
-axis_name:units = "meters" ; 
-axis_name:positive = "down" ; 	
+axis_name:units = "meters" ;
+axis_name:positive = "down" ;
 ----
 
-If, on the other hand, the depth of 1000 meters were represented as -1000 then the value of the **`positive`** attribute would have been **`up`**.
-If the **`units`** attribute value is a valid pressure unit the default value of the **`positive`** attribute is **`down`**.
+If, on the other hand, the depth of 1000 meters were represented as -1000 then the value of the **`positive`** attribute would be **`up`**.
 
-A vertical coordinate will be identifiable by:
-
-* units of pressure; or
-* the presence of the **`positive`** attribute with a value of **`up`** or **`down`** (case insensitive).
-
-Optionally, the vertical type [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with an appropriate value, and/or the **`axis`** attribute with the value **`Z`**. 
-If both **`positive`** and **`standard_name`** are provided, it is [aqua-background]#recommended# that they [aqua-background]#should# be consistent. 
-For instance, if a depth of 1000 metres is represented by -1000 and **`positive`** is **`up`**, it would be inconsistent to give the **`standard_name`** as **`depth`**, whose definition (vertical distance below the surface) implies positive down. 
+Optionally, the vertical type [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with an appropriate value, and/or the **`axis`** attribute with the value **`Z`**.
+If both **`positive`** and **`standard_name`** are provided, it is [aqua-background]#recommended# that they [aqua-background]#should# be consistent.
+For instance, if a depth of 1000 metres is represented by -1000 and **`positive`** is **`up`**, it would be inconsistent to give the **`standard_name`** as **`depth`**, whose definition (vertical distance below the surface) implies positive down.
 If an application detects such an inconsistency, the user [aqua-background]#should# be warned, and the **`positive`** attribute [aqua-background]#should# be used to determine the sign convention.
 
-Recommendations:  The **`positive`** attribute [aqua-background]#should# be consistent with the sign convention implied by the definition of the **`standard_name`**, if both are provided.
-
+[[dimensional-vertical-coordinate, Section 4.3.1, "Dimensional Vertical Coordinate"]]
 ==== Dimensional Vertical Coordinate
 
+Variables representing dimensional vertical coordinates (i.e. not dimensionless numbers, but having a unit of measure) [aqua-background]#must# always explicitly include **`units`** consistent with UDUNITS; there is no default value.
+Acceptable units include the following:
 
-Variables representing dimensional vertical coordinates for or height [aqua-background]#must# always explicitly include the  **`units`** attribute.
-The acceptable units for a vertical (depth or height) coordinate variable [aqua-background]#must# a UDUNITS <<UDUNITS>> representation of one of the following:
-
-* units of pressure.
-For vertical axes the most commonly used of these include **`bar`**, **`millibar`**, **`decibar`**, **`atmosphere (atm)`**, **`pascal (Pa)`**, and **`hPa`**.
-* units of length.
-For vertical axes the most commonly used of these include **`meter (metre, m)`**, and **`kilometer (km)`**.
+* units of pressure; the most commonly used of these include **`bar`**, **`millibar`**, **`decibar`**, **`atmosphere (atm)`**, **`pascal (Pa)`**, and **`hPa`**.
+* units of length; the most commonly used of these include **`meter (metre, m)`**, and **`kilometer (km)`**.
 * other units that [aqua-background]#may# under certain circumstances reference vertical position such as units of density or temperature.
-
-Plural forms are also acceptable.
 
 [[dimensionless-vertical-coordinate, Section 4.3.2, "Dimensionless Vertical Coordinate"]]
 ==== Dimensionless Vertical Coordinate
 
 The **`units`** attribute is not [aqua-background]#required# for dimensionless coordinates.
-For backwards compatibility with COARDS we continue to [lime-background]#allow# the **`units`** attribute to take one of the values: **`level`**, **`layer`**, or **`sigma_level`**.
-These values are not recognized by the UDUNITS package, and are considered a deprecated feature in the CF standard.
+For backwards compatibility with COARDS the **`units`** attribute [aqua-background]#may# take one of the values: **`level`**, **`layer`**, or **`sigma_level`**.
+These values are not recognized by the UDUNITS package, and are considered a deprecated feature in the CF conventions.
 
 [[parametric-vertical-coordinate, Section 4.3.3, "Parametric Vertical Coordinate"]]
 ==== Parametric Vertical Coordinate
@@ -147,7 +136,7 @@ In some cases dimensional vertical coordinates are a function of horizontal loca
 The `standard_name` of the parametric (usually dimensionless) vertical coordinate variable [lime-background]#can# be used to find the definition of the associated computed (always dimensional) vertical coordinate in <<parametric-v-coord>>.
 The definition provides a mapping between the parametric vertical coordinate values and computed values that [lime-background]#can# positively and uniquely indicate the location of the data.
 The `formula_terms` attribute [lime-background]#can# be used to associate terms in the definitions with variables in a netCDF file, and the `computed_standard_name` attribute [lime-background]#can# be used to supply the `standard_name` of the computed vertical coordinate values computed according to the definition.
-To maintain backwards compatibility with COARDS the use of these attributes is not [aqua-background]#required#, but is strongly [aqua-background]#recommended#.
+To maintain backwards compatibility with the COARDS conventions the use of these attributes is not [aqua-background]#required#, but is strongly [aqua-background]#recommended#.
 Some of the definitions [aqua-background]#may# be supplemented with information stored in the `grid_mapping` variable about the datum used as a vertical reference (e.g. geoid, other geopotential datum or reference ellipsoid; see <<grid-mappings-and-projections>> and <<appendix-grid-mappings>>).
 
 [[atm-sigma-coord-ex]]
@@ -173,7 +162,7 @@ p(n,k,j,i) = ptop + sigma(k)*(ps(n,j,i)-ptop)
 ----
 
 The **`formula_terms`** attribute associates the variable **`lev`** with the term **`sigma`**, the variable **`PS`** with the term **`ps`**, and the variable **`PTOP`** with the term **`ptop`**.
-Thus the pressure at gridpoint **`(n,k,j,i)`** would be calculated by 
+Thus the pressure at gridpoint **`(n,k,j,i)`** would be calculated by
 
 ----
 p(n,k,j,i) = PTOP + lev(k)*(PS(n,j,i)-PTOP)
@@ -182,93 +171,273 @@ p(n,k,j,i) = PTOP + lev(k)*(PS(n,j,i)-PTOP)
 The `computed_standard_name` attribute indicates that the values in variable
 `p` would have a `standard_name` of `air_pressure`.
 
+
 [[time-coordinate, Section 4.4, "Time Coordinate"]]
 === Time Coordinate
 
-Variables representing reference time [aqua-background]#must# always explicitly include the **`units`** attribute; there is no default value.
-The **`units`** attribute takes a string value that follows the formatting requirements of the <<UDUNITS>> package. These requirements [lime-background]#can# best be described by an example with explanatory comments:
+A time coordinate is a number which identifies an instant along the continuous axis of time, expressed as elapsed time relative to a specified reference instant.
+Variables containing time coordinates have a **`units`** attribute (see <<time-coordinate-variables>> and <<time-coordinate-units>>, e.g. **`units="days since 1990-01-01"`**) which defines both the unit of measure of elapsed time (here **`days`**) and the reference instant (here **`1990-01-01`**).
 
-The time unit specification **`seconds since 1992-10-8 15:15:42.5 -6:00`** indicates seconds since October 8th, 1992  at  3 hours,  15 minutes  and  42.5 seconds in the afternoon in the time zone which is six hours to the west of Coordinated Universal Time (i.e.  Mountain Daylight Time).
-The time zone specification [lime-background]#can# also be written without a colon using one or two digits (indicating hours) or three or four digits (indicating hours and minutes).
+The interpretation of the numeric values as dates and times depends on both the **`units`** attribute and the calendar, specified by the **`calendar`** attribute.
+Given the **`units`** and **`calendar`**, a time coordinate value and its corresponding representation as a date and time are interconvertible.
+CF defines several different calendars (see <<calendar>>) to meet diverse requirements, both for the real world and for models.
 
-The acceptable units for time are given by the UDUNITS package.
-The most commonly used of these strings (and their abbreviations) includes **`day`** (**`d`**), **`hour`** (**`hr`**, **`h`**), **`minute`** (**`min`**) and **`second`** (**`sec`**, **`s`**).
-Plural forms are also acceptable.
+In reality, the need for explicit calendar definitions arises in part because the natural astronomical periods of year and day, which are based on the Earth's orbit and rotation, are not constants and do not align exactly.
+A year is not an integer multiple of days, the length of a day varies with changes in Earth's rotation, and the timing of seasons within the astronomical year is affected by the precession of the equinoxes.
+Calendars introduce an extra day (a "leap day", in leap years) to keep their annual cycles aligned with the astronomical year, and leap seconds are occasionally inserted into Coordinated Universal Time (link:$$https://en.wikipedia.org/wiki/Coordinated_Universal_Time$$[UTC]) to maintain agreement with observed rotation.
+Some CF real-world calendars either explicitly omit leap seconds or tacitly assume they are ignored (see <<calendar>>).
 
-UDUNITS [lime-background]#permits# a number of alternatives to the word **`since`** in the units of time coordinates. All the alternatives have exactly the same meaning in UDUNITS. For compatibility with other software, CF strongly [lime-background]#recommends# that `since` [aqua-background]#should# be used.
+In addition to real-world calendars, CF defines several simplified calendars that are widely used in numerical models including, for example, the **`360_day`** calendar (with twelve 30-day months) and the **`366_day`** calendar (with a leap day every year).
+These calendars consistently represent the lengths of days and years in those models, where the astronomical cycles are themselves simplified.
 
-The reference date/time string (appearing after the identifier **`since`**) is [aqua-background]#required#.
-It [aqua-background]#may# include date alone, or date and time, or date, time and time zone.
-If the time zone is omitted the default is UTC, and if both time and time zone are omitted the default is 00:00:00 UTC.
 
-UDUNITS defines a **`year`** to be exactly 365.242198781 days (the interval between 2 successive passages of the sun through vernal equinox).
-__It is not a calendar year.__ UDUNITS defines a  **`month`** to be exactly **`year/12`**, which is __not a calendar month__.
-The CF standard follows UDUNITS in the definition of units, but we [lime-background]#recommend# that **`year`** and **`month`** [aqua-background]#should not# be used, because of the potential for mistakes and confusion.
+[[time-coordinate-variables, Section 4.4.1, "Time Coordinate Variables"]]
+==== Time Coordinate Variables
+
+Variables containing time coordinates [aqua-background]#must# always explicitly include the **`units`** attribute, formatted as described in <<time-coordinate-units>>.
+There is no default value for the **`units`**.
+A coordinate variable is identifiable as a time coordinate variable from its **`units`** alone.
+Optionally, a time coordinate variable [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with an appropriate value, and/or the **`axis`** attribute with the value **`T`**.
 
 [[time-axis-ex]]
 [caption="Example 4.4. "]
-.Time axis
+.Example of a time coordinate variable
 ====
 
 ----
 double time(time) ;
-  time:long_name = "time" ;
-  time:units = "days since 1990-1-1 0:0:0" ;
+  time:axis = "T" ;                          // axis attribute is optional
+  time:standard_name = "time" ;              // standard_name attribute is optional
+  time:calendar = "standard" ;               // calendar attribute is recommended
+  time:units = "days since 1990-01-01" ;     // units attribute is mandatory
 ----
 
 ====
 
-A reference time coordinate is identifiable from its units string alone.
 
-Optionally, the time coordinate [aqua-background]#may# be indicated additionally by providing the **`standard_name`** attribute with an appropriate value, and/or the **`axis`** attribute with the value **`T`**.
+[[time-coordinate-units, Section 4.4.2, "Time Coordinate Units"]]
+==== Time Coordinate Units
 
-[[calendar, Section 4.4.1, "Calendar"]]
+The **`units`** attribute of a time coordinate variable takes a string value that follows the formatting requirements of the <<UDUNITS>> package (e.g. <<time-axis-ex>>).
+It [aqua-background]#must# comprise a unit of measure that is physically equivalent (see <<units>>) to the SI base unit of time (i.e. the second), followed by the word **`since`** and a reference datetime, in the format specified below.
+The time coordinate exactly equals the length of the time interval from the instant identified by the reference datetime to the instant identified by the time coordinate, in all cases except when leap seconds occur between the two instants in the **`standard`** calendar.
+(See <<appendix-leap-seconds>> for details.)
+
+The CF conventions follow UDUNITS (<<units>>) in the definition of the acceptable units of measure for time.
+The most commonly used of these units (and their symbols) are **`day`** (**`d`**), **`hour`** (**`h`**), **`minute`** (**`min`**) and **`second`** (**`s`**).
+Plural forms are also acceptable.
+In CF, following UDUNITS, any unit [aqua-background]#may# optionally have one of the decimal prefixes for multiples and submultiples (<<table-supported-units, Table 3.1>>) e.g. **`millisecond`** or **`ms`**.
+CF [lime-background]#recommends# __not__ to use these prefixes with any unit of time other than **`second`**, because <<SI>> (chapter 4) does not [lime-background]#allow# them except with **`second`**.
+
+UDUNITS defines a **`year`** to be exactly 365.242198781 days (the interval between 2 successive passages of the sun through vernal equinox).
+__It is not a calendar year.__ UDUNITS defines a **`month`** to be exactly **`year/12`**, which is __not a calendar month__.
+It is [aqua-background]#recommended# that **`year`** and **`month`** [aqua-background]#should not# be used, because of the potential for mistakes and confusion.
+
+UDUNITS defines a **`minute`** as 60 **`seconds`**, an **`hour`** as 3600 **`seconds`** and a **`day`** as 86400 **`seconds`**, consistent with the <<SI>> definitions of these non-SI units.
+These are fixed units of measure.
+When a leap second is inserted into UTC, the minute, hour and day affected differ by one second from their usual durations according to clock time, but the units of **`minute`**, **`hour`** and **`day`** do not.
+To avoid mistakes and confusion, the second is therefore the only [aqua-background]#recommended# unit in the **`utc`** calendar (<<calendar>>).
+
+UDUNITS [lime-background]#permits# a number of alternatives to the word **`since`** in the **`units`** attribute of time coordinates.
+All the alternatives have exactly the same meaning in UDUNITS.
+For compatibility with other software, CF strongly [lime-background]#recommends# that **`since`** [aqua-background]#should# be used.
+
+The reference datetime string (appearing after the identifier **`since`** in the **`units`** attribute) is [aqua-background]#required#.
+It uses the default format of datetime strings, but for historical reasons it [aqua-background]#may# omit leading zeros on each of the elements of the datetime string.
+
+===== Datetime string format
+
+The default format of datetime strings is __y__-__m__-__d__ [__H__:__M__:__S__[ __TZ__]], where [...] indicates an [aqua-background]#optional# element.
+This closely resembles the specifications of <<ISO_8601>>, but with some adjustments to accommodate the various calendars (<<calendar>>) defined by these conventions:
+
+* __y__ is year, an integer of four or more digits, which [aqua-background]#may# be prefixed with a minus sign for years before year 0 (but note that some CF calendars do not [lime-background]#permit# negative years; see <<calendar>>),
+
+* __m__ month, __d__ day, __H__ hour and __M__ minute, which are all integers of two digits,
+
+* __S__ is second, which is an integer of two digits, possibly followed by fractional part,
+
+* __TZ__ is the time zone offset.
+__TZ__ is __not__ a time zone name or acronym; it is an interval of time.
+
+The default for time zone offset __TZ__ is zero, which [aqua-background]#may# also be explicitly indicated in any of the numeric formats for __TZ__ defined below, or by the letter **`Z`**, sometimes referred to as "Zulu Time".
+It is [lime-background]#suggested# that a zero offset be stated explicitly to avoid confusion in situations where omitting it [lime-background]#might# be misunderstood as indicating local time.
+It is [aqua-background]#recommended# that a non-zero time zone offset [aqua-background]#should# __not__ be specified __in any situation__, because it is easy to make mistakes about the sign of the offset and allowance for daylight-saving/summer time.
+A non-zero offset is __not allowed__ in the **`utc`** and **`tai`** calendars (see <<calendar>>).
+
+In a time zone with zero offset, time (approximately) equals mean solar time for 0 **`degrees_east`** of longitude.
+If both time and time zone offset are omitted the time is 00:00:00 (the beginning of the day i.e. midnight in the time zone with zero offset).
+Thus, **`units = "days since 1990-01-01"`** means the same as **`units = "days since 1990-01-01 00:00:00Z"`**.
+
+Other than **`Z`** for zero offset, the time zone offset __TZ__ [aqua-background]#must# be in one of the following signed numeric formats, where ± stands for the positive sign **`+`** or the negative sign **`-`**, and __nn__ stands for two digits.
+
+* ±__nn__, the hour alone, e.g. **`-06`**, **`+02`**, **`+11`**. This format is sufficient for many time zones. Zero hours [aqua-background]#must# have a positive sign e.g. **`+00`**, which means the same as **`Z`**.
+
+* ±__nn__:__nn__, the hour and minute, separated by a colon **`:`**, e.g. **`-10:00`**, **`-03:30`**, **`+05:30`**, **`+12:45`**.
+
+The date and time parts are separated by a single space character, which [aqua-background]#may# be replaced by the letter **`T`** to align more closely to ISO 8601.
+(Note, however, that legacy software applications [aqua-background]#may# not be able to process the letter **`T`**.)
+The space between the time and __TZ__ [aqua-background]#may# be omitted.
+Spaces are otherwise [lime-background]#not allowed# in the format.
+
+For reasons of backwards compatibility with existing data sets, leading 0's [aqua-background]#may# be omitted from all the elements of the datetime string.
+The instant **`2026-06-10 00:00:00+03:00`** [aqua-background]#may# thus also be written as **`2026-6-10 0:0:0+3`**.
+Leading 0's are, however, [aqua-background]#recommended# to be included as they are [aqua-background]#required# by the ISO 8601 standard.
+
+The default datetime string format [lime-background]#can# represent datetimes in all calendars defined in these conventions.
+In this context, the default datetime format in these conventions extends the allowable set of datetime strings as defined by ISO 8601, given that this standard only recognizes the Gregorian calendar.
+Representing datetime strings in CF calendars that do not follow the Gregorian calendar (in particular the **`julian`** calendar and all the model-only calendars) [aqua-background]#may# fail with software libraries implementing the ISO 8601 standard; in these cases the use of tailor-made software libraries for the CF calendars [aqua-background]#may# be [aqua-background]#required#.
+
+For example, **`1992-10-08 15:15:42.5`** indicates 42.5 seconds after 3.15 pm on 8th October 1992, in the time zone with zero offset.
+Subtracting the time zone offset from a given datetime converts it to the equivalent datetime with zero time zone offset, e.g. **`1992-10-08 09:15:42.5-06`** identifies the same instant as **`1992-10-08 15:15:42.5`**.
+
+
+[[calendar, Section 4.4.3, "Calendar"]]
 ==== Calendar
 
-A date/time is the set of numbers which together identify an instant of time, namely its year, month, day, hour, minute and second, where the second [aqua-background]#may# have a fraction but the others are all integer.
-A time coordinate value represents a date/time.
-In order to calculate a time coordinate value from a date/time, or the reverse, one [aqua-background]#must# know the **`units`** attribute of the time coordinate variable (containing the time unit of the coordinate values and the reference date/time) and the calendar.
-The choice of calendar defines the set of dates (year-month-day combinations) which are [lime-background]#permitted#, and therefore it specifies the number of days between the times of **`0:0:0`** (midnight) on any two dates.
-Date/times which are [lime-background]#not permitted# in a given calendar are [lime-background]#prohibited# in both the encoded time coordinate values, and in the reference date/time string.
-It is [aqua-background]#recommended# that the calendar be specified by the **`calendar`** attribute of the time coordinate variable.
+A calendar defines a set of valid datetimes and their order; note that the CF meaning of "calendar" refers to datetimes, not to dates alone.
+It is [aqua-background]#recommended# that the time coordinate variable [aqua-background]#should# have a **`calendar`** attribute (rather than relying on the default).
+<<table-calendars, Table 4.1>> lists the possible values of the **`calendar`** attribute and the key characteristics of the calendars.
 
-When a time coordinate value is calculated from a date/time, or the reverse, it is assumed that the coordinate value increases by exactly 60 seconds from the start of any minute (identified by year, month, day, hour, minute, all being integers) to the start of the next minute, with no leap seconds, in all CF calendars.
-This assumption has various consequences when real-world date/times from calendars which do contain leap seconds (such as UTC) are stored in time coordinate variables:
+====
+[[table-calendars]]
+.List of defined values for the **`calendar`** attribute and summary of the key characteristics of the calendars
+[options="header",caption="Table 4.1. ",cols="20,8,22,8,8,10,10"]
+|===============
+| **`calendar`** | Days in year | Leap days | Leap seconds | Exact intervals | First date | Last date
+| **`standard`** before CF 1.13 .2+| 365/366 .2+| Julian before 1582-10-05
+Gregorian from 1582-10-15 | unknown | unknown .2+| 0001-01-01 .2+| +∞
+| **`standard`** since CF 1.13 | no | some
+| **`julian`** | 365/366 | Julian | no | all | 0001-01-01 | +∞
+| **`proleptic_gregorian`** | 365/366 | Gregorian | no | all | -∞ | +∞
+| **`noleap`**/**`365_day`** | 365 | never | no | all | -∞ | +∞
+| **`all_leap`**/**`366_day`** | 366 | every year | no | all | -∞ | +∞
+| **`360_day`** | 360 | never | no | all | -∞ | +∞
+| **`utc`** | 365/366 | Gregorian | yes | all | 1972-01-01 | today
+| **`tai`** | 365/366 | Gregorian | no | all | 1958-01-01 | +∞
+|===============
+In this table, "/" means "or", "-∞" means "any date (provided it is earlier than the **Last date**, if any)" and "+∞" means "any date (provided it is later than the **First date**, if any)".
+As well as those listed in this table, the **`calendar`** attribute [aqua-background]#may# also take the value **`none`** or any other value, with meanings given at the end of <<calendar>>.
+In the **Leap days** column, "Gregorian" and "Julian" identify different rules for determining whether a given year is a common year (with 365 days) or a leap year (with 366).
+By the Gregorian rule, a year is a leap year if either (i) it is divisible by 4 but not by 100 or (ii) it is divisible by 400.
+By the Julian rule, any year that is divisible by 4 is a leap year, even if it is also divisible by 100.
+In the **Leap seconds** column: "no" means that seconds ≥60 are [lime-background]#not allowed# in datetimes, and that time coordinates and datetimes [aqua-background]#must# be interconverted assuming 60 seconds in every minute, as if leap seconds never occurred; "yes" means that datetimes with seconds ≥60 are valid and [aqua-background]#must# be counted in time coordinates.
+In the **Exact intervals** column: "all" means that the difference between two time coordinates __always__ exactly equals the interval between the instants they identify; "some" means this is __not always__ true.
+====
 
-* Any date/times between the end of the 60th second of the last minute of one hour and the start of the first second of the next hour cannot be represented by time coordinates e.g. **`2016-12-31 23:59:60.5`** cannot be represented.
-* A time coordinate value [aqua-background]#must not# be interpreted as representing a date/time in the excluded range.
-For instance, **`60 seconds after 23:59`** means **`00:00`** on the next day.
-* A date/time in the excluded range [aqua-background]#must not# be used as a reference date/time e.g. **`seconds since 2016-12-31 23:59:60`** is not a [lime-background]#permitted# value for **`units`**.
-* It is important to realise that a time coordinate value does not necessarily exactly equal the actual length of the interval of time between the reference date/time and the date/time it represents.
+The lengths of the months defined by the Julian and Gregorian calendars (12 months in the year, 31 days in January, etc.) are used in all calendars except **`360_day`** (in which there are 12 months of 30 days each), **`none`** (see <<none-calendar>>) and explicitly defined calendars (see <<explicit-calendar>>).
+The calendars differ in their treatment of leap years (when there are 29 days in February instead of 28).
 
-The values currently defined for **`calendar`** are listed below.
-In all calendars except **`360_day`** and **`none`**, the lengths of the months are the same as in the Gregorian calendar for leap years and non-leap years.
-In the **`julian`** and the default **`standard`** mixed Gregorian/Julian calendar, dates in years before year 0 (i.e. before 0-1-1 0:0:0) are [lime-background]#not allowed#, and the year in the reference date/time of the units [aqua-background]#must not# be negative.
-In these calendars, year zero has a special use to indicate a climatology (see <<climatological-statistics>>), but this use of year zero is deprecated.
-In other calendars, years before year 1 are [lime-background]#allowed#.
+In a given calendar, each valid datetime identifies a particular instant in the continuous physical dimension of time.
+The reference datetime in the **`units`** of a time coordinate variable [aqua-background]#must# be a valid datetime in the calendar of the variable, and identifies a particular instant according to that calendar.
+A datetime which is invalid in a given calendar cannot be converted into a time coordinate value in that calendar.
+For example, 2025-01-31 is a valid datetime in the **`standard`** calendar but not in the **`360_day`** calendar (in which January has 30 days), while 2025-02-29 11:00:00 is valid in the **`all_leap`** calendar (in which 2025 is a leap year) but not in the **`standard`** calendar.
 
-**`standard`**:: Mixed Gregorian/Julian calendar as defined by UDUNITS.
-This is the default.
+A given instant in the continuous physical dimension of time [aqua-background]#may# be identified by different datetimes in different calendars.
+For example, 1917-11-07 12:00:00 in the **`standard`** calendar and 1917-10-25 12:00:00 in the **`julian`** calendar identify the same instant.
+Because the calendars have different sets of valid datetimes, a given time coordinate value with given reference datetime in its **`units`** attribute [lime-background]#can# represent different datetimes in different calendars.
+For example, a time coordinate of **1** with **`units="days since 2020-02-28 23:10:00"`** represents the datetime 2020-02-29 23:10:00 in the **`standard`** calendar, but 2020-03-01 23:10:00 in the **`noleap`** calendar (in which 2020 is not a leap year).
+
+In all calendars __except__ **`julian`** and **`standard`**, year 0 is the year before year 1, and negative years are [lime-background]#allowed#.
+In the **`julian`** and **`standard`** calendars, dates in years before year 0 are invalid and [aqua-background]#must not# be used in the reference datetime of the **`units`** attribute.
+In these calendars, datetimes in year 0 indicate a climatology.
+This use is deprecated (see <<climatological-statistics>> for the [aqua-background]#recommended# mechanism).
+
+Since 1972-01-01, UTC has been the basis of civil time internationally, and the definition of the time zone with zero offset, which is the default time zone in UDUNITS and CF (see <<time-coordinate-units>>).
+Owing to variations in Earth rotation, positive or negative leap seconds are inserted into UTC in order to keep it close to mean solar time at 0 **`degrees_east`**.
+When a single positive leap second is inserted at the end of a minute, that minute contains 61 seconds.
+The net number of leap seconds added to UTC between 1972-01-01 and 2026-01-01 is 27.
+
+If you are producing a dataset which follows the Gregorian calendar, the [aqua-background]#recommended# choice of CF **`calendar`** is as follows:
+
+* Use the **`utc`** calendar for observational data for datetimes since 1972 based on UTC, if it is necessary to preserve precision to the second in both datetimes and time intervals.
+
+WARNING: The **`utc`** calendar [lime-background]#requires# both the writer **and the user** of the dataset to have software that takes leap seconds into account for converting between datetimes and time coordinates.
+Leap seconds are ignored by most software, including UDUNITS.
+
+* Use the **`tai`** calendar for observational data with TAI datetimes.
+
+* Use the **`standard`** calendar for observational data in other cases.
+
+* Use the **`proleptic_gregorian`** calendar for model-generated data.
+(In principle a model [lime-background]#could# be programmed to include leap seconds, but it is assumed that this is not the case.)
+
+<<appendix-leap-seconds>> compares these calendars' treatment of leap seconds and explains the above recommendations.
+Leap seconds do not need to be considered in the **`360_day`**, **`365_day`** and **`366_day`** calendars.
+
+Further details of each calendar are as follows:
+
+**`standard`**:: The Gregorian--Julian calendar as defined by UDUNITS.
+This is the default calendar when there is no **`calendar`** attribute, except when the attribute `month_lengths` is present (see <<explicit-calendar>>).
 A deprecated alternative name for this calendar is **`gregorian`**.
-In this calendar, date/times after (and including) 1582-10-15 0:0:0 are in the Gregorian calendar, in which a year is a leap year if either (i) it is divisible by 4 but not by 100 or (ii) it is divisible by 400.
-Date/times before (and excluding) 1582-10-5 0:0:0 are in the Julian calendar.
+The Gregorian and Julian calendars have the same lengths of their months; they differ only in respect of the rules that decide which years are leap years.
+In the **`standard`** calendar, datetimes after, and including, 1582-10-15 00:00:00 follow the Gregorian rule for leap years.
+Datetimes before, and excluding, 1582-10-05 00:00:00 follow the Julian rule for leap years.
 Year 1 AD or CE in the **`standard`** calendar is also year 1 of the **`julian`** calendar.
-In the **`standard`** calendar, 1582-10-15 0:0:0 is exactly 1 day later than 1582-10-4 0:0:0 and the intervening dates are undefined.
-Therefore it is [aqua-background]#recommended# that date/times in the range from (and including) 1582-10-5 0:0:0 until (but excluding) 1582-10-15 0:0:0 [aqua-background]#should not# be used as reference in **`units`**, and that a time coordinate variable [aqua-background]#should not# include any date/times in this range, because their interpretation is unclear.
-It is also [aqua-background]#recommended# that a reference date/time before the discontinuity [aqua-background]#should not# be used for date/times after the discontinuity, and vice-versa.
+Negative years are invalid in time coordinates and reference datetimes in the **`standard`** calendar.
++
+In the **`standard`** calendar, datetimes in the range from (and including) 1582-10-05 00:00:00 until (but excluding) 1582-10-15 00:00:00 are invalid.
+Datetimes in this range [aqua-background]#must not# be used as reference in **`units`**.
+The interval between the datetimes 1582-10-04 00:00:00 and 1582-10-15 00:00:00 is exactly 1 day.
+It is [aqua-background]#recommended# that a reference datetime before the discontinuity [aqua-background]#should not# be used for datetimes after the discontinuity, and vice-versa.
++
+The **`standard`** calendar has been used for both observational data and model-generated data with real-world datetimes.
+In data written with CF versions before 1.13 in the **`standard`** calendar for dates since 1972, datetimes and time coordinates [aqua-background]#should# be regarded as uncertain by a number of seconds (but less than a minute), because leap seconds [aqua-background]#may# or [aqua-background]#may# not have been taken into account.
+For such datasets, this uncertainty [lime-background]#can# be eliminated only if you have separate information about how leap seconds were treated.
++
+In real-world data written with CF 1.13 or later in the **`standard`** calendar,
 
-**`proleptic_gregorian`**:: A calendar with the Gregorian rules for leap-years extended to dates before 1582-10-15.
-All dates consistent with these rules are [lime-background]#allowed#, both before and after 1582-10-15 0:0:0.
+* datetimes since 1972 are UTC,
 
-**`julian`**:: Julian calendar, in which a year is a leap year if it is divisible by 4, even if it is also divisible by 100.
+* the difference between two time coordinates is less than the length of the time interval between them by the number of intervening leap seconds.
 
-**`noleap`** or **`365_day`**:: A calendar with no leap years, i.e., all years are 365 days long.
++
+See <<appendix-leap-seconds>> for details.
 
-**`all_leap`** or **`366_day`**:: A calendar in which every year is a leap year, i.e., all years are 366 days long.
+**`proleptic_gregorian`**:: A calendar with the Gregorian rule for leap years, extended to dates before 1582-10-15.
+All dates consistent with these rules are [lime-background]#allowed#, both before and after 1582-10-15.
+There are no leap seconds in this CF calendar.
 
-**`360_day`**:: A calendar in which all years are 360 days, and divided into 30 day months.
+**`julian`**:: A calendar which follows the Julian rule for leap years.
+Year 1 AD or CE in the **`julian`** calendar is also year 1 of the **`standard`** calendar.
+Negative years are invalid in time coordinates and reference datetimes in the **`julian`** calendar.
 
-**`none`**:: No calendar.
+**`utc`**:: A Gregorian calendar __with leap seconds__ prescribed by UTC.
+Earlier datetimes than 1972-01-01 00:00:00 are [lime-background]#not allowed# in the UTC calendar, whose current definition came into force at that instant.
+The same instant has the datetime 1972-01-01 00:00:10 in the **`tai`** calendar.
+The difference of 10 seconds between these datetimes is an adjustment for variations in Earth rotation between 1958-01-01 00:00:00, when TAI began, and 1972-01-01 00:00:00.
+The difference (**`tai`** minus **`utc`**) between the datetimes for any subsequent instant is 10 seconds plus the net number of leap seconds introduced since 1972-01-01.
+A given datetime in the **`utc`** calendar represents an instant that is later than the same datetime in the **`tai`** calendar.
+Datetimes in the future are [lime-background]#not allowed# in this calendar, because it is unknown when future leap seconds will occur.
++
+To avoid mistakes and confusion, the second is the only [aqua-background]#recommended# unit of measure in this **`calendar`** for the **`units`** of the time coordinate variable (denoted by any string [lime-background]#allowed# in UDUNITS, optionally with one of the prefixes of <<table-supported-units, Table 3.1>>).
+For the same reason, it is [aqua-background]#recommended# not to use a datetime during a leap second as the reference datetime in the **`units`** attribute.
+When a datetime is converted to a time coordinate value or vice-versa in this calendar, any leap seconds (positive or negative) [aqua-background]#must# be counted that occurred in the interval between the datetime and the reference datetime in the **`units`**.
+If time coordinates in the **`utc`** calendar are converted to datetimes by software that does not take leap seconds into account, they will be later than the correct UTC datetimes by a number of seconds.
++
+A non-zero time zone offset is [lime-background]#not allowed# in this calendar.
+
+**`tai`**:: A Gregorian calendar __without leap seconds__ that is based on International Atomic Time (TAI), which began on 1958-01-01 00:00:00.
+Earlier datetimes than this are [lime-background]#not allowed# in the **`tai`** calendar.
+The difference between the two datetimes (**`tai`** minus **`utc`**) for a given instant of time is 10 seconds plus the net number of leap seconds introduced since the instant with the datetime 1972-01-01 00:00:10 in the **`tai`** calendar, when the current definition of UTC came into force.
+The same instant has the datetime 1972-01-01 00:00:00 in the **`utc`** calendar.
+A given datetime in the **`tai`** calendar represents an instant that is earlier than the same datetime in the **`utc`** calendar.
+A non-zero time zone offset is [lime-background]#not allowed# in this calendar.
+
+**`noleap`** or **`365_day`**:: A model calendar with no leap years, i.e., all years are 365 days long.
+
+**`all_leap`** or **`366_day`**:: A model calendar in which every year is a leap year, i.e., all years are 366 days long.
+
+**`360_day`**:: A model calendar in which all years are 360 days, and divided into 30 day months.
+
+**`none`**:: To be used when there is no annual cycle.
+See <<none-calendar>>.
+
+Any other value [aqua-background]#may# be given to the **`calendar`** attribute to describe an explicitly defined calendar.
+See <<explicit-calendar>>.
+
+
+[[none-calendar, Section 4.4.5, "Time Coordinates with no Annual Cycle"]]
+==== Time Coordinates with no Annual Cycle
 
 The **`calendar`** attribute [aqua-background]#may# be set to **`none`** in climate experiments that simulate a fixed time of year.
 The time of year is indicated by the date in the reference time of the **`units`** attribute.
@@ -283,7 +452,7 @@ The time coordinates that [lime-background]#might# apply in a perpetual July exp
 variables:
   double time(time) ;
     time:long_name = "time" ;
-    time:units = "days since 1-7-15 0:0:0" ;
+    time:units = "days since 0001-07-15" ;
     time:calendar = "none" ;
 data:
   time = 0., 1., 2., ...;
@@ -294,12 +463,16 @@ data:
 Here, all days simulate the conditions of 15th July, so it does not make sense to give them different dates.
 The time coordinates are interpreted as 0, 1, 2, etc. days since the start of the experiment.
 
-If none of the calendars defined above applies (e.g., calendars appropriate to a different paleoclimate era), a non-standard calendar [lime-background]#can# be defined.
-The lengths of each month are explicitly defined with the **`month_lengths`** attribute of the time axis:
+
+[[explicit-calendar, Section 4.4.6, "Explicitly Defined Calendar"]]
+==== Explicitly Defined Calendar
+
+If none of the calendars defined in <<calendar>> applies (e.g., calendars appropriate to a different paleoclimate era), a calendar [lime-background]#can# be explicitly defined, in terms of permissible year-month-day combinations.
+To do this, the lengths of each month are explicitly defined with the **`month_lengths`** attribute of the time axis:
 
 **`month_lengths`**:: A vector of size 12, specifying the number of days in the months from January to December (in a non-leap year).
 
-If leap years are included, then two other attributes of the time axis [aqua-background]#should# also be defined:
+If leap years are included, then two other attributes of the time axis [aqua-background]#must# also be defined:
 
 **`leap_year`**:: An example of a leap year.
 It is assumed that all years that differ from this year by a multiple of four are also leap years.
@@ -309,9 +482,7 @@ If this attribute is absent, it is assumed there are no leap years.
 If this attribute is not present, February (2) is assumed.
 This attribute is ignored if **`leap_year`** is not specified.
 
-The **`calendar`** attribute is not [aqua-background]#required# when a non-standard calendar is being used.
-It is sufficient to define the calendar using the **`month_lengths`** attribute, along with **`leap_year`**, and **`leap_month`** as appropriate.
-However, the **`calendar`** attribute is [lime-background]#allowed# to take non-standard values and in that case defining the non-standard calendar using the appropriate attributes is [aqua-background]#required#.
+When an explicitly defined calendar is being used, the calendar [aqua-background]#may# be described by giving a value not defined in <<calendar>> to the **`calendar`** attribute; alternatively, the attribute [aqua-background]#may# be omitted.
 
 [[paleoclimate-time-axis-ex]]
 [caption="Example 4.6. "]
@@ -321,7 +492,7 @@ However, the **`calendar`** attribute is [lime-background]#allowed# to take non-
 ----
 double time(time) ;
   time:long_name = "time" ;
-  time:units = "days since 1-1-1 0:0:0" ;
+  time:units = "days since 0001-01-01" ;
   time:calendar = "126 kyr B.P." ;
   time:month_lengths = 34, 31, 32, 30, 29, 27, 28, 28, 28, 32, 32, 34 ;
 ----
@@ -337,4 +508,3 @@ Consequently such an axis [aqua-background]#may# be called {ldquo}discrete{rdquo
 A discrete axis has a dimension but [lime-background]#might# not have a coordinate variable.
 Instead, there [lime-background]#might# be one or more auxiliary coordinate variables with this dimension (see preamble to section 5).
 Following sections define various applications of discrete axes, for instance section 6.1.1 {ldquo}Geographical regions{rdquo}, section 7.3.3 {ldquo}Statistics applying to portions of cells{rdquo}, section 9.3 {ldquo}Representation of collections of features in data variables{rdquo}.
-
